@@ -3,8 +3,11 @@
 #include "background.h"
 #include "window.h"
 
-// Vector2 Window {1280,720};
-Vector2 Window::Dimension {1280,720};
+void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow);
+
+// extern window dimensions
+Vector2 Window::Dimension {1920,1080};
+Vector2 Window::PreviousDimension {};
 
 int main() {
 
@@ -27,15 +30,42 @@ int main() {
             Window::Dimension.y = GetScreenHeight();
         }
 
-        Background::DrawBackground(SpaceBG);
         float DeltaTime {GetFrameTime()};
 
-        Background::Tick(DeltaTime);
+        Background::DrawBackground(SpaceBG);
+        Background::Tick(DeltaTime, SpaceBG);
         Spaceship.tick(DeltaTime);
+
+        // check for alt + enter
+ 		if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
+ 		{
+            SetFullScreen(Window::Dimension, Window::PreviousDimension);
+ 		}
 
         EndDrawing();
     }
 
     CloseWindow();
+}
+
+void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow)
+{
+    // see what display we are on right now
+    // int display = GetCurrentMonitor();
+
+    if (IsWindowFullscreen()) 
+    {
+        // if we are full screen, then go back to the windowed size
+        ToggleFullscreen();             
+        // SetWindowSize(Window.x, Window.y); 
+    }
+    else
+    {                                        
+        // if we are not full screen, set the window size to match the monitor we are on
+        // SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+        // Window.x = GetMonitorWidth(display);
+        // Window.y = GetMonitorHeight(display);
+        ToggleFullscreen();
+    }
 }
 

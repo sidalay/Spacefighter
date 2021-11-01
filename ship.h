@@ -2,6 +2,7 @@
 #define SHIP_H
 
 #include "basecharacter.h"
+#include "window.h"
 
 class Ship : BaseCharacter
 {
@@ -13,7 +14,7 @@ private:
     float sourceY{};
     float bulletWidth{};
     float bulletHeight{};
-    Vector2 ScreenPos {640.f, 360.f};
+    Vector2 ScreenPos {Window::Dimension.x/2, Window::Dimension.y/2};
 
 public:
     Ship();

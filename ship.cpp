@@ -1,7 +1,6 @@
 #include "ship.h"
-#include "window.h"
 
-Ship::Ship()
+Ship::Ship() 
 {
     health = 100.f;
     texture = idle;

@@ -3,18 +3,21 @@
 
 #include "raylib.h"
 #include "window.h"
+#include <iostream>
+#include <iomanip>
 
 namespace Background
 {
     float scale{4.f};
     // Vector2 ScreenPos{0.f, -(scale * Window::Dimension.y)};
-    Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)))};
-    // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + 648.f))};
+    // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)))};
+    Vector2 ScreenPos{0.f, -(5120.f)};
+    // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + 432.f))};
     float RunningTime{};
     float UpdateTime{1.f/14.f};
     float Speed{1.f};
 
-    void Tick(float DeltaTime) {
+    void Tick(float DeltaTime, Texture2D BG) {
 
         // Control the speed at which the background moves based on acceleration or decceleration
         if (IsKeyDown(KEY_W)) {
@@ -38,12 +41,17 @@ namespace Background
 
         // Reset Background image position
         if (ScreenPos.y >= 0.f) {
-            ScreenPos.y = -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)));
-            // ScreenPos.y = -(scale * (Window::Dimension.y + 648.f));
+            // ScreenPos.y = -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)));
+            ScreenPos.y = -(5120);
+            // ScreenPos.y = -(scale * (Window::Dimension.y + 432.f));
+            std::cout << std::fixed << std::setprecision(5) << "ScreenPos.y: " << ScreenPos.y << '\n' 
+            << "Window::Dimension.y: " << Window::Dimension.y << '\n'
+            << "Scale: " << scale << '\n';
         }
 
         DrawText(FormatText("ScreenPos.y: %i", static_cast<int>(Background::ScreenPos.y)), 20, 20, 20, RED);
         DrawText(FormatText("Speed: %i", static_cast<int>(Background::Speed)), 20, 40, 20, BLUE);
+
     }
     
     // Draw the background
