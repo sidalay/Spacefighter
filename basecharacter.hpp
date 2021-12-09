@@ -1,5 +1,5 @@
-#ifndef BASECHARACTER_H
-#define BASECHARACTER_H
+#ifndef BASECHARACTER_HPP
+#define BASECHARACTER_HPP
 
 #include "raylib.h"
 

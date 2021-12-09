@@ -1,4 +1,4 @@
-#include "ship.h"
+#include "ship.hpp"
 
 Ship::Ship() 
 {
@@ -20,6 +20,7 @@ Ship::~Ship()
 
 void Ship::tick(float DeltaTime)
 {
+    // Movement
     if (IsKeyPressed(KEY_W)) texture = accel;
     if (IsKeyDown(KEY_W)) ScreenPos.y -= speed;
     if (IsKeyReleased(KEY_W)) texture = idle;
@@ -45,11 +46,6 @@ void Ship::tick(float DeltaTime)
     if (IsKeyReleased(KEY_D)) sourceY = 6 * height;
 
     // Screen dimension borders
-    // if (ScreenPos.x < 0) ScreenPos.x = 0;
-    // if (ScreenPos.x > 1280 - scale*width) ScreenPos.x = 1280 - scale*width;
-    // if (ScreenPos.y < 0) ScreenPos.y = 0;
-    // if (ScreenPos.y > 720 - scale*height) ScreenPos.y = 720 - scale*height;
-
     if (ScreenPos.x + scale*width < 0) ScreenPos.x = Window::Dimension.x;
     if (ScreenPos.x > Window::Dimension.x) ScreenPos.x = 0 - scale*width;
     if (ScreenPos.y < 0) ScreenPos.y = 0;

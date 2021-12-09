@@ -1,8 +1,8 @@
-#ifndef SHIP_H
-#define SHIP_H
+#ifndef SHIP_HPP
+#define SHIP_HPP
 
-#include "basecharacter.h"
-#include "window.h"
+#include "basecharacter.hpp"
+#include "window.hpp"
 
 class Ship : BaseCharacter
 {
@@ -11,7 +11,7 @@ private:
     Texture2D accel {LoadTexture("sprites/ShipAccel_Sprites.png")};
     Texture2D decel {LoadTexture("sprites/ShipDecel_Sprites.png")};
     Texture2D projectile {LoadTexture("sprites/Projectile_Sprites.png")};
-    float sourceY{};
+    float sourceY{};            // Change the Y portion of the sprite being drawn
     float bulletWidth{};
     float bulletHeight{};
     Vector2 ScreenPos {Window::Dimension.x/2, Window::Dimension.y/2};

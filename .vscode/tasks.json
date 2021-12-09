@@ -12,7 +12,7 @@
                 "BUILD_MODE=DEBUG"
             ],
             "windows": {
-                "command": "C:/raylib/mingw/bin/mingw32-make.exe",
+                "command": "C:/raylib/w64devkit/bin/mingw32-make.exe",
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
@@ -53,7 +53,7 @@
                 "PLATFORM=PLATFORM_DESKTOP"
             ],
             "windows": {
-                "command": "C:/raylib/mingw/bin/mingw32-make.exe",
+                "command": "C:/raylib/w64devkit/bin/mingw32-make.exe",
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
                     "PROJECT_NAME=${fileBasenameNoExtension}",
@@ -82,7 +82,7 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "detail": "compiler: C:\\raylib\\mingw\\bin\\g++.exe"
+            "detail": "compiler: C:\\raylib\\w64devkit\\bin\\g++.exe"
         }
     ]
 }

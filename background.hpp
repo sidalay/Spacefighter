@@ -1,8 +1,8 @@
-#ifndef BACKGROUND_H
-#define BACKGROUND_H
+#ifndef BACKGROUND_HPP
+#define BACKGROUND_HPP
 
 #include "raylib.h"
-#include "window.h"
+#include "window.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -49,8 +49,8 @@ namespace Background
             << "Scale: " << scale << '\n';
         }
 
-        DrawText(FormatText("ScreenPos.y: %i", static_cast<int>(Background::ScreenPos.y)), 20, 20, 20, RED);
-        DrawText(FormatText("Speed: %i", static_cast<int>(Background::Speed)), 20, 40, 20, BLUE);
+        DrawText(TextFormat("ScreenPos.y: %i", static_cast<int>(Background::ScreenPos.y)), 20, 20, 20, RED);
+        DrawText(TextFormat("Speed: %i", static_cast<int>(Background::Speed)), 20, 40, 20, BLUE);
 
     }
     
