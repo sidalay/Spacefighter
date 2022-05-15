@@ -1,4 +1,4 @@
-#include "ship.hpp"
+#include "headers/ship.hpp"
 
 Ship::Ship() 
 {
@@ -59,10 +59,11 @@ void Ship::tick(float DeltaTime)
     DrawTexturePro(texture, source, dest, Vector2{0.f, 0.f}, 0.f, WHITE);
 
     // draw projectile
-    if (IsKeyDown(KEY_SPACE)) 
-    {
-        Rectangle bulletSource{currentFrame * bulletWidth, bulletHeight, bulletWidth, bulletHeight};
-        Rectangle bulletDest{ScreenPos.x + scale*width/2-6, ScreenPos.y - height, 3 * bulletWidth, 3 * bulletHeight};
-        DrawTexturePro(projectile, bulletSource, bulletDest, Vector2{0.f, 0.f}, 0.f, WHITE);
-    }
+    // if (IsKeyDown(KEY_SPACE)) 
+    // {
+    //     // Bullets.at(1).Tick(DeltaTime);
+    //     Rectangle bulletSource{currentFrame * bulletWidth, bulletHeight, bulletWidth, bulletHeight};
+    //     Rectangle bulletDest{ScreenPos.x + scale*width/2-6, ScreenPos.y - height, 3 * bulletWidth, 3 * bulletHeight};
+    //     DrawTexturePro(projectile, bulletSource, bulletDest, Vector2{0.f, 0.f}, 0.f, WHITE);
+    // }
 }

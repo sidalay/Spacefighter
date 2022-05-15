@@ -1,8 +1,10 @@
 #ifndef SHIP_HPP
 #define SHIP_HPP
 
-#include "basecharacter.hpp"
-#include "window.hpp"
+// #include <vector>
+#include "headers/basecharacter.hpp"
+#include "headers/window.hpp"
+// #include "headers/projectile.hpp"
 
 class Ship : BaseCharacter
 {
@@ -16,10 +18,13 @@ private:
     float bulletHeight{};
     Vector2 ScreenPos {Window::Dimension.x/2, Window::Dimension.y/2};
 
+    // int MaxBullets{3};
+    // std::vector<Projectile> Bullets {Projectile{ScreenPos}, Projectile{ScreenPos}, Projectile{ScreenPos}}; 
+
 public:
     Ship();
     ~Ship();
-    void tick(float deltaTime) override;
+    void tick(float DeltaTime) override;
 };
 
 #endif

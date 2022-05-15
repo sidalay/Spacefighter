@@ -1,10 +1,10 @@
 #ifndef BACKGROUND_HPP
 #define BACKGROUND_HPP
 
-#include "raylib.h"
-#include "window.hpp"
+#include <raylib.h>
 #include <iostream>
 #include <iomanip>
+#include "headers/window.hpp"
 
 namespace Background
 {

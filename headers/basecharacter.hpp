@@ -1,7 +1,7 @@
 #ifndef BASECHARACTER_HPP
 #define BASECHARACTER_HPP
 
-#include "raylib.h"
+#include <raylib.h>
 
 class BaseCharacter
 {

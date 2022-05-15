@@ -1,7 +1,7 @@
-#include "raylib.h"
-#include "ship.hpp"
-#include "background.hpp"
-#include "window.hpp"
+#include <raylib.h>
+#include "headers/ship.hpp"
+#include "headers/background.hpp"
+#include "headers/window.hpp"
 
 void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow);
 
@@ -11,7 +11,7 @@ Vector2 Window::PreviousDimension {};
 
 int main() {
 
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(Window::Dimension.x, Window::Dimension.y, "Space Invaders");
     SetExitKey(0);
     SetTargetFPS(144);
@@ -44,7 +44,7 @@ int main() {
 
         EndDrawing();
     }
-
+    
     CloseWindow();
 }
 
