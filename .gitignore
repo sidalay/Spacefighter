@@ -4,3 +4,4 @@ main
 .VSCodeCounter
 *.code-workspace
 .vscode
+*.dll
