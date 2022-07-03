@@ -1,3 +1,6 @@
 *.exe
 *.dsym
 main
+.VSCodeCounter
+*.code-workspace
+.vscode
