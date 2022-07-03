@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <iostream>
 #include <iomanip>
-#include "headers/window.hpp"
+#include "window.hpp"
 
 namespace Background
 {

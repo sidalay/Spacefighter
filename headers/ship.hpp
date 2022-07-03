@@ -2,9 +2,9 @@
 #define SHIP_HPP
 
 // #include <vector>
-#include "headers/basecharacter.hpp"
-#include "headers/window.hpp"
-// #include "headers/projectile.hpp"
+#include "basecharacter.hpp"
+#include "window.hpp"
+// #include "projectile.hpp"
 
 class Ship : BaseCharacter
 {

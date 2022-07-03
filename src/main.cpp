@@ -1,7 +1,7 @@
 #include <raylib.h>
-#include "headers/ship.hpp"
-#include "headers/background.hpp"
-#include "headers/window.hpp"
+#include "ship.hpp"
+#include "background.hpp"
+#include "window.hpp"
 
 void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow);
 

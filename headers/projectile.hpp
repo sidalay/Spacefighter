@@ -2,7 +2,7 @@
 #define PROJECTILE_HPP
 
 // #include <raylib.h>
-// #include "headers/window.hpp"
+// #include "window.hpp"
 
 // class Projectile {
 // private:

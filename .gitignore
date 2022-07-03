@@ -1,7 +1,8 @@
 *.exe
 *.dsym
-main
-.VSCodeCounter
 *.code-workspace
-.vscode
 *.dll
+cmake-build-debug
+.VSCodeCounter
+.vscode
+report.txt

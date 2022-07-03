@@ -1,4 +1,4 @@
-#include "headers/ship.hpp"
+#include "ship.hpp"
 
 Ship::Ship() 
 {
