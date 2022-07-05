@@ -21,10 +21,11 @@ endif()
 
 add_executable(${PROJECT_NAME}
     src/basecharacter.cpp
+    src/game.cpp
     src/main.cpp
     src/projectile.cpp
     src/ship.cpp
-    src/game.cpp
+    src/textures.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)

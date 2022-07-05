@@ -18,7 +18,7 @@ int main() {
 
     Ship Spaceship{};
 
-    Texture2D SpaceBG {LoadTexture("sprites/SpaceBackground-1.png")};
+    Texture2D SpaceBG {LoadTexture("sprites/SpaceBG.png")};
 
     while (!WindowShouldClose())
     {

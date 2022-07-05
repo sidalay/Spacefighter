@@ -30,4 +30,4 @@ namespace Game
     void Tick();
 }
 
-#endif
+#endif // GAME_HPP
