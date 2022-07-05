@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(TheLastStand)
+project(Spacefighter)
 
 find_package(raylib QUIET)
 if (NOT raylib_FOUND)
@@ -24,6 +24,7 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/projectile.cpp
     src/ship.cpp
+    src/game.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
