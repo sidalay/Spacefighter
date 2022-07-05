@@ -20,6 +20,7 @@ if (NOT raylib_FOUND)
 endif()
 
 add_executable(${PROJECT_NAME}
+    src/audio.cpp
     src/basecharacter.cpp
     src/game.cpp
     src/main.cpp
