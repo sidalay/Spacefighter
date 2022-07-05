@@ -17,7 +17,7 @@ namespace Background
     float UpdateTime{1.f/14.f};
     float Speed{1.f};
 
-    void Tick(float DeltaTime, Texture2D BG) {
+    void Tick(float DeltaTime) {
 
         // Control the speed at which the background moves based on acceleration or decceleration
         if (IsKeyDown(KEY_W)) {

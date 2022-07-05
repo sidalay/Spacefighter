@@ -3,7 +3,7 @@
 #include "background.hpp"
 #include "window.hpp"
 
-void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow);
+void SetFullScreen();
 
 // extern window dimensions
 Vector2 Window::Dimension {1920,1080};
@@ -33,13 +33,13 @@ int main() {
         float DeltaTime {GetFrameTime()};
 
         Background::DrawBackground(SpaceBG);
-        Background::Tick(DeltaTime, SpaceBG);
+        Background::Tick(DeltaTime);
         Spaceship.tick(DeltaTime);
 
         // check for alt + enter
  		if (IsKeyPressed(KEY_ENTER) && (IsKeyDown(KEY_LEFT_ALT) || IsKeyDown(KEY_RIGHT_ALT)))
  		{
-            SetFullScreen(Window::Dimension, Window::PreviousDimension);
+            SetFullScreen();
  		}
 
         EndDrawing();
@@ -48,7 +48,7 @@ int main() {
     CloseWindow();
 }
 
-void SetFullScreen(Vector2 &Window, Vector2 &PreviousWindow)
+void SetFullScreen()
 {
     // see what display we are on right now
     // int display = GetCurrentMonitor();
