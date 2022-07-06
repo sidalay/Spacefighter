@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <raylib-cpp.hpp>
 #include "ship.hpp"
 #include "background.hpp"
 #include "window.hpp"
