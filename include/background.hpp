@@ -6,7 +6,7 @@
 
 namespace Background
 {
-    float scale{4.f};
+    float Scale{4.f};
     // Vector2 ScreenPos{0.f, -(scale * Window::Dimension.y)};
     // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)))};
     Vector2 ScreenPos{0.f, -(5120.f)};
@@ -51,9 +51,9 @@ namespace Background
     
     // Draw the background
     void DrawBackground(Texture2D BG) {
-        Rectangle source {0.f,0.f, static_cast<float>(BG.width), static_cast<float>(BG.height)};
-        Rectangle dest {ScreenPos.x, ScreenPos.y, scale * BG.width, scale * BG.height};
-        DrawTexturePro(BG, source, dest, Vector2{}, 0.f, GRAY);
+        Rectangle Source {0.f,0.f, static_cast<float>(BG.width), static_cast<float>(BG.height)};
+        Rectangle Destination {ScreenPos.x, ScreenPos.y, Scale * BG.width, Scale * BG.height};
+        DrawTexturePro(BG, Source, Destination, Vector2{}, 0.f, GRAY);
     }
 }
 

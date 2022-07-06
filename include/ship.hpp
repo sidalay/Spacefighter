@@ -8,16 +8,14 @@
 class Ship : BaseCharacter
 {
 public:
-    Ship();
     Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Vector2I& Screen);
     void Tick(float DeltaTime) override;
-    void SetTexture();
 private:
     float SourceY{};
-    float BulletWidth{};
-    float BulletHeight{};
-    raylib::Vector2I Screen{};
-    std::vector<Sprite> Sprites{};
+    const GameTexture& Textures;
+    const GameAudio& Audio;
+    const raylib::Vector2I& Screen;
+    // std::vector<Sprite> Sprites{};
 };
 
 #endif

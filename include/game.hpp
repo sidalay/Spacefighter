@@ -29,21 +29,19 @@ namespace Game
         GameAudio Audio;
     };
 
-    struct Object
+    struct Device
     {
-        raylib::Vector2I Screen{1920,1080};
+        raylib::Vector2I Screen{1280,720};
         raylib::Window Window;
         raylib::AudioDevice Audio;
-        Ship Spacefighter;
     };
 
     void Run();
-    void Initialize(Object& Object);
-    void Loop(Info& Info, Object& Object, const Asset& Asset);
-    void Tick(Info& Info, Object& Object, const Asset& Asset);
-    void Draw(Info& Info, Object& Object, const Asset& Asset);
-    void CheckScreenSizing(Object& Object);
-    void ObjectInit(Object& Object, const Asset& Asset);
+    void Initialize(Device& Device);
+    void Loop(Info& Info, Device& Device, const Asset& Asset);
+    void Tick(Info& Info, Device& Device, const Asset& Asset);
+    void Draw(Info& Info, Device& Device, const Asset& Asset);
+    void CheckScreenSizing(Device& Device);
 };
 
 #endif // GAME_HPP

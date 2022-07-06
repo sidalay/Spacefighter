@@ -2,43 +2,43 @@
 
 void Game::Run()
 {
+    Game::Device Device{};
+    Game::Initialize(Device);
     Game::Info Info{};
     Game::Asset Asset{};
-    Game::Object Object{};
-    Game::Initialize(Object);
-    Game::Loop(Info, Object, Asset);
+    Game::Loop(Info, Device, Asset);
 }
 
-void Game::Initialize(Game::Object& Object)
+void Game::Initialize(Device& Device)
 {
-    Object.Window.Init(Object.Screen.x, Object.Screen.y, "Spacefighter");
-    Object.Window.SetTargetFPS(144);
-    Object.Audio.Init();
-    Object.Audio.SetVolume(0.2f);
+    Device.Window.Init(Device.Screen.x, Device.Screen.y, "Spacefighter");
+    Device.Window.SetTargetFPS(144);
+    Device.Audio.Init();
+    Device.Audio.SetVolume(0.2f);
     SetTraceLogLevel(LOG_WARNING);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetExitKey(0);
     HideCursor();
 }
 
-void Game::Loop(Info& Info, Object& Object, const Asset& Asset)
+void Game::Loop(Info& Info, Device& Device, const Asset& Asset)
 {
-    while (!Object.Window.ShouldClose()) 
+    while (!Device.Window.ShouldClose()) 
     {
-        Game::Tick(Info, Object, Asset);
+        Game::Tick(Info, Device, Asset);
     }
 }
 
-void Game::Tick(Info& Info, Object& Object, const Asset& Asset)
+void Game::Tick(Info& Info, Device& Device, const Asset& Asset)
 {
-    Game::CheckScreenSizing(Object);
-    Game::Draw(Info, Object, Asset);
+    Game::CheckScreenSizing(Device);
+    Game::Draw(Info, Device, Asset);
 }
 
-void Game::Draw(Info& Info, Object& Object, const Asset& Asset)
+void Game::Draw(Info& Info, Device& Device, const Asset& Asset)
 {
-    Object.Window.BeginDrawing();
-    Object.Window.ClearBackground(BLACK);
+    Device.Window.BeginDrawing();
+    Device.Window.ClearBackground(BLACK);
 
     switch (Info.State)
     {
@@ -67,23 +67,21 @@ void Game::Draw(Info& Info, Object& Object, const Asset& Asset)
             break;
         }
     }
+
+    Device.Window.EndDrawing();
 }
 
-void Game::CheckScreenSizing(Object& Object)
+void Game::CheckScreenSizing(Device& Device)
 {
-    if (Object.Window.IsResized())
+    if (Device.Window.IsResized())
     {
-        Object.Screen.x = Object.Window.GetWidth();
-        Object.Screen.y = Object.Window.GetHeight();
+        Device.Screen.x = Device.Window.GetWidth();
+        Device.Screen.y = Device.Window.GetHeight();
     }
 
     if (IsKeyPressed(KEY_ENTER) && ((IsKeyPressed(KEY_RIGHT_ALT) || IsKeyPressed(KEY_LEFT_ALT))))
     {
-        Object.Window.ToggleFullscreen();
+        Device.Window.ToggleFullscreen();
     }
 }
 
-void Game::ObjectInit(Object& Object, const Asset& Asset)
-{
-    
-} 

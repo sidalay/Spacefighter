@@ -1,13 +1,12 @@
 #include "ship.hpp"
 
-Ship::Ship() 
+Ship::Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Vector2I& Screen)
+    : Textures{Textures}, Audio{Audio}, Screen{Screen}
 {
     // Health = 100.f;
     // Texture = Idle;
     // Width = static_cast<float>(Texture.width/8);
     // Height = static_cast<float>(Texture.height/7);
-    // BulletWidth = static_cast<float>(projectile.width/8);
-    // BulletHeight = static_cast<float>(projectile.height);
 }
 
 void Ship::Tick(float DeltaTime)

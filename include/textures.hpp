@@ -13,14 +13,14 @@ struct GameTexture
     GameTexture& operator=(GameTexture&&) = default;
 
     // Alien Sprites
-    const raylib::Texture2D Aliens{LoadTexture("sprites/Aliens.png")};
+    const raylib::Texture Aliens{"sprites/Aliens.png"};
     // Ship Sprites
-    const raylib::Texture2D Accelerate{LoadTexture("sprites/ShipAccel.png")};
-    const raylib::Texture2D Decelerate{LoadTexture("sprites/ShipDecel.png")};
-    const raylib::Texture2D Normal{LoadTexture("sprites/ShipNorm.png")};
-    const raylib::Texture2D Projectiles{LoadTexture("sprites/Projectiles.png")};
+    const raylib::Texture Accelerate{"sprites/ShipAccel.png"};
+    const raylib::Texture Decelerate{"sprites/ShipDecel.png"};
+    const raylib::Texture Normal{"sprites/ShipNorm.png"};
+    const raylib::Texture Projectiles{"sprites/Projectiles.png"};
     // Background Sprites
-    const raylib::Texture2D SpaceBackground{LoadTexture("sprites/SpaceBG.png")};
+    const raylib::Texture SpaceBackground{"sprites/SpaceBG.png"};
 };
 
 #endif // TEXTURES_HPP
