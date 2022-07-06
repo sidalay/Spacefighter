@@ -9,15 +9,15 @@ class Ship : BaseCharacter
 {
 public:
     Ship();
-    Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Window& Window);
-    ~Ship();
+    Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Vector2I& Screen);
     void Tick(float DeltaTime) override;
     void SetTexture();
 private:
-    float SourceY{};            // Change the Y portion of the sprite being drawn
+    float SourceY{};
     float BulletWidth{};
     float BulletHeight{};
-    Vector2 ScreenPos{};
+    raylib::Vector2I Screen{};
+    std::vector<Sprite> Sprites{};
 };
 
 #endif

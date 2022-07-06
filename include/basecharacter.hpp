@@ -2,8 +2,10 @@
 #define BASECHARACTER_HPP
 
 #include <raylib-cpp.hpp>
-#include "textures.hpp"
+#include <vector>
 #include "audio.hpp"
+#include "sprite.hpp"
+#include "textures.hpp"
 
 class BaseCharacter
 {
@@ -24,7 +26,7 @@ public:
     BaseCharacter();
     // void undoMovement();
     // Rectangle getCollisionRec();
-    virtual void Tick(float deltaTime);
+    virtual void Tick(float DeltaTime);
     float GetHealth() const {return Health;}
 };
 

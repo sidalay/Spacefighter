@@ -2,19 +2,7 @@
 #define GAME_HPP
 
 #include <raylib-cpp.hpp>
-#include "audio.hpp"
-#include "background.hpp"
 #include "ship.hpp"
-#include "textures.hpp"
-
-namespace raylib 
-{
-    struct Vector2I
-    {
-        int x;
-        int y;
-    };
-};
 
 namespace Game
 {
@@ -43,10 +31,10 @@ namespace Game
 
     struct Object
     {
-        Ship Spacefighter;
         raylib::Vector2I Screen{1920,1080};
         raylib::Window Window;
         raylib::AudioDevice Audio;
+        Ship Spacefighter;
     };
 
     void Run();

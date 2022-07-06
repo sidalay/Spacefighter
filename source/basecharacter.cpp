@@ -2,15 +2,15 @@
 
 BaseCharacter::BaseCharacter() {}
 
-void BaseCharacter::tick(float deltaTime) 
+void BaseCharacter::Tick(float DeltaTime)
 {
     // update animation frame
-    runningTime += deltaTime;
-    if (runningTime >= updateTime)
+    RunningTime += DeltaTime;
+    if (RunningTime >= UpdateTime)
     {
-        previousFrame = currentFrame;
-        ++currentFrame;
-        runningTime = 0.f;
-        if (currentFrame > maxFrames) currentFrame = 0;
+        PreviousFrame = CurrentFrame;
+        ++CurrentFrame;
+        RunningTime = 0.f;
+        if (CurrentFrame > MaxFrames) CurrentFrame = 0;
     }
 }
