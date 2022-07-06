@@ -2,8 +2,10 @@
 #define GAME_HPP
 
 #include <raylib-cpp.hpp>
-#include <textures.hpp>
-#include <audio.hpp>
+#include "textures.hpp"
+#include "audio.hpp"
+#include "ship.hpp"
+#include "background.hpp"
 
 namespace raylib 
 {
