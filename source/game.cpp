@@ -2,11 +2,11 @@
 
 void Game::Run()
 {
-    Game::Info Info;
-    Game::Asset Asset;
-    Game::Object Object;
+    Game::Info Info{};
+    Game::Asset Asset{};
+    Game::Object Object{};
     Game::Initialize(Object);
-    Game::Loop(Info, Asset, Object);
+    Game::Loop(Info, Object, Asset);
 }
 
 void Game::Initialize(Game::Object& Object)
@@ -21,21 +21,21 @@ void Game::Initialize(Game::Object& Object)
     HideCursor();
 }
 
-void Game::Loop(Info& Info, Asset& Asset, Object& Object)
+void Game::Loop(Info& Info, Object& Object, const Asset& Asset)
 {
     while (!Object.Window.ShouldClose()) 
     {
-        Game::Tick(Info, Asset, Object);
+        Game::Tick(Info, Object, Asset);
     }
 }
 
-void Game::Tick(Info& Info, Asset& Asset, Object& Object)
+void Game::Tick(Info& Info, Object& Object, const Asset& Asset)
 {
     Game::CheckScreenSizing(Object);
-    Game::Draw(Info, Asset, Object);
+    Game::Draw(Info, Object, Asset);
 }
 
-void Game::Draw(Info& Info, Asset& Asset, Object& Object)
+void Game::Draw(Info& Info, Object& Object, const Asset& Asset)
 {
     Object.Window.BeginDrawing();
     Object.Window.ClearBackground(BLACK);
@@ -83,3 +83,7 @@ void Game::CheckScreenSizing(Object& Object)
     }
 }
 
+void Game::ObjectInit(Object& Object, const Asset& Asset)
+{
+    
+} 

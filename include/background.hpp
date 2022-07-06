@@ -3,8 +3,6 @@
 
 #include <raylib.h>
 #include <iostream>
-#include <iomanip>
-#include "window.hpp"
 
 namespace Background
 {
@@ -44,9 +42,6 @@ namespace Background
             // ScreenPos.y = -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)));
             ScreenPos.y = -(5120);
             // ScreenPos.y = -(scale * (Window::Dimension.y + 432.f));
-            std::cout << std::fixed << std::setprecision(5) << "ScreenPos.y: " << ScreenPos.y << '\n' 
-            << "Window::Dimension.y: " << Window::Dimension.y << '\n'
-            << "Scale: " << scale << '\n';
         }
 
         DrawText(TextFormat("ScreenPos.y: %i", static_cast<int>(Background::ScreenPos.y)), 20, 20, 20, RED);

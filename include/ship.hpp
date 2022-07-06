@@ -9,8 +9,10 @@ class Ship : BaseCharacter
 {
 public:
     Ship();
+    Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Window& Window);
     ~Ship();
     void Tick(float DeltaTime) override;
+    void SetTexture();
 private:
     float SourceY{};            // Change the Y portion of the sprite being drawn
     float BulletWidth{};

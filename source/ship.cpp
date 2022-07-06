@@ -2,23 +2,20 @@
 
 Ship::Ship() 
 {
-    health = 100.f;
-    texture = idle;
-    width = static_cast<float>(texture.width/8);
-    height = static_cast<float>(texture.height/7);
-    bulletWidth = static_cast<float>(projectile.width/8);
-    bulletHeight = static_cast<float>(projectile.height);
+    Health = 100.f;
+    Texture = Idle;
+    Width = static_cast<float>(texture.width/8);
+    Height = static_cast<float>(texture.height/7);
+    BulletWidth = static_cast<float>(projectile.width/8);
+    BulletHeight = static_cast<float>(projectile.height);
 }
 
 Ship::~Ship()
 {
-    UnloadTexture(idle);
-    UnloadTexture(accel);
-    UnloadTexture(decel);
-    UnloadTexture(projectile);
+
 }
 
-void Ship::tick(float DeltaTime)
+void Ship::Tick(float DeltaTime)
 {
     // Movement
     if (IsKeyPressed(KEY_W)) texture = accel;
@@ -51,7 +48,7 @@ void Ship::tick(float DeltaTime)
     if (ScreenPos.y < 0) ScreenPos.y = 0;
     if (ScreenPos.y > Window::Dimension.y - scale*height) ScreenPos.y = Window::Dimension.y - scale*height;
 
-    BaseCharacter::tick(DeltaTime);
+    BaseCharacter::Tick(DeltaTime);
 
     // draw main texture
     Rectangle source{currentFrame * width, sourceY, width, height};

@@ -1,6 +1,10 @@
 #ifndef BASECHARACTER_HPP
 #define BASECHARACTER_HPP
 
+#include <raylib-cpp.hpp>
+#include "textures.hpp"
+#include "audio.hpp"
+
 class BaseCharacter
 {
 protected:
