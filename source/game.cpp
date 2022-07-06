@@ -14,7 +14,7 @@ void Game::Initialize(Game::Object& Object)
     Object.Window.Init(Object.Screen.x, Object.Screen.y, "Spacefighter");
     Object.Window.SetTargetFPS(144);
     Object.Audio.Init();
-    Object.Audio.SetVolume(0.5f);
+    Object.Audio.SetVolume(0.2f);
     SetTraceLogLevel(LOG_WARNING);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetExitKey(0);

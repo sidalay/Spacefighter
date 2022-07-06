@@ -6,7 +6,7 @@
 struct GameAudio
 {
     constexpr GameAudio() = default;
-    ~GameAudio();
+    ~GameAudio() = default;
     GameAudio(const GameAudio&) = delete;
     GameAudio(GameAudio&&) = default;
     GameAudio& operator=(const GameAudio&) = delete;
