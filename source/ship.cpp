@@ -177,20 +177,20 @@ void Ship::CheckOffScreen()
     float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth())};
     float TextureHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight())};
 
-    if (ScreenPos.x + TextureWidth * Scale < 0) 
+    if (ScreenPos.x + TextureWidth < 0) 
     {
-        ScreenPos.x = Window.GetWidth();
+        ScreenPos.x = static_cast<float>(Window.GetWidth());
     }
-    if (ScreenPos.x > Window.GetWidth()) 
+    if (ScreenPos.x > static_cast<float>(Window.GetWidth())) 
     {
-        ScreenPos.x = 0 - TextureWidth * Scale;
+        ScreenPos.x = 0 - TextureWidth;
     }
     if (ScreenPos.y < 0) 
     {
         ScreenPos.y = 0;
     }
-    if (ScreenPos.y > Window.GetHeight() - TextureHeight * Scale) 
+    if (ScreenPos.y >= static_cast<float>(Window.GetHeight()) - TextureHeight) 
     {
-        ScreenPos.y = Window.GetHeight() - TextureHeight * Scale;
+        ScreenPos.y = (static_cast<float>(Window.GetHeight()) - TextureHeight);
     }
 }
