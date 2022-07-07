@@ -1,21 +1,48 @@
 #ifndef SHIP_HPP
 #define SHIP_HPP
 
-// #include <vector>
 #include "basecharacter.hpp"
-// #include "projectile.hpp"
+
+enum class Shipcolor
+{
+    Red, Purple, Green, Blue    
+};
+
+enum class Shipstate
+{
+    ACCELERATE, DECELERATE, NORMAL
+};
 
 class Ship : BaseCharacter
 {
 public:
-    Ship(const GameTexture& Textures, const GameAudio& Audio, const raylib::Vector2I& Screen);
+    Ship(const GameTexture& Textures, 
+         const GameAudio& Audio,
+         const raylib::Window& Window,
+         const Shipcolor Shade = Shipcolor::Purple);
     void Tick(float DeltaTime) override;
+    void Draw();
 private:
-    float SourceY{};
     const GameTexture& Textures;
     const GameAudio& Audio;
-    const raylib::Vector2I& Screen;
-    // std::vector<Sprite> Sprites{};
+
+    int SpriteIndex{};
+    float Brakespeed{Speed - 1.5f};
+    
+    Shipcolor Shade{};
+    Shipstate State{Shipstate::NORMAL}; 
+    Direction Flying{Direction::UP};
+    raylib::Vector2 ScreenPos{};
+    const raylib::Window& Window;
+    std::vector<Sprite> Sprites{};
+
+    void SpriteTick(float DeltaTime);
+    void Movement();
+    void WithinScreen();
+    void CheckInput();
+    void CheckDirection();
+    void CheckSpriteIndex();
+    void CheckOffScreen();
 };
 
 #endif

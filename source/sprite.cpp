@@ -1,18 +1,18 @@
 #include "sprite.hpp"
 
-Sprite::Sprite(const raylib::Texture2D& Texture, const raylib::Vector2I& MaxFrames, const float UpdateSpeed)
-    : MaxFrames{MaxFrames}, Texture{Texture}, UpdateTime{UpdateSpeed} {}
+Sprite::Sprite(const raylib::Texture2D& Texture, const raylib::Vector2I&& MaxFrames, const float UpdateSpeed)
+    : Texture{Texture}, MaxFrames{MaxFrames}, UpdateTime{UpdateSpeed} {}
 
 void Sprite::Tick(float DeltaTime)
 {
     // update animation frame
     RunningTime += DeltaTime;
     if (RunningTime >= UpdateTime) {
-        PreviousFrame = CurrentFrame.x;
-        ++CurrentFrame.x;
+        PreviousFrame = Frame.x;
+        ++Frame.x;
         RunningTime = 0.f;
-        if (CurrentFrame.x > MaxFrames.x) {
-            CurrentFrame.x = 0;
+        if (Frame.x > MaxFrames.x) {
+            Frame.x = 0;
         }
     }
 }
@@ -20,19 +20,19 @@ void Sprite::Tick(float DeltaTime)
 raylib::Rectangle Sprite::GetSourceRec()
 {
     Rectangle Source {
-        static_cast<float>(CurrentFrame.x * Texture.width / MaxFrames.x),
-        static_cast<float>(CurrentFrame.y * Texture.height / MaxFrames.y),
+        static_cast<float>(Frame.x * Texture.width / MaxFrames.x),
+        static_cast<float>(Frame.y * Texture.height / MaxFrames.y),
         static_cast<float>(Texture.width / MaxFrames.x),
         static_cast<float>(Texture.height / MaxFrames.y)
     };
     return Source;
 }
 
-raylib::Rectangle Sprite::GetPosRec(const raylib::Vector2I& ScreenPos, const float Scale)
+raylib::Rectangle Sprite::GetPosRec(raylib::Vector2& ScreenPos, const float Scale)
 {
     Rectangle Destination {
-        static_cast<float>(ScreenPos.x),
-        static_cast<float>(ScreenPos.y),
+        (ScreenPos.x),
+        (ScreenPos.y),
         static_cast<float>(Texture.width/MaxFrames.x) * Scale,
         static_cast<float>(Texture.height/MaxFrames.y) * Scale
     };

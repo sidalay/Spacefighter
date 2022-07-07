@@ -1,7 +1,7 @@
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
 
-#include <raylib-cpp.hpp>
+#include "textures.hpp"
 
 namespace raylib 
 {
@@ -15,14 +15,16 @@ namespace raylib
 struct Sprite
 {
     Sprite() = default;
-    explicit Sprite(const raylib::Texture2D& Texture, const raylib::Vector2I& MaxFrames = raylib::Vector2I{1,1}, const float UpdateSpeed = 1.f/8.f);
+    explicit Sprite(const raylib::Texture& Texture, const raylib::Vector2I&& MaxFrames = raylib::Vector2I{1,1}, const float UpdateSpeed = 1.f/8.f);
     void Tick(float DeltaTime);
+    constexpr int GetTextureWidth() {return Texture.width;}
+    constexpr int GetTextureHeight() {return Texture.height;}
     raylib::Rectangle GetSourceRec();
-    raylib::Rectangle GetPosRec(const raylib::Vector2I& ScreenPos, const float Scale);
+    raylib::Rectangle GetPosRec(raylib::Vector2& ScreenPos, const float Scale);
+
+    const raylib::Texture& Texture{};
     raylib::Vector2I MaxFrames{};
-    raylib::Vector2I CurrentFrame{};
-private:
-    const Texture2D& Texture{};
+    raylib::Vector2I Frame{};
     int PreviousFrame{};
     float RunningTime{};
     const float UpdateTime{1.f/8.f};

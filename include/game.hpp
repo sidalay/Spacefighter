@@ -1,7 +1,6 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <raylib-cpp.hpp>
 #include "ship.hpp"
 
 namespace Game
@@ -18,7 +17,8 @@ namespace Game
 
     struct Info
     {
-        Game::State State{Game::State::TRANSITION};
+        float DeltaTime{};
+        Game::State State{Game::State::RUNNING};
         Game::State PrevState{Game::State::START};
         Game::State NextState{Game::State::RUNNING};
     };
@@ -31,16 +31,21 @@ namespace Game
 
     struct Device
     {
-        raylib::Vector2I Screen{1280,720};
+        raylib::Vector2I Screen{1920,1080};
         raylib::Window Window;
         raylib::AudioDevice Audio;
     };
 
+    struct Object
+    {
+        Ship Spacefighter;
+    };
+
     void Run();
     void Initialize(Device& Device);
-    void Loop(Info& Info, Device& Device, const Asset& Asset);
-    void Tick(Info& Info, Device& Device, const Asset& Asset);
-    void Draw(Info& Info, Device& Device, const Asset& Asset);
+    void Loop(Info& Info, Device& Device, Object& Object, const Asset& Asset);
+    void Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset);
+    void Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset);
     void CheckScreenSizing(Device& Device);
 };
 
