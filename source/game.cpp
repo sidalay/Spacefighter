@@ -14,8 +14,8 @@ void Game::Initialize(Device& Device)
 {
     Device.Window.Init(Device.Screen.x, Device.Screen.y, "Spacefighter");
     Device.Window.SetTargetFPS(144);
-    Device.Audio.Init();
-    Device.Audio.SetVolume(0.2f);
+    // Device.Audio.Init();
+    // Device.Audio.SetVolume(0.2f);
     SetTraceLogLevel(LOG_WARNING);
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetExitKey(0);

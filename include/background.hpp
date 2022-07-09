@@ -1,15 +1,14 @@
 #ifndef BACKGROUND_HPP
 #define BACKGROUND_HPP
 
-#include <raylib.h>
-#include <iostream>
+#include <raylib-cpp.hpp>
 
 namespace Background
 {
     float Scale{4.f};
     // Vector2 ScreenPos{0.f, -(scale * Window::Dimension.y)};
     // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + (Window::Dimension.y * 0.6f)))};
-    Vector2 ScreenPos{0.f, -(5120.f)};
+    raylib::Vector2 ScreenPos{0.f, -(5120.f)};
     // Vector2 ScreenPos{0.f, -(scale * (Window::Dimension.y + 432.f))};
     float RunningTime{};
     float UpdateTime{1.f/14.f};
@@ -50,7 +49,7 @@ namespace Background
     }
     
     // Draw the background
-    void DrawBackground(Texture2D BG) {
+    void DrawBackground(const raylib::Texture BG) {
         Rectangle Source {0.f,0.f, static_cast<float>(BG.width), static_cast<float>(BG.height)};
         Rectangle Destination {ScreenPos.x, ScreenPos.y, Scale * BG.width, Scale * BG.height};
         DrawTexturePro(BG, Source, Destination, Vector2{}, 0.f, GRAY);
