@@ -34,8 +34,9 @@ private:
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
     Direction Flying{Direction::UP};
-    raylib::Vector2 ScreenPos{};
     const raylib::Window& Window;
+    raylib::Vector2 ScreenPos{};
+    raylib::Vector2 Velocity{};
     std::vector<Sprite> Sprites{};
 
     void SpriteTick(float DeltaTime);

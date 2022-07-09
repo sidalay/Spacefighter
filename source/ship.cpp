@@ -4,10 +4,8 @@ Ship::Ship(const GameTexture& Textures,
            const GameAudio& Audio, 
            const raylib::Window& Window,
            const Shipcolor Shade)
-    : Textures{Textures}, Audio{Audio}, Shade{Shade}, Window{Window}
+    : Textures{Textures}, Audio{Audio}, Shade{Shade}, Window{Window}, ScreenPos{raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}
 {
-    ScreenPos = raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)};
-
     switch (Shade)
     {
         case Shipcolor::Purple:
@@ -30,11 +28,6 @@ void Ship::Tick(float DeltaTime)
     CheckSpriteIndex();
     CheckOffScreen();
     SpriteTick(DeltaTime);
-
-    // // draw main Texture
-    // Rectangle source{currentFrame * width, sourceY, width, height};
-    // Rectangle dest{ScreenPos.x, ScreenPos.y, scale * width, scale * height};
-    // DrawTexturePro(Texture, source, dest, Vector2{0.f, 0.f}, 0.f, WHITE);
 }
 
 void Ship::Draw()
@@ -56,20 +49,22 @@ void Ship::Movement()
 {
     if (IsKeyDown(KEY_W)) 
     {
-        ScreenPos.y -= Speed;
+        Velocity.y -= Speed;
     }
     if (IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) 
     {
-        ScreenPos.x -= Speed;
+        Velocity.x -= Speed;
     }
     if (IsKeyDown(KEY_S)) 
     {
-        ScreenPos.y += Brakespeed;
+        Velocity.y += Brakespeed;
     }
     if (IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) 
     {
-        ScreenPos.x += Speed;
+        Velocity.x += Speed;
     }
+
+    ScreenPos = ScreenPos.Add(Velocity.Normalize().Scale(Speed));
 }
 
 void Ship::CheckInput()
