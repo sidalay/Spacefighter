@@ -28,6 +28,8 @@ private:
 
     int SpriteIndex{};
     float Brakespeed{Speed - 1.5f};
+    float TurnInTime{};
+    float TurnOutTime{};
     
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 

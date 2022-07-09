@@ -24,11 +24,11 @@ Ship::Ship(const GameTexture& Textures,
 
 void Ship::Tick(float DeltaTime)
 {   
+    Movement(); 
     CheckInput();
     CheckDirection();
     CheckSpriteIndex();
     CheckOffScreen();
-    Movement(); 
     SpriteTick(DeltaTime);
 
     // // draw main Texture
@@ -54,74 +54,121 @@ void Ship::SpriteTick(float DeltaTime)
 
 void Ship::Movement()
 {
-    switch (State)
+    if (IsKeyDown(KEY_W)) 
     {
-        case Shipstate::ACCELERATE:
-            ScreenPos.y -= Speed;
-            break;
-        case Shipstate::DECELERATE:
-            ScreenPos.y += Brakespeed;
-            break;
-        default:
-            break;
+        ScreenPos.y -= Speed;
     }
-
-    switch (Flying)
+    if (IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) 
     {
-        case Direction::LEFT:
-        case Direction::SUBTLELEFT:
-            ScreenPos.x -= Speed;
-            break;
-        case Direction::RIGHT:
-        case Direction::SUBTLERIGHT:
-            ScreenPos.x += Speed;
-            break;
-        default: 
-            break;
+        ScreenPos.x -= Speed;
+    }
+    if (IsKeyDown(KEY_S)) 
+    {
+        ScreenPos.y += Brakespeed;
+    }
+    if (IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) 
+    {
+        ScreenPos.x += Speed;
     }
 }
 
 void Ship::CheckInput()
 {
+    bool TurningLeft{Flying == Direction::LEFT || Flying == Direction::SUBTLELEFT};
+    bool TurningRight{Flying == Direction::RIGHT || Flying == Direction::SUBTLERIGHT};
+    bool Turning{TurningLeft || TurningRight};
+    bool TurnLeftRelease{
+        (IsKeyUp(KEY_A) && TurningLeft) ||
+        (IsKeyUp(KEY_A) && IsKeyDown(KEY_W) && (TurningLeft && Flying == Direction::UP)) ||
+        (IsKeyUp(KEY_A) && IsKeyDown(KEY_S) && (TurningLeft && Flying == Direction::DOWN))
+    };
+    bool TurnRightRelease{
+        (IsKeyUp(KEY_D) && TurningRight) ||
+        (IsKeyUp(KEY_D) && IsKeyDown(KEY_W) && (TurningRight && Flying == Direction::UP)) ||
+        (IsKeyUp(KEY_D) && IsKeyDown(KEY_S) && (TurningRight && Flying == Direction::DOWN))
+    };
+    float MaxTurningTime{1.f/11.f};
+
     if (IsKeyDown(KEY_W)) 
     {
-        Flying = Direction::UP;
         State = Shipstate::ACCELERATE;
+        Flying = Direction::UP;
     }
     else if (IsKeyDown(KEY_S)) 
     {
-        Flying = Direction::DOWN;
         State = Shipstate::DECELERATE;
-    }
-    else if (IsKeyReleased(KEY_W) && IsKeyReleased(KEY_S))
-    {
-        State = Shipstate::NORMAL;
+        Flying = Direction::DOWN;
     }
 
     if (IsKeyDown(KEY_A)) 
     {
-        Flying = Direction::LEFT;
-    }
-    else if (IsKeyPressed(KEY_A)) 
-    {
-        Flying = Direction::SUBTLELEFT;
-    }
-    else if (IsKeyReleased(KEY_A))
-    {
-        Flying = Direction::RETURNLEFT;
+        TurnInTime += GetFrameTime();
+        Turning = true;
+
+        if (TurnInTime <= MaxTurningTime) 
+        {
+            Flying = Direction::SUBTLELEFT;
+        }
+        else 
+        {
+            Flying = Direction::LEFT;
+        }
     }
 
     if (IsKeyDown(KEY_D)) 
     {
-        Flying = Direction::RIGHT;
+        TurnInTime += GetFrameTime();
+        Turning = true;
+
+        if (TurnInTime <= MaxTurningTime) 
+        {
+            Flying = Direction::SUBTLERIGHT;
+        }
+        else 
+        {
+            Flying = Direction::RIGHT;
+        }
     }
-    else if (IsKeyPressed(KEY_D))
+
+    if (TurnLeftRelease)
     {
-        Flying = Direction::SUBTLERIGHT;
+        TurnOutTime += GetFrameTime();
+        
+        if (TurnOutTime <= MaxTurningTime) 
+        {
+            Flying = Direction::SUBTLELEFT;
+        }
+        else 
+        {
+            Turning = false;
+            TurnInTime = 0.f;
+            TurnOutTime = 0.f;
+            Flying = Direction::NORMAL;
+        }
     }
-    else if (IsKeyReleased(KEY_D))
+    if (TurnRightRelease)
     {
-        Flying = Direction::RETURNRIGHT;
+        TurnOutTime += GetFrameTime();
+        
+        if (TurnOutTime <= MaxTurningTime) 
+        {
+            Flying = Direction::SUBTLERIGHT;
+        }
+        else 
+        {
+            Turning = false;
+            TurnInTime = 0.f;
+            TurnOutTime = 0.f;
+            Flying = Direction::NORMAL;
+        }
+    }
+    
+    if (IsKeyUp(KEY_W) && IsKeyUp(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && !Turning)
+    {
+        State = Shipstate::NORMAL;
+        Flying = Direction::NORMAL;
+        TurnInTime = 0.f;
+        TurnOutTime = 0.f;
     }
 }
 
@@ -129,7 +176,9 @@ void Ship::CheckDirection()
 {
     switch (Flying)
     {
+        case Direction::UP: 
         case Direction::DOWN: 
+        case Direction::NORMAL:
             Sprites.at(SpriteIndex).Frame.y = 0;
             break;
         case Direction::LEFT: 
@@ -138,20 +187,11 @@ void Ship::CheckDirection()
         case Direction::RIGHT:
             Sprites.at(SpriteIndex).Frame.y = 5;
             break;
-        case Direction::UP: 
-            Sprites.at(SpriteIndex).Frame.y = 0;
-            break;
         case Direction::SUBTLELEFT:
             Sprites.at(SpriteIndex).Frame.y = 1;
             break;
         case Direction::SUBTLERIGHT:
             Sprites.at(SpriteIndex).Frame.y = 4;
-            break;
-        case Direction::RETURNLEFT:
-            Sprites.at(SpriteIndex).Frame.y = 3;
-            break;
-        case Direction::RETURNRIGHT:
-            Sprites.at(SpriteIndex).Frame.y = 6;
             break;
     }
 }
