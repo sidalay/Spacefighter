@@ -24,8 +24,8 @@ void Ship::Tick(float DeltaTime)
 {   
     Movement(); 
     CheckInput();
-    CheckDirection();
-    CheckSpriteIndex();
+    SetDirectionSprite();
+    SetSpriteIndex();
     SpriteTick(DeltaTime);
 }
 
@@ -39,6 +39,9 @@ void Ship::Draw()
     DrawText(TextFormat("Velocity.x: %i", static_cast<int>(Velocity.x)), 20, 20, 20, RED);
     DrawText(TextFormat("Velocity.y: %i", static_cast<int>(Velocity.y)), 20, 40, 20, BLUE);
     DrawText(TextFormat("Speed: %i", static_cast<int>(Speed)), 20, 60, 20, BLUE);
+    DrawText(TextFormat("ScreenPos.x: %i", static_cast<int>(ScreenPos.x)), 20, 80, 20, BLUE);
+    DrawText(TextFormat("ScreenPos.y: %i", static_cast<int>(ScreenPos.y)), 20, 100, 20, BLUE);
+    DrawText(TextFormat("Shifting: %i", static_cast<int>(Shifting)), 20, 120, 20, BLUE);
 }
 
 void Ship::SpriteTick(float DeltaTime)
@@ -50,6 +53,8 @@ void Ship::SpriteTick(float DeltaTime)
 
 void Ship::Movement()
 {
+    PrevScreenPos = ScreenPos;
+    CheckShifting();
     CheckSpeed();
     CheckVelocity();
     CheckOffScreen();
@@ -76,30 +81,32 @@ void Ship::Movement()
 
 void Ship::CheckInput()
 {
-    bool TurningLeft{Flying == Direction::LEFT || Flying == Direction::SUBTLELEFT};
-    bool TurningRight{Flying == Direction::RIGHT || Flying == Direction::SUBTLERIGHT};
+    PrevHeading = Heading;
+    bool TurningLeft{Heading == Direction::LEFT || Heading == Direction::SUBTLELEFT};
+    bool TurningRight{Heading == Direction::RIGHT || Heading == Direction::SUBTLERIGHT};
     bool Turning{TurningLeft || TurningRight};
     bool TurnLeftRelease{
         (IsKeyUp(KEY_A) && TurningLeft) ||
-        (IsKeyUp(KEY_A) && IsKeyDown(KEY_W) && (TurningLeft && Flying == Direction::UP)) ||
-        (IsKeyUp(KEY_A) && IsKeyDown(KEY_S) && (TurningLeft && Flying == Direction::DOWN))
+        (IsKeyUp(KEY_A) && IsKeyDown(KEY_W) && (TurningLeft && Heading == Direction::UP)) ||
+        (IsKeyUp(KEY_A) && IsKeyDown(KEY_S) && (TurningLeft && Heading == Direction::DOWN))
     };
     bool TurnRightRelease{
         (IsKeyUp(KEY_D) && TurningRight) ||
-        (IsKeyUp(KEY_D) && IsKeyDown(KEY_W) && (TurningRight && Flying == Direction::UP)) ||
-        (IsKeyUp(KEY_D) && IsKeyDown(KEY_S) && (TurningRight && Flying == Direction::DOWN))
+        (IsKeyUp(KEY_D) && IsKeyDown(KEY_W) && (TurningRight && Heading == Direction::UP)) ||
+        (IsKeyUp(KEY_D) && IsKeyDown(KEY_S) && (TurningRight && Heading == Direction::DOWN))
     };
+
     float MaxTurningTime{1.f/11.f};
 
     if (IsKeyDown(KEY_W)) 
     {
         State = Shipstate::ACCELERATE;
-        Flying = Direction::UP;
+        Heading = Direction::UP;
     }
     else if (IsKeyDown(KEY_S)) 
     {
         State = Shipstate::DECELERATE;
-        Flying = Direction::DOWN;
+        Heading = Direction::DOWN;
     }
 
     if (IsKeyDown(KEY_A)) 
@@ -109,11 +116,11 @@ void Ship::CheckInput()
 
         if (TurnInTime <= MaxTurningTime) 
         {
-            Flying = Direction::SUBTLELEFT;
+            Heading = Direction::SUBTLELEFT;
         }
         else 
         {
-            Flying = Direction::LEFT;
+            Heading = Direction::LEFT;
         }
     }
 
@@ -124,11 +131,11 @@ void Ship::CheckInput()
 
         if (TurnInTime <= MaxTurningTime) 
         {
-            Flying = Direction::SUBTLERIGHT;
+            Heading = Direction::SUBTLERIGHT;
         }
         else 
         {
-            Flying = Direction::RIGHT;
+            Heading = Direction::RIGHT;
         }
     }
 
@@ -138,14 +145,14 @@ void Ship::CheckInput()
         
         if (TurnOutTime <= MaxTurningTime) 
         {
-            Flying = Direction::SUBTLELEFT;
+            Heading = Direction::SUBTLELEFT;
         }
         else 
         {
             Turning = false;
             TurnInTime = 0.f;
             TurnOutTime = 0.f;
-            Flying = Direction::NORMAL;
+            Heading = Direction::NORMAL;
         }
     }
     if (TurnRightRelease)
@@ -154,29 +161,29 @@ void Ship::CheckInput()
         
         if (TurnOutTime <= MaxTurningTime) 
         {
-            Flying = Direction::SUBTLERIGHT;
+            Heading = Direction::SUBTLERIGHT;
         }
         else 
         {
             Turning = false;
             TurnInTime = 0.f;
             TurnOutTime = 0.f;
-            Flying = Direction::NORMAL;
+            Heading = Direction::NORMAL;
         }
     }
     
     if (IsKeyUp(KEY_W) && IsKeyUp(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && !Turning)
     {
         State = Shipstate::NORMAL;
-        Flying = Direction::NORMAL;
+        Heading = Direction::NORMAL;
         TurnInTime = 0.f;
         TurnOutTime = 0.f;
     }
 }
 
-void Ship::CheckDirection()
+void Ship::SetDirectionSprite()
 {
-    switch (Flying)
+    switch (Heading)
     {
         case Direction::UP: 
         case Direction::DOWN: 
@@ -198,7 +205,7 @@ void Ship::CheckDirection()
     }
 }
 
-void Ship::CheckSpriteIndex()
+void Ship::SetSpriteIndex()
 {
     switch (State)
     {
@@ -239,13 +246,21 @@ void Ship::CheckOffScreen()
 
 void Ship::CheckSpeed()
 {
-    bool Accelerating{Flying == Direction::UP};
-    bool Decelerating{Flying == Direction::DOWN};
-    bool TurningLeft{Flying == Direction::LEFT || Flying == Direction::SUBTLELEFT};
-    bool TurningRight{Flying == Direction::RIGHT || Flying == Direction::SUBTLERIGHT};
+    bool Accelerating{Heading == Direction::UP};
+    bool Decelerating{Heading == Direction::DOWN};
+    bool TurningLeft{Heading == Direction::LEFT || Heading == Direction::SUBTLELEFT};
+    bool TurningRight{Heading == Direction::RIGHT || Heading == Direction::SUBTLERIGHT};
     bool Turning{TurningLeft || TurningRight};
 
-    if (Turning || Accelerating || Decelerating)
+    if (Shifting && Speed > 3.f)
+    {
+        Speed -= 0.01f;
+    }
+    else if (Shifting && Speed <= 3.f)
+    {
+        Shifting = false;
+    }
+    else if (Turning || Accelerating || Decelerating)
     {
         if (Speed <= MaxSpeed) 
         {
@@ -284,5 +299,17 @@ void Ship::CheckVelocity()
         {
             Velocity.y += SlowDown;
         }
+    }
+}
+
+void Ship::CheckShifting()
+{
+    raylib::Vector2 Quadrant{ScreenPos.Subtract(PrevScreenPos)};
+
+    if (((Quadrant.x <= 0.f && Heading == Direction::LEFT && Heading != PrevHeading) ||
+        (Quadrant.x >= 0.f && Heading == Direction::RIGHT && Heading != PrevHeading)) 
+        && Speed >= 4.f && !IsKeyDown(KEY_W) && !IsKeyDown(KEY_S))
+    {
+        Shifting = true;
     }
 }

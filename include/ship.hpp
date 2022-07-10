@@ -30,27 +30,30 @@ private:
     float Brakespeed{Speed - 1.5f};
     float TurnInTime{};
     float TurnOutTime{};
-    float MaxVelocity{100.f};
+    float MaxVelocity{50.f};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
+    bool Shifting{false};
     
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
-    Direction Flying{Direction::UP};
+    Direction Heading{Direction::UP};
+    Direction PrevHeading{Direction::UP};
     const raylib::Window& Window;
     raylib::Vector2 ScreenPos{};
+    raylib::Vector2 PrevScreenPos{};
     raylib::Vector2 Velocity{};
     std::vector<Sprite> Sprites{};
 
     void SpriteTick(float DeltaTime);
     void Movement();
-    void WithinScreen();
     void CheckInput();
-    void CheckDirection();
-    void CheckSpriteIndex();
     void CheckOffScreen();
     void CheckSpeed();
+    void CheckShifting();
     void CheckVelocity();
+    void SetSpriteIndex();
+    void SetDirectionSprite();
 };
 
 #endif
