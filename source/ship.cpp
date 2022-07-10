@@ -254,7 +254,7 @@ void Ship::CheckSpeed()
 
     if (Shifting && Speed > 3.f)
     {
-        Speed -= 0.01f;
+        Speed -= Decelerate;
     }
     else if (Shifting && Speed <= 3.f)
     {
