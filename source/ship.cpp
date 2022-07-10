@@ -26,7 +26,6 @@ void Ship::Tick(float DeltaTime)
     CheckInput();
     CheckDirection();
     CheckSpriteIndex();
-    CheckOffScreen();
     SpriteTick(DeltaTime);
 }
 
@@ -36,6 +35,10 @@ void Ship::Draw()
                    Sprites.at(SpriteIndex).GetSourceRec(), 
                    Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Scale), 
                    raylib::Vector2{}, 0.f, WHITE);
+
+    DrawText(TextFormat("Velocity.x: %i", static_cast<int>(Velocity.x)), 20, 20, 20, RED);
+    DrawText(TextFormat("Velocity.y: %i", static_cast<int>(Velocity.y)), 20, 40, 20, BLUE);
+    DrawText(TextFormat("Speed: %i", static_cast<int>(Speed)), 20, 60, 20, BLUE);
 }
 
 void Ship::SpriteTick(float DeltaTime)
@@ -47,19 +50,23 @@ void Ship::SpriteTick(float DeltaTime)
 
 void Ship::Movement()
 {
-    if (IsKeyDown(KEY_W)) 
+    CheckSpeed();
+    CheckVelocity();
+    CheckOffScreen();
+
+    if (IsKeyDown(KEY_W) && Velocity.y >= -MaxVelocity) 
     {
         Velocity.y -= Speed;
     }
-    if (IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) 
+    if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Velocity.x >= -MaxVelocity) 
     {
         Velocity.x -= Speed;
     }
-    if (IsKeyDown(KEY_S)) 
+    if (IsKeyDown(KEY_S) && Velocity.y <= MaxVelocity) 
     {
-        Velocity.y += Brakespeed;
+        Velocity.y += Speed;
     }
-    if (IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) 
+    if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Velocity.x <= MaxVelocity) 
     {
         Velocity.x += Speed;
     }
@@ -227,5 +234,55 @@ void Ship::CheckOffScreen()
     if (ScreenPos.y >= static_cast<float>(Window.GetHeight()) - TextureHeight) 
     {
         ScreenPos.y = (static_cast<float>(Window.GetHeight()) - TextureHeight);
+    }
+}
+
+void Ship::CheckSpeed()
+{
+    bool Accelerating{Flying == Direction::UP};
+    bool Decelerating{Flying == Direction::DOWN};
+    bool TurningLeft{Flying == Direction::LEFT || Flying == Direction::SUBTLELEFT};
+    bool TurningRight{Flying == Direction::RIGHT || Flying == Direction::SUBTLERIGHT};
+    bool Turning{TurningLeft || TurningRight};
+
+    if (Turning || Accelerating || Decelerating)
+    {
+        if (Speed <= MaxSpeed) 
+        {
+            Speed += Accelerate;
+        }
+    }
+    else
+    {
+        if (Speed > 0.f)
+        {
+            Speed -= Decelerate;
+        }
+    }
+}
+
+void Ship::CheckVelocity()
+{
+    float SlowDown{0.2f};
+
+    if (State == Shipstate::NORMAL)
+    {
+        if (Velocity.x > 0.f)
+        {
+            Velocity.x -= SlowDown;
+        }
+        else if (Velocity.x < 0.f)
+        {
+            Velocity.x += SlowDown;
+        }
+        
+        if (Velocity.y > 0.f)
+        {
+            Velocity.y -= SlowDown;
+        }
+        else if (Velocity.y < 0.f)
+        {
+            Velocity.y += SlowDown;
+        }
     }
 }

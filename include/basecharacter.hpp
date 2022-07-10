@@ -17,7 +17,8 @@ protected:
     float UpdateTime{1.f/14.f};
     float RunningTime{};
     float Health{};
-    float Speed{4};
+    float MaxSpeed{4.f};
+    float Speed{0.1f};
     float Scale{4.f};
 
 public:

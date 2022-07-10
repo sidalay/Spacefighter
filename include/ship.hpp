@@ -30,6 +30,9 @@ private:
     float Brakespeed{Speed - 1.5f};
     float TurnInTime{};
     float TurnOutTime{};
+    float MaxVelocity{100.f};
+    float Accelerate{0.05f};
+    float Decelerate{0.03f};
     
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
@@ -46,6 +49,8 @@ private:
     void CheckDirection();
     void CheckSpriteIndex();
     void CheckOffScreen();
+    void CheckSpeed();
+    void CheckVelocity();
 };
 
 #endif
