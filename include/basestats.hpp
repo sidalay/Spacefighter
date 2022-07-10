@@ -1,5 +1,5 @@
-#ifndef BASECHARACTER_HPP
-#define BASECHARACTER_HPP
+#ifndef BASESTATS_HPP
+#define BASESTATS_HPP
 
 #include <vector>
 #include "audio.hpp"
@@ -10,9 +10,8 @@ enum class Direction
     UP, LEFT, DOWN, RIGHT, SUBTLELEFT, SUBTLERIGHT, NORMAL
 };
 
-class BaseCharacter
+struct BaseStats
 {
-protected:
     bool Alive{true};
     float UpdateTime{1.f/14.f};
     float RunningTime{};
@@ -20,13 +19,6 @@ protected:
     float MaxSpeed{4.f};
     float Speed{0.1f};
     float Scale{4.f};
-
-public:
-    BaseCharacter();
-    // void undoMovement();
-    // Rectangle getCollisionRec();
-    virtual void Tick(float DeltaTime);
-    float GetHealth() const {return Health;}
 };
 
-#endif
+#endif // BASESTATS_HPP

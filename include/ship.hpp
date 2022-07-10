@@ -1,7 +1,7 @@
 #ifndef SHIP_HPP
 #define SHIP_HPP
 
-#include "basecharacter.hpp"
+#include "basestats.hpp"
 
 enum class Shipcolor
 {
@@ -13,21 +13,22 @@ enum class Shipstate
     ACCELERATE, DECELERATE, NORMAL
 };
 
-class Ship : BaseCharacter
+class Ship
 {
 public:
     Ship(const GameTexture& Textures, 
          const GameAudio& Audio,
          const raylib::Window& Window,
          const Shipcolor Shade = Shipcolor::Purple);
-    void Tick(float DeltaTime) override;
+    void Tick(float DeltaTime);
     void Draw();
 private:
     const GameTexture& Textures;
     const GameAudio& Audio;
+    BaseStats Stats{};
 
     int SpriteIndex{};
-    float Brakespeed{Speed - 1.5f};
+    float Brakespeed{Stats.Speed - 1.5f};
     float TurnInTime{};
     float TurnOutTime{};
     float MaxVelocity{50.f};

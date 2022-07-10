@@ -33,12 +33,12 @@ void Ship::Draw()
 {
     DrawTexturePro(Sprites.at(SpriteIndex).Texture, 
                    Sprites.at(SpriteIndex).GetSourceRec(), 
-                   Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Scale), 
+                   Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Stats.Scale), 
                    raylib::Vector2{}, 0.f, WHITE);
 
     DrawText(TextFormat("Velocity.x: %i", static_cast<int>(Velocity.x)), 20, 20, 20, RED);
     DrawText(TextFormat("Velocity.y: %i", static_cast<int>(Velocity.y)), 20, 40, 20, BLUE);
-    DrawText(TextFormat("Speed: %i", static_cast<int>(Speed)), 20, 60, 20, BLUE);
+    DrawText(TextFormat("Speed: %i", static_cast<int>(Stats.Speed)), 20, 60, 20, BLUE);
     DrawText(TextFormat("ScreenPos.x: %i", static_cast<int>(ScreenPos.x)), 20, 80, 20, BLUE);
     DrawText(TextFormat("ScreenPos.y: %i", static_cast<int>(ScreenPos.y)), 20, 100, 20, BLUE);
     DrawText(TextFormat("Shifting: %i", static_cast<int>(Shifting)), 20, 120, 20, BLUE);
@@ -61,22 +61,22 @@ void Ship::Movement()
 
     if (IsKeyDown(KEY_W) && Velocity.y >= -MaxVelocity) 
     {
-        Velocity.y -= Speed;
+        Velocity.y -= Stats.Speed;
     }
     if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Velocity.x >= -MaxVelocity) 
     {
-        Velocity.x -= Speed;
+        Velocity.x -= Stats.Speed;
     }
     if (IsKeyDown(KEY_S) && Velocity.y <= MaxVelocity) 
     {
-        Velocity.y += Speed;
+        Velocity.y += Stats.Speed;
     }
     if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Velocity.x <= MaxVelocity) 
     {
-        Velocity.x += Speed;
+        Velocity.x += Stats.Speed;
     }
 
-    ScreenPos = ScreenPos.Add(Velocity.Normalize().Scale(Speed));
+    ScreenPos = ScreenPos.Add(Velocity.Normalize().Scale(Stats.Speed));
 }
 
 void Ship::CheckInput()
@@ -252,26 +252,26 @@ void Ship::CheckSpeed()
     bool TurningRight{Heading == Direction::RIGHT || Heading == Direction::SUBTLERIGHT};
     bool Turning{TurningLeft || TurningRight};
 
-    if (Shifting && Speed > 3.f)
+    if (Shifting && Stats.Speed > 3.f)
     {
-        Speed -= Decelerate;
+        Stats.Speed -= Decelerate;
     }
-    else if (Shifting && Speed <= 3.f)
+    else if (Shifting && Stats.Speed <= 3.f)
     {
         Shifting = false;
     }
     else if (Turning || Accelerating || Decelerating)
     {
-        if (Speed <= MaxSpeed) 
+        if (Stats.Speed <= Stats.MaxSpeed) 
         {
-            Speed += Accelerate;
+            Stats.Speed += Accelerate;
         }
     }
     else
     {
-        if (Speed > 0.f)
+        if (Stats.Speed > 0.f)
         {
-            Speed -= Decelerate;
+            Stats.Speed -= Decelerate;
         }
     }
 }
@@ -308,7 +308,7 @@ void Ship::CheckShifting()
 
     if (((Quadrant.x <= 0.f && Heading == Direction::LEFT && Heading != PrevHeading) ||
         (Quadrant.x >= 0.f && Heading == Direction::RIGHT && Heading != PrevHeading)) 
-        && Speed >= 4.f && !IsKeyDown(KEY_W) && !IsKeyDown(KEY_S))
+        && Stats.Speed >= 4.f && !IsKeyDown(KEY_W) && !IsKeyDown(KEY_S))
     {
         Shifting = true;
     }
