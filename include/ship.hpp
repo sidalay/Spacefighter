@@ -31,7 +31,6 @@ private:
     float Brakespeed{Stats.Speed - 1.5f};
     float TurnInTime{};
     float TurnOutTime{};
-    float MaxVelocity{50.f};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
     bool Shifting{false};
@@ -44,6 +43,7 @@ private:
     raylib::Vector2 ScreenPos{};
     raylib::Vector2 PrevScreenPos{};
     raylib::Vector2 Velocity{};
+    raylib::Vector2 MaxVelocity{200.f, 200.f};
     std::vector<Sprite> Sprites{};
 
     void SpriteTick(float DeltaTime);
