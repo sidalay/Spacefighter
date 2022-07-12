@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "ship.hpp"
+#include "background.hpp"
 
 namespace Game
 {
@@ -39,6 +40,7 @@ namespace Game
     struct Object
     {
         Ship Spacefighter;
+        Background Background;
     };
 
     void Run();

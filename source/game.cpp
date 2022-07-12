@@ -6,7 +6,7 @@ void Game::Run()
     Game::Initialize(Device);
     Game::Info Info{};
     Game::Asset Asset{};
-    Game::Object Object{Ship{Asset.Textures, Asset.Audio, Device.Window, Shipcolor::Purple}};
+    Game::Object Object{Ship{Asset.Textures, Asset.Audio, Device.Window, Shipcolor::Purple}, Background{Asset.Textures}};
     Game::Loop(Info, Device, Object, Asset);
 }
 
@@ -27,6 +27,7 @@ void Game::Loop(Info& Info, Device& Device, Object& Object, const Asset& Asset)
     while (!Device.Window.ShouldClose()) 
     {
         Game::Tick(Info, Device, Object, Asset);
+        Game::Draw(Info, Device, Object, Asset);
     }
 }
 
@@ -34,8 +35,9 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
 {
     Info.DeltaTime = GetFrameTime();
     Game::CheckScreenSizing(Device);
+
+    Object.Background.Tick(Info.DeltaTime);
     Object.Spacefighter.Tick(Info.DeltaTime);
-    Game::Draw(Info, Device, Object, Asset);
 }
 
 void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
@@ -51,6 +53,7 @@ void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
         }
         case Game::State::RUNNING:
         {
+            Object.Background.Draw();
             Object.Spacefighter.Draw();
             break;
         }
