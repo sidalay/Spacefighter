@@ -54,27 +54,10 @@ void Ship::SpriteTick(float DeltaTime)
 void Ship::Movement()
 {
     PrevScreenPos = ScreenPos;
-    CheckSpeed();
-    CheckVelocity();
     CheckOffScreen();
-
-    if (IsKeyDown(KEY_W) && Velocity.y >= -MaxVelocity.y) 
-    {
-        Velocity.y -= Stats.Speed;
-    }
-    if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Velocity.x >= -MaxVelocity.x) 
-    {
-        Velocity.x -= Stats.Speed;
-    }
-    if (IsKeyDown(KEY_S) && Velocity.y <= MaxVelocity.y) 
-    {
-        Velocity.y += Stats.Speed;
-    }
-    if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Velocity.x <= MaxVelocity.x) 
-    {
-        Velocity.x += Stats.Speed;
-    }
-
+    CheckSpeed();
+    IncreaseVelocity();
+    ReduceVelocity();
     ScreenPos = ScreenPos.Add(Velocity.Normalize().Scale(Stats.Speed));
 }
 
@@ -102,7 +85,7 @@ void Ship::CheckInput()
         State = Shipstate::ACCELERATE;
         Heading = Direction::UP;
     }
-    else if (IsKeyDown(KEY_S)) 
+    if (IsKeyDown(KEY_S)) 
     {
         State = Shipstate::DECELERATE;
         Heading = Direction::DOWN;
@@ -261,11 +244,18 @@ void Ship::CheckSpeed()
     {
         Shifting = false;
     }
-    else if (Turning || Accelerating || Decelerating)
+    else if (Turning || Accelerating)
     {
         if (Stats.Speed <= Stats.MaxSpeed) 
         {
             Stats.Speed += Accelerate;
+        }
+    }
+    else if (Decelerating)
+    {
+        if (Stats.Speed >= Brakespeed)
+        {
+            Stats.Speed -= 0.01;
         }
     }
     else
@@ -277,7 +267,7 @@ void Ship::CheckSpeed()
     }
 }
 
-void Ship::CheckVelocity()
+void Ship::ReduceVelocity()
 {
     float SlowDown{1.f};
 
@@ -300,6 +290,26 @@ void Ship::CheckVelocity()
         {
             Velocity.y += SlowDown;
         }
+    }
+}
+
+void Ship::IncreaseVelocity()
+{
+    if (IsKeyDown(KEY_W) && Velocity.y >= -MaxVelocity.y) 
+    {
+        Velocity.y -= Stats.Speed;
+    }
+    if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Velocity.x >= -MaxVelocity.x) 
+    {
+        Velocity.x -= Stats.Speed;
+    }
+    if (IsKeyDown(KEY_S) && Velocity.y <= MaxVelocity.y) 
+    {
+        Velocity.y += Stats.Speed;
+    }
+    if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Velocity.x <= MaxVelocity.x) 
+    {
+        Velocity.x += Stats.Speed;
     }
 }
 

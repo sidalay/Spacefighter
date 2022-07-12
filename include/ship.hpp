@@ -28,7 +28,7 @@ private:
     BaseStats Stats{};
 
     int SpriteIndex{};
-    float Brakespeed{Stats.Speed - 1.5f};
+    float Brakespeed{3.f};
     float TurnInTime{};
     float TurnOutTime{};
     float Accelerate{0.05f};
@@ -52,7 +52,8 @@ private:
     void CheckOffScreen();
     void CheckSpeed();
     void CheckShifting();
-    void CheckVelocity();
+    void ReduceVelocity();
+    void IncreaseVelocity();
     void SetSpriteIndex();
     void SetDirectionSprite();
 };
