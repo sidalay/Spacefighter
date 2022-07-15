@@ -24,12 +24,6 @@ namespace Game
         Game::State NextState{Game::State::RUNNING};
     };
 
-    struct Asset
-    {
-        GameTexture Textures;
-        GameAudio Audio;
-    };
-
     struct Device
     {
         raylib::Vector2I Screen{1920,1080};
@@ -41,6 +35,12 @@ namespace Game
     {
         Ship Spacefighter;
         Background Background;
+    };
+
+    struct Asset
+    {
+        GameTexture Textures;
+        GameAudio Audio;
     };
 
     void Run();

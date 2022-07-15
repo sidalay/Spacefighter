@@ -17,7 +17,9 @@ struct BaseStats
     float RunningTime{};
     float Health{};
     float MaxSpeed{4.f};
-    float Speed{0.1f};
+    float BrakeSpeed{2.5f};
+    float SpeedX{0.1f};
+    float SpeedY{0.1f};
     float Scale{4.f};
 };
 

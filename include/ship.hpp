@@ -28,7 +28,6 @@ private:
     BaseStats Stats{};
 
     int SpriteIndex{};
-    float Brakespeed{3.f};
     float TurnInTime{};
     float TurnOutTime{};
     float Accelerate{0.05f};
@@ -41,21 +40,17 @@ private:
     Direction PrevHeading{Direction::UP};
     const raylib::Window& Window;
     raylib::Vector2 ScreenPos{};
-    raylib::Vector2 PrevScreenPos{};
-    raylib::Vector2 Velocity{};
-    raylib::Vector2 MaxVelocity{200.f, 200.f};
     std::vector<Sprite> Sprites{};
 
     void SpriteTick(float DeltaTime);
     void Movement();
+    void CheckAccel();
+    void CheckDecel();
     void CheckInput();
     void CheckOffScreen();
-    void CheckSpeed();
-    void CheckShifting();
-    void ReduceVelocity();
-    void IncreaseVelocity();
-    void SetSpriteIndex();
     void SetDirectionSprite();
+    void SetSpriteIndex();
+    void UpdateScreenPos();
 };
 
 #endif
