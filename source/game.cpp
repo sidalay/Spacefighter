@@ -36,9 +36,36 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
     Info.DeltaTime = GetFrameTime();
     Game::CheckScreenSizing(Device);
 
-    Object.Background.Tick(Info.DeltaTime);
-    Object.Spacefighter.Tick(Info.DeltaTime);
-    Object.DevTools.Tick();
+    switch (Info.State)
+    {
+        case Game::State::START:
+        {
+            break;
+        }
+        case Game::State::RUNNING:
+        {
+            Object.Background.Tick(Info.DeltaTime);
+            Object.Spacefighter.Tick(Info.DeltaTime);
+            Object.DevTools.Tick();
+            break;
+        }
+        case Game::State::PAUSED:
+        {
+            break;
+        }
+        case Game::State::EXIT:
+        {
+            break;
+        }
+        case Game::State::GAMEOVER:
+        {
+            break;
+        }
+        case Game::State::TRANSITION:
+        {
+            break;
+        }
+    }
 }
 
 void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
@@ -88,7 +115,7 @@ void Game::CheckScreenSizing(Device& Device)
         Device.Screen.y = Device.Window.GetHeight();
     }
 
-    if (IsKeyPressed(KEY_ENTER) && ((IsKeyPressed(KEY_RIGHT_ALT) || IsKeyPressed(KEY_LEFT_ALT))))
+    if (IsKeyDown(KEY_ENTER) && ((IsKeyDown(KEY_RIGHT_ALT) || IsKeyDown(KEY_LEFT_ALT))))
     {
         Device.Window.ToggleFullscreen();
     }
