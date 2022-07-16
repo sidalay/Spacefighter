@@ -31,10 +31,12 @@ void Ship::Tick(float DeltaTime)
 
 void Ship::Draw()
 {
-    DrawTexturePro(Sprites.at(SpriteIndex).Texture, 
-                   Sprites.at(SpriteIndex).GetSourceRec(), 
-                   Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Stats.Scale), 
-                   raylib::Vector2{}, 0.f, WHITE);
+    DrawTexturePro(
+        Sprites.at(SpriteIndex).GetTexture(), 
+        Sprites.at(SpriteIndex).GetSourceRec(), 
+        Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Stats.Scale), 
+        raylib::Vector2{}, 0.f, WHITE
+    );
 }
 
 void Ship::SpriteTick(float DeltaTime)
@@ -196,8 +198,8 @@ void Ship::CheckInput()
 
 void Ship::CheckOffScreen()
 {
-    float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth())};
-    float TextureHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight())};
+    float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
+    float TextureHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight(Stats.Scale))};
 
     if (ScreenPos.x + TextureWidth < 0) 
     {
@@ -264,14 +266,14 @@ void Ship::UpdateScreenPos()
 
 raylib::Rectangle Ship::GetCollision() const
 {
-    float ShipWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth())};
-    float ShipHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight())};
+    float ShipWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
+    float ShipHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight(Stats.Scale))};
 
     return raylib::Rectangle
     {
-        ScreenPos.x + ((ShipWidth * 0.25f) * Stats.Scale),
-        ScreenPos.y + ((ShipHeight * 0.15f) * Stats.Scale),
-        (ShipWidth - ShipWidth * 0.5f) * Stats.Scale,
-        (ShipHeight - ShipHeight * 0.45f) * Stats.Scale,
+        ScreenPos.x + ((ShipWidth * 0.25f)),
+        ScreenPos.y + ((ShipHeight * 0.15f)),
+        (ShipWidth - ShipWidth * 0.5f),
+        (ShipHeight - ShipHeight * 0.45f),
     };
 }

@@ -17,24 +17,24 @@ void Sprite::Tick(float DeltaTime)
     }
 }
 
-raylib::Rectangle Sprite::GetSourceRec()
+raylib::Rectangle Sprite::GetSourceRec() const
 {
-    Rectangle Source {
+    return Rectangle
+    {
         static_cast<float>(Frame.x * Texture.width / MaxFrames.x),
         static_cast<float>(Frame.y * Texture.height / MaxFrames.y),
         static_cast<float>(Texture.width / MaxFrames.x),
         static_cast<float>(Texture.height / MaxFrames.y)
     };
-    return Source;
 }
 
-raylib::Rectangle Sprite::GetPosRec(raylib::Vector2& ScreenPos, const float Scale)
+raylib::Rectangle Sprite::GetPosRec(const raylib::Vector2& ScreenPos, const float Scale) const
 {
-    Rectangle Destination {
+    return Rectangle
+    {
         (ScreenPos.x),
         (ScreenPos.y),
         static_cast<float>(Texture.width/MaxFrames.x) * Scale,
         static_cast<float>(Texture.height/MaxFrames.y) * Scale
     };
-    return Destination;
 }

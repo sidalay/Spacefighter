@@ -22,16 +22,19 @@ namespace raylib
 struct Sprite
 {
     Sprite() = default;
-    explicit Sprite(const raylib::Texture& Texture, const raylib::Vector2I&& MaxFrames = raylib::Vector2I{1,1}, const float UpdateSpeed = 1.f/8.f);
+    explicit Sprite(const raylib::Texture& Texture, 
+                    const raylib::Vector2I&& MaxFrames = raylib::Vector2I{1,1}, 
+                    const float UpdateSpeed = 1.f/8.f);
     void Tick(float DeltaTime);
-    constexpr int GetTextureWidth() const {return Texture.width/MaxFrames.x;}
-    constexpr int GetTextureHeight() const {return Texture.height/MaxFrames.y;}
-    raylib::Rectangle GetSourceRec();
-    raylib::Rectangle GetPosRec(raylib::Vector2& ScreenPos, const float Scale);
-
-    const raylib::Texture& Texture{};
-    raylib::Vector2I MaxFrames{};
+    constexpr int GetTextureWidth(float Scale = 1.f) const {return (Texture.width/MaxFrames.x) * static_cast<int>(Scale);}
+    constexpr int GetTextureHeight(float Scale = 1.f) const {return (Texture.height/MaxFrames.y) * static_cast<int>(Scale);}
+    const raylib::Texture& GetTexture() const {return Texture;}
+    raylib::Rectangle GetSourceRec() const;
+    raylib::Rectangle GetPosRec(const raylib::Vector2& ScreenPos, const float Scale) const;
     raylib::Vector2I Frame{};
+private:
+    const raylib::Texture& Texture{};
+    const raylib::Vector2I MaxFrames{};
     int PreviousFrame{};
     float RunningTime{};
     const float UpdateTime{1.f/8.f};
