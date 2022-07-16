@@ -31,13 +31,6 @@ void Ship::Tick(float DeltaTime)
 
 void Ship::Draw()
 {
-    // Debug
-    int Row{20};
-    DrawText(TextFormat("Pos.x: %i", static_cast<int>(ScreenPos.x)), 20, Row*3, 20, BLUE);
-    DrawText(TextFormat("Pos.y: %i", static_cast<int>(ScreenPos.y)), 20, Row*4, 20, BLUE);
-    DrawText(TextFormat("SpeedX: %i", static_cast<int>(Stats.Speed.x)), 20, Row*5, 20, LIME);
-    DrawText(TextFormat("SpeedY: %i", static_cast<int>(Stats.Speed.y)), 20, Row*6, 20, LIME);
-
     DrawTexturePro(Sprites.at(SpriteIndex).Texture, 
                    Sprites.at(SpriteIndex).GetSourceRec(), 
                    Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Stats.Scale), 

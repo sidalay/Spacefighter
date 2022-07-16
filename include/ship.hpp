@@ -22,8 +22,8 @@ public:
          const Shipcolor Shade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
-    raylib::Vector2 GetPos() {return ScreenPos;}
-    raylib::Vector2 GetSpeed() {return Stats.Speed;}
+    raylib::Vector2 GetPos() const {return ScreenPos;}
+    raylib::Vector2 GetSpeed() const {return Stats.Speed;}
 private:
     const GameTexture& Textures;
     const GameAudio& Audio;

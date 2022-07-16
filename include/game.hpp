@@ -1,7 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "ship.hpp"
+#include "developertools.hpp"
 #include "background.hpp"
 
 namespace Game
@@ -35,6 +35,7 @@ namespace Game
     {
         Ship Spacefighter;
         Background Background;
+        DeveloperTools DevTools;
     };
 
     struct Asset

@@ -38,6 +38,7 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
 
     Object.Background.Tick(Info.DeltaTime);
     Object.Spacefighter.Tick(Info.DeltaTime);
+    Object.DevTools.Tick();
 }
 
 void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
@@ -55,6 +56,7 @@ void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
         {
             Object.Background.Draw();
             Object.Spacefighter.Draw();
+            Object.DevTools.DrawTools(Object.Spacefighter);
             break;
         }
         case Game::State::PAUSED:
