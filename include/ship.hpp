@@ -35,7 +35,6 @@ private:
     float TurnOutTime{};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
-    bool Shifting{false};
     
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 

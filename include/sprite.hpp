@@ -10,6 +10,13 @@ namespace raylib
         int x;
         int y;
     };
+
+    struct Circle
+    {
+        int x;
+        int y;
+        float radius;
+    };
 };
 
 struct Sprite
