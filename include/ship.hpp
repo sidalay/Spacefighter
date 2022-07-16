@@ -24,6 +24,7 @@ public:
     void Draw();
     raylib::Vector2 GetPos() const {return ScreenPos;}
     raylib::Vector2 GetSpeed() const {return Stats.Speed;}
+    raylib::Rectangle GetCollision() const;
 private:
     const GameTexture& Textures;
     const GameAudio& Audio;
@@ -53,7 +54,6 @@ private:
     void SetDirectionSprite();
     void SetSpriteIndex();
     void UpdateScreenPos();
-    raylib::Rectangle GetCollision();
 };
 
 #endif

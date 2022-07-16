@@ -17,8 +17,8 @@ struct Sprite
     Sprite() = default;
     explicit Sprite(const raylib::Texture& Texture, const raylib::Vector2I&& MaxFrames = raylib::Vector2I{1,1}, const float UpdateSpeed = 1.f/8.f);
     void Tick(float DeltaTime);
-    constexpr int GetTextureWidth() {return Texture.width/MaxFrames.x;}
-    constexpr int GetTextureHeight() {return Texture.height/MaxFrames.y;}
+    constexpr int GetTextureWidth() const {return Texture.width/MaxFrames.x;}
+    constexpr int GetTextureHeight() const {return Texture.height/MaxFrames.y;}
     raylib::Rectangle GetSourceRec();
     raylib::Rectangle GetPosRec(raylib::Vector2& ScreenPos, const float Scale);
 

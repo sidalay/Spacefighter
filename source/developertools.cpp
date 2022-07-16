@@ -76,6 +76,11 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter)
         {
             DrawShipSpeed(Spacefighter);
         }
+
+        if (DrawRectanglesOn)
+        {
+            DrawCollision(Spacefighter);
+        }
         
         if (ShowDevTools) 
         {
@@ -85,7 +90,7 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter)
             DrawText("  ---- Toggles ----", 20, 310, 20, WHITE);
             DrawText("[`] Dev Tools", 20, 335, 20, !DevToolsOn ? WHITE : LIME);
             DrawText("[1] Noclip", 20, 355, 20, !NoClipOn ? WHITE : LIME);
-            DrawText("[2] CollisionRecs", 20, 375, 20, !DrawRectanglesOn ? WHITE : LIME);
+            DrawText("[2] Collision", 20, 375, 20, !DrawRectanglesOn ? WHITE : LIME);
             DrawText("[3] FPS", 20, 395, 20, !ShowFPS ? WHITE : LIME);
             DrawText("[4] Position", 20, 415, 20, !ShowPos ? WHITE : LIME);
             DrawText("[5] Speed", 20, 435, 20, !ShowSpeed ? WHITE : LIME);
@@ -112,5 +117,11 @@ void DeveloperTools::DrawShipSpeed(const Ship& Spacefighter)
 
 void DeveloperTools::DrawCollision(const Ship& Spacefighter)
 {
-
+    DrawRectangle(
+        Spacefighter.GetCollision().GetX(),
+        Spacefighter.GetCollision().GetY(),
+        Spacefighter.GetCollision().GetWidth(),
+        Spacefighter.GetCollision().GetHeight(),
+        Color{0, 121, 241, 150}
+    );
 }
