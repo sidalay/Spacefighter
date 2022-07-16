@@ -53,6 +53,7 @@ private:
     void SetDirectionSprite();
     void SetSpriteIndex();
     void UpdateScreenPos();
+    raylib::Rectangle GetCollision();
 };
 
 #endif

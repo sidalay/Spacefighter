@@ -261,3 +261,17 @@ void Ship::UpdateScreenPos()
 {
     ScreenPos = ScreenPos.Add(Stats.Speed);
 }
+
+raylib::Rectangle Ship::GetCollision()
+{
+    float ShipWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth())};
+    float ShipHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight())};
+
+    return raylib::Rectangle
+    {
+        ScreenPos.x,
+        ScreenPos.y,
+        (ShipWidth - ShipWidth*0.5f) * Stats.Scale,
+        (ShipHeight - ShipHeight*0.75f) * Stats.Scale,
+    };
+}
