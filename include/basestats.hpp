@@ -21,6 +21,7 @@ struct BaseStats
     float SpeedX{0.1f};
     float SpeedY{0.1f};
     float Scale{4.f};
+    raylib::Vector2 Speed{0.1f, 0.1f};
 };
 
 #endif // BASESTATS_HPP
