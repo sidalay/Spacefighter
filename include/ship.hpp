@@ -3,15 +3,8 @@
 
 #include "basestats.hpp"
 
-enum class Shipcolor
-{
-    Red, Purple, Green, Blue    
-};
-
-enum class Shipstate
-{
-    ACCELERATE, DECELERATE, NORMAL
-};
+enum class Shipcolor;
+enum class Shipstate;
 
 class Ship
 {
@@ -53,6 +46,16 @@ private:
     void SetDirectionSprite();
     void SetSpriteIndex();
     void UpdateScreenPos();
+};
+
+enum class Shipcolor
+{
+    Red, Purple, Green, Blue    
+};
+
+enum class Shipstate
+{
+    ACCELERATE, DECELERATE, NORMAL
 };
 
 #endif

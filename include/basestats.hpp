@@ -5,11 +5,6 @@
 #include "audio.hpp"
 #include "sprite.hpp"
 
-enum class Direction
-{
-    UP, LEFT, DOWN, RIGHT, SUBTLELEFT, SUBTLERIGHT, NORMAL
-};
-
 struct BaseStats
 {
     bool Alive{true};
@@ -20,6 +15,11 @@ struct BaseStats
     float BrakeSpeed{2.5f};
     float Scale{4.f};
     raylib::Vector2 Speed{0.1f, 0.1f};
+};
+
+enum class Direction
+{
+    UP, LEFT, DOWN, RIGHT, SUBTLELEFT, SUBTLERIGHT, NORMAL
 };
 
 #endif // BASESTATS_HPP
