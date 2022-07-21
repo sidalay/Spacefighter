@@ -94,7 +94,7 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter)
             DrawText("[3] FPS", 20, 395, 20, !ShowFPS ? WHITE : LIME);
             DrawText("[4] Position", 20, 415, 20, !ShowPos ? WHITE : LIME);
             DrawText("[5] Speed", 20, 435, 20, !ShowSpeed ? WHITE : LIME);
-            DrawText("[0] Tools Menu", 20, 455, 20, !ShowDevTools ? WHITE : LIME);
+            DrawText("[0] Tools Menu", 20, 455, 20, !IsKeyDown(KEY_ZERO) ? WHITE : LIME);
             DrawText("    ---- Misc ----", 20, 480, 20, WHITE);
             DrawText("[-] Decrease HP", 20, 505, 20, !IsKeyDown(KEY_MINUS) ? WHITE : LIME);
             DrawText("[+] Increase HP", 20, 525, 20, !IsKeyDown(KEY_EQUAL) ? WHITE : LIME);

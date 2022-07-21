@@ -16,7 +16,7 @@ namespace Game
     void Initialize(Device& Device);
     void Loop(Info& Info, Device& Device, Object& Object, const Asset& Asset);
     void Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset);
-    void Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset);
+    void Draw(const Info& Info, Device& Device, Object& Object, const Asset& Asset);
     void CheckScreenSizing(Device& Device);
 
     enum class State

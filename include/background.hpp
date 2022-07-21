@@ -6,7 +6,7 @@
 class Background
 {
 public:
-    Background(const GameTexture& Textures);
+    explicit Background(const GameTexture& Textures);
     ~Background() = default;
     Background(const Background&) = delete;
     Background(Background&&) = default;

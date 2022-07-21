@@ -68,7 +68,7 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
     }
 }
 
-void Game::Draw(Info& Info, Device& Device, Object& Object, const Asset& Asset)
+void Game::Draw(const Info& Info, Device& Device, Object& Object, const Asset& Asset)
 {
     Device.Window.BeginDrawing();
     Device.Window.ClearBackground(BLACK);
