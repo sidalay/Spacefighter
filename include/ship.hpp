@@ -24,6 +24,7 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     raylib::Vector2 GetPos() const {return ScreenPos;}
+    raylib::Vector2 GetCenterPos();
     raylib::Vector2 GetSpeed() const {return Stats.Speed;}
     raylib::Rectangle GetCollision() const;
 private:

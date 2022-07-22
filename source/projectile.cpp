@@ -1,39 +1,58 @@
-// #include "headers/projectile.hpp"
+#include "projectile.hpp"
 
-// Projectile::Projectile(Vector2 ShipScreenPos)
-//     : ScreenPos{ShipScreenPos},
-//       bulletWidth{static_cast<float>(Bullet.width/8)},
-//       bulletHeight{static_cast<float>(Bullet.height)} 
-// {
+Projectile::Projectile(const GameTexture& Textures, const raylib::Window& Window) 
+    : Textures{Textures}, Window{Window}, Bullet{Textures.Projectiles, raylib::Vector2I{8,1}} {}
 
-// }
+void Projectile::Tick(float DeltaTime)
+{
+    SpriteTick(DeltaTime);
 
-// Projectile::~Projectile() 
-// {
-//     UnloadTexture(Bullet);
-// }
+    for (auto it = Positions.begin(); it != Positions.end(); ++it)
+    {
+        if (WithinScreen(*it))
+        {
+            (*it).y -= 4.f;
+        }
+        else 
+        {
+            Positions.erase(it);
+            --it;
+        }
+    }
+}
 
-// void Projectile::Tick(float deltaTime)
-// {
-//     // update animation frame
-//     runningTime += deltaTime;
-//     if (runningTime >= updateTime)
-//     {
-//         previousFrame = currentFrame;
-//         ++currentFrame;
-//         runningTime = 0.f;
-//         if (currentFrame > maxFrames) currentFrame = 0;
-//     }
+void Projectile::Draw()
+{
+    for (auto& Pos:Positions)
+    {
+        DrawTexturePro(Bullet.GetTexture(), Bullet.GetSourceRec(), Bullet.GetPosRec(Pos, Scale), raylib::Vector2{}, 0.f, WHITE);
+    }
+}
 
-//     // draw
-//     if (ScreenPos.y - height > 0) {
-//         Rectangle bulletSource{currentFrame * bulletWidth, bulletHeight, bulletWidth, bulletHeight};
-//         Rectangle bulletDest{ScreenPos.x + scale*width/2-6, ScreenPos.y - height, 3 * bulletWidth, 3 * bulletHeight};
-//         DrawTexturePro(Bullet, bulletSource, bulletDest, Vector2{0.f, 0.f}, 0.f, WHITE);
-//         bulletDest.y += 20.f;
-//     }
+void Projectile::Load(const raylib::Vector2 Pos)
+{
+    Positions.push_back(Pos);
+}
 
-//     // check where it is on the screen and call destructor when it reaches a certain point
+void Projectile::SpriteTick(float DeltaTime)
+{
+    Bullet.Tick(DeltaTime);
+}
 
+bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
+{
+    float TextureWidth{static_cast<float>(Bullet.GetTextureWidth(Scale))};
+    float TextureHeight{static_cast<float>(Bullet.GetTextureHeight(Scale))};
 
-// }
+    for (auto& Pos:Positions)
+    {
+        if (Pos == BulletPos && (Pos.x + TextureWidth < 0 || 
+            Pos.x > static_cast<float>(Window.GetWidth()) ||
+            Pos.y < 0 ||
+            Pos.y >= static_cast<float>(Window.GetHeight()) - TextureHeight)) 
+        {
+            return false;
+        }
+    }
+    return true;
+}

@@ -270,6 +270,11 @@ void Ship::UpdateScreenPos()
     ScreenPos = ScreenPos.Add(Stats.Speed);
 }
 
+raylib::Vector2 Ship::GetCenterPos()
+{
+    return raylib::Vector2{ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.37f), ScreenPos.y};
+}
+
 raylib::Rectangle Ship::GetCollision() const
 {
     float ShipWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
