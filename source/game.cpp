@@ -6,7 +6,11 @@ void Game::Run()
     Game::Initialize(Device);
     Game::Info Info{};
     Game::Asset Asset{};
-    Game::Object Object{Ship{Asset.Textures, Asset.Audio, Device.Window, Shipcolor::Purple}, Background{Asset.Textures}};
+    Game::Object Object{
+        Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Device.Window, Shipcolor::Purple}, 
+        Background{Asset.Textures}, 
+        DeveloperTools{}
+    };
     Game::Loop(Info, Device, Object, Asset);
 }
 

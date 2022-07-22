@@ -37,6 +37,7 @@ add_executable(${PROJECT_NAME}
     source/game.cpp
     source/main.cpp
     source/projectile.cpp
+    source/randomizer.cpp
     source/ship.cpp
     source/sprite.cpp
     source/textures.cpp

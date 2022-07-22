@@ -5,7 +5,9 @@
 
 class Projectile
 {
-    
+public:
+    Projectile();
+private:
 };
 
 #endif // PROJECTILE_HPP

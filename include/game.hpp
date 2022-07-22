@@ -51,6 +51,7 @@ namespace Game
     {
         GameTexture Textures;
         GameAudio Audio;
+        Randomizer RandomEngine;
     };
 };
 

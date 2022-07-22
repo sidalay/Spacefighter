@@ -18,6 +18,7 @@ class Ship
 public:
     Ship(const GameTexture& Textures, 
          const GameAudio& Audio,
+         const Randomizer& RandomEngine,
          const raylib::Window& Window,
          const Shipcolor Shade = Shipcolor::Purple);
     void Tick(float DeltaTime);
@@ -28,6 +29,7 @@ public:
 private:
     const GameTexture& Textures;
     const GameAudio& Audio;
+    const Randomizer& RandomEngine;
     BaseStats Stats{};
 
     int SpriteIndex{};

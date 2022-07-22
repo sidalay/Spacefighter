@@ -2,9 +2,15 @@
 
 Ship::Ship(const GameTexture& Textures, 
            const GameAudio& Audio, 
+           const Randomizer& RandomEngine,
            const raylib::Window& Window,
            const Shipcolor Shade)
-    : Textures{Textures}, Audio{Audio}, Shade{Shade}, Window{Window}, ScreenPos{raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}
+    : Textures{Textures}, 
+      Audio{Audio}, 
+      RandomEngine{RandomEngine}, 
+      Shade{Shade}, 
+      Window{Window}, 
+      ScreenPos{raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}
 {
     switch (Shade)
     {
