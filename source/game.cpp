@@ -17,14 +17,14 @@ void Game::Run()
 
 void Game::Initialize(Device& Device)
 {
+    SetTraceLogLevel(LOG_WARNING);
+    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
+    SetExitKey(0);
+    HideCursor();
     Device.Window.Init(Device.Screen.x, Device.Screen.y, "Spacefighter");
     Device.Window.SetTargetFPS(144);
     // Device.Audio.Init();
     // Device.Audio.SetVolume(0.2f);
-    SetTraceLogLevel(LOG_WARNING);
-    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    SetExitKey(0);
-    HideCursor();
 }
 
 void Game::Loop(Info& Info, Device& Device, Object& Object, const Asset& Asset)
