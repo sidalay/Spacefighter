@@ -1,7 +1,7 @@
 #ifndef DEVELOPERTOOLS_HPP
 #define DEVELOPERTOOLS_HPP
 
-#include "projectile.hpp"
+#include "ship.hpp"
 
 class DeveloperTools
 {

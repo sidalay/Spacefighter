@@ -3,11 +3,13 @@
 Ship::Ship(const GameTexture& Textures, 
            const GameAudio& Audio, 
            const Randomizer& RandomEngine,
+           Projectile& Projectiles,
            const raylib::Window& Window,
            const Shipcolor Shade)
     : Textures{Textures}, 
       Audio{Audio}, 
-      RandomEngine{RandomEngine}, 
+      RandomEngine{RandomEngine},
+      Projectiles{Projectiles}, 
       Shade{Shade}, 
       Window{Window}, 
       ScreenPos{raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}
@@ -29,6 +31,7 @@ Ship::Ship(const GameTexture& Textures,
 void Ship::Tick(float DeltaTime)
 {   
     CheckInput();
+    CheckAttack();
     Movement(); 
     SetDirectionSprite();
     SetSpriteIndex();
@@ -202,6 +205,14 @@ void Ship::CheckInput()
     }
 }
 
+void Ship::CheckAttack()
+{
+    if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        Projectiles.Load(GetCenterPos());
+    }
+}
+
 void Ship::CheckOffScreen()
 {
     float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
@@ -270,12 +281,12 @@ void Ship::UpdateScreenPos()
     ScreenPos = ScreenPos.Add(Stats.Speed);
 }
 
-raylib::Vector2 Ship::GetCenterPos()
+const raylib::Vector2 Ship::GetCenterPos()
 {
     return raylib::Vector2{ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.37f), ScreenPos.y};
 }
 
-raylib::Rectangle Ship::GetCollision() const
+const raylib::Rectangle Ship::GetCollision() const
 {
     float ShipWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
     float ShipHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight(Stats.Scale))};

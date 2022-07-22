@@ -19,18 +19,20 @@ public:
     Ship(const GameTexture& Textures, 
          const GameAudio& Audio,
          const Randomizer& RandomEngine,
+         Projectile& Projectiles,
          const raylib::Window& Window,
          const Shipcolor Shade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
-    raylib::Vector2 GetPos() const {return ScreenPos;}
-    raylib::Vector2 GetCenterPos();
-    raylib::Vector2 GetSpeed() const {return Stats.Speed;}
-    raylib::Rectangle GetCollision() const;
+    const raylib::Vector2 GetPos() const {return ScreenPos;}
+    const raylib::Vector2 GetCenterPos();
+    const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
+    const raylib::Rectangle GetCollision() const;
 private:
     const GameTexture& Textures;
     const GameAudio& Audio;
     const Randomizer& RandomEngine;
+    Projectile& Projectiles;
     BaseStats Stats{};
 
     int SpriteIndex{};
@@ -52,6 +54,7 @@ private:
     void CheckAccel();
     void CheckDecel();
     void CheckInput();
+    void CheckAttack();
     void CheckOffScreen();
     void SetDirectionSprite();
     void SetSpriteIndex();

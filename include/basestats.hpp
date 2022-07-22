@@ -3,8 +3,8 @@
 
 #include <vector>
 #include "audio.hpp"
-#include "sprite.hpp"
 #include "randomizer.hpp"
+#include "projectile.hpp"
 
 struct BaseStats
 {

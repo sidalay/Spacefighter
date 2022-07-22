@@ -43,9 +43,9 @@ namespace Game
     };
     struct Object
     {
+        Projectile Projectiles; 
         Ship Spacefighter;
         Background Background;
-        Projectile Projectiles; 
         DeveloperTools DevTools;
     };
     struct Asset

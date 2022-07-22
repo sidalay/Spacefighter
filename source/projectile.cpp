@@ -46,7 +46,8 @@ bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
 
     for (auto& Pos:Positions)
     {
-        if (Pos == BulletPos && (Pos.x + TextureWidth < 0 || 
+        if (Pos == BulletPos && 
+           (Pos.x + TextureWidth < 0 || 
             Pos.x > static_cast<float>(Window.GetWidth()) ||
             Pos.y < 0 ||
             Pos.y >= static_cast<float>(Window.GetHeight()) - TextureHeight)) 

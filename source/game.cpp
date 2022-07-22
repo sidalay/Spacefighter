@@ -7,9 +7,9 @@ void Game::Run()
     Game::Info Info{};
     Game::Asset Asset{};
     Game::Object Object{
-        Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Device.Window, Shipcolor::Purple}, 
-        Background{Asset.Textures}, 
         Projectile{Asset.Textures, Device.Window},
+        Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Shipcolor::Purple}, 
+        Background{Asset.Textures}, 
         DeveloperTools{}
     };
     Game::Loop(Info, Device, Object, Asset);
@@ -53,11 +53,6 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
             Object.Projectiles.Tick(Info.DeltaTime);
             Object.Spacefighter.Tick(Info.DeltaTime);
             Object.DevTools.Tick();
-
-            if (IsKeyPressed(KEY_SPACE))
-            {
-                Object.Projectiles.Load(Object.Spacefighter.GetCenterPos());
-            }
             break;
         }
         case Game::State::PAUSED:

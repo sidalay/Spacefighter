@@ -2,7 +2,7 @@
 #define PROJECTILE_HPP
 
 #include <vector>
-#include "ship.hpp"
+#include "sprite.hpp"
 
 class Projectile
 {
