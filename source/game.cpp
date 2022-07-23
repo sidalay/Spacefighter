@@ -90,7 +90,7 @@ void Game::Draw(const Info& Info, Device& Device, Object& Object, const Asset& A
             Object.Background.Draw();
             Object.Projectiles.Draw();
             Object.Spacefighter.Draw();
-            Object.DevTools.DrawTools(Object.Spacefighter);
+            Object.DevTools.DrawTools(Object.Spacefighter, Object.Projectiles);
             break;
         }
         case Game::State::PAUSED:

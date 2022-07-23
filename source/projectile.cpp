@@ -57,3 +57,24 @@ bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
     }
     return true;
 }
+
+std::vector<raylib::Circle> Projectile::GetCollision() const
+{
+    int Width{Bullet.GetTextureWidth(Scale)};
+    int Height{Bullet.GetTextureHeight(Scale)};
+    std::vector<raylib::Circle> Collisions{};
+
+    for (auto& Pos:Positions)
+    {
+        Collisions.push_back(
+            raylib::Circle
+            {
+                static_cast<int>(Pos.x) + ((Width/2)),
+                static_cast<int>(Pos.y) + ((Height/2)),
+                6.5f
+            }    
+        ); 
+    }
+
+    return Collisions;
+}

@@ -14,7 +14,7 @@ public:
     DeveloperTools& operator=(DeveloperTools&&) = default;
 
     void Tick();
-    void DrawTools(const Ship& Spacefighter);
+    void DrawTools(const Ship& Spacefighter, const Projectile& Bullets);
 private:
     int Row{20};
     bool ShowPos{false};
@@ -24,11 +24,12 @@ private:
     bool ToggleAll{false};
     bool DevToolsOn{false};
     bool ShowDevTools{true};
-    bool DrawRectanglesOn{false};
+    bool DrawCollisions{false};
 
     void DrawScreenPos(const Ship& Spacefighter);
     void DrawShipSpeed(const Ship& Spacefighter);
     void DrawCollision(const Ship& Spacefighter);
+    void DrawCollision(const Projectile& Bullet);
 };
 
 #endif // DEVELOPERTOOLS_HPP

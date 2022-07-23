@@ -15,7 +15,7 @@ void DeveloperTools::Tick()
         }
         else if (IsKeyPressed(KEY_TWO)) 
         {
-            DrawRectanglesOn = !DrawRectanglesOn;
+            DrawCollisions = !DrawCollisions;
         }
         else if (IsKeyPressed(KEY_THREE)) 
         {
@@ -53,11 +53,11 @@ void DeveloperTools::Tick()
         ShowFPS = false;
         NoClipOn = false;
         ShowDevTools = true;
-        DrawRectanglesOn = false;
+        DrawCollisions = false;
     }
 }
 
-void DeveloperTools::DrawTools(const Ship& Spacefighter)
+void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bullets)
 {
     if (DevToolsOn) 
     {
@@ -77,9 +77,10 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter)
             DrawShipSpeed(Spacefighter);
         }
 
-        if (DrawRectanglesOn)
+        if (DrawCollisions)
         {
             DrawCollision(Spacefighter);
+            DrawCollision(Bullets);
         }
         
         if (ShowDevTools) 
@@ -90,7 +91,7 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter)
             DrawText("  ---- Toggles ----", 20, 310, 20, WHITE);
             DrawText("[`] Dev Tools", 20, 335, 20, !DevToolsOn ? WHITE : LIME);
             DrawText("[1] Noclip", 20, 355, 20, !NoClipOn ? WHITE : LIME);
-            DrawText("[2] Collision", 20, 375, 20, !DrawRectanglesOn ? WHITE : LIME);
+            DrawText("[2] Collision", 20, 375, 20, !DrawCollisions ? WHITE : LIME);
             DrawText("[3] FPS", 20, 395, 20, !ShowFPS ? WHITE : LIME);
             DrawText("[4] Position", 20, 415, 20, !ShowPos ? WHITE : LIME);
             DrawText("[5] Speed", 20, 435, 20, !ShowSpeed ? WHITE : LIME);
@@ -124,4 +125,19 @@ void DeveloperTools::DrawCollision(const Ship& Spacefighter)
         Spacefighter.GetCollision().GetHeight(),
         Color{0, 121, 241, 150}
     );
+}
+
+void DeveloperTools::DrawCollision(const Projectile& Bullets)
+{
+    std::vector<raylib::Circle> BulletCollisions{Bullets.GetCollision()};
+
+    for (auto& Collision:BulletCollisions)
+    {
+        DrawCircle(
+            Collision.x,
+            Collision.y,
+            Collision.radius,
+            Color{209, 0, 0, 150}
+        );
+    }
 }
