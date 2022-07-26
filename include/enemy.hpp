@@ -32,8 +32,10 @@ private:
 
     void SpriteTick(float DeltaTime);
     void Movement();
+    void CheckAttack();
     void CheckOffScreen();
     void SetSpriteIndex();
+    void SetMonsterSprite();
     void UpdateScreenPos();
 };
 
