@@ -1,0 +1,4 @@
+#ifndef MOTHERSHIP_HPP
+#define MOTHERSHIP_HPP
+
+#endif // MOTHERSHIP_HPP

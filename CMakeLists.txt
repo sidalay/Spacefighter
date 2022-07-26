@@ -37,6 +37,7 @@ add_executable(${PROJECT_NAME}
     source/enemy.cpp
     source/game.cpp
     source/main.cpp
+    source/mothership.cpp
     source/projectile.cpp
     source/randomizer.cpp
     source/ship.cpp
@@ -45,7 +46,7 @@ add_executable(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib raylib_cpp)
-target_include_directories(${PROJECT_NAME} PRIVATE include ${raylib_INCLUDE_DIRS} ${raylib_cpp_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PRIVATE include enums ${raylib_INCLUDE_DIRS} ${raylib_cpp_INCLUDE_DIRS})
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 
