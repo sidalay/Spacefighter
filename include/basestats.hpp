@@ -14,7 +14,7 @@ struct BaseStats
     Projectile& Projectiles;
     const raylib::Window& Window;
     raylib::Vector2 ScreenPos;
-    raylib::Vector2 Speed{0.1f, 0.1f};
+    raylib::Vector2 Speed{};
     bool Alive{true};
     float UpdateTime{1.f/14.f};
     float RunningTime{};

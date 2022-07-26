@@ -33,7 +33,6 @@ private:
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
     Direction Heading{Direction::UP};
-    Direction PrevHeading{Direction::UP};
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
