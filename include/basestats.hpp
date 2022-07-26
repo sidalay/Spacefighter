@@ -8,6 +8,13 @@
 
 struct BaseStats
 {
+    const GameTexture& Textures;
+    const GameAudio& Audio;
+    const Randomizer& RandomEngine;
+    Projectile& Projectiles;
+    const raylib::Window& Window;
+    raylib::Vector2 ScreenPos;
+    raylib::Vector2 Speed{0.1f, 0.1f};
     bool Alive{true};
     float UpdateTime{1.f/14.f};
     float RunningTime{};
@@ -15,7 +22,6 @@ struct BaseStats
     float MaxSpeed{4.f};
     float BrakeSpeed{2.5f};
     float Scale{4.f};
-    raylib::Vector2 Speed{0.1f, 0.1f};
 };
 
 enum class Direction

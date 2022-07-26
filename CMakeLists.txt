@@ -34,6 +34,7 @@ add_executable(${PROJECT_NAME}
     source/audio.cpp
     source/background.cpp
     source/developertools.cpp
+    source/enemy.cpp
     source/game.cpp
     source/main.cpp
     source/projectile.cpp

@@ -6,13 +6,13 @@ Ship::Ship(const GameTexture& Textures,
            Projectile& Projectiles,
            const raylib::Window& Window,
            const Shipcolor Shade)
-    : Textures{Textures}, 
-      Audio{Audio}, 
-      RandomEngine{RandomEngine},
-      Projectiles{Projectiles}, 
-      Shade{Shade}, 
-      Window{Window}, 
-      ScreenPos{raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}
+    : Stats{Textures, 
+            Audio, 
+            RandomEngine, 
+            Projectiles, 
+            Window, 
+            raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}, 
+      Shade{Shade}
 {
     switch (Shade)
     {
@@ -43,7 +43,7 @@ void Ship::Draw()
     DrawTexturePro(
         Sprites.at(SpriteIndex).GetTexture(), 
         Sprites.at(SpriteIndex).GetSourceRec(), 
-        Sprites.at(SpriteIndex).GetPosRec(ScreenPos, Stats.Scale), 
+        Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
         raylib::Vector2{}, 0.f, WHITE
     );
 }
@@ -209,7 +209,7 @@ void Ship::CheckAttack()
 {
     if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
-        Projectiles.Load(GetCenterPos());
+        Stats.Projectiles.Load(GetCenterPos());
     }
 }
 
@@ -218,21 +218,21 @@ void Ship::CheckOffScreen()
     float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
     float TextureHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight(Stats.Scale))};
 
-    if (ScreenPos.x + TextureWidth < 0) 
+    if (Stats.ScreenPos.x + TextureWidth < 0) 
     {
-        ScreenPos.x = static_cast<float>(Window.GetWidth());
+        Stats.ScreenPos.x = static_cast<float>(Stats.Window.GetWidth());
     }
-    if (ScreenPos.x > static_cast<float>(Window.GetWidth())) 
+    if (Stats.ScreenPos.x > static_cast<float>(Stats.Window.GetWidth())) 
     {
-        ScreenPos.x = 0 - TextureWidth;
+        Stats.ScreenPos.x = 0 - TextureWidth;
     }
-    if (ScreenPos.y < 0) 
+    if (Stats.ScreenPos.y < 0) 
     {
-        ScreenPos.y = 0;
+        Stats.ScreenPos.y = 0;
     }
-    if (ScreenPos.y >= static_cast<float>(Window.GetHeight()) - TextureHeight) 
+    if (Stats.ScreenPos.y >= static_cast<float>(Stats.Window.GetHeight()) - TextureHeight) 
     {
-        ScreenPos.y = (static_cast<float>(Window.GetHeight()) - TextureHeight);
+        Stats.ScreenPos.y = (static_cast<float>(Stats.Window.GetHeight()) - TextureHeight);
     }
 }
 
@@ -278,12 +278,12 @@ void Ship::SetSpriteIndex()
 
 void Ship::UpdateScreenPos()
 {
-    ScreenPos = ScreenPos.Add(Stats.Speed);
+    Stats.ScreenPos = Stats.ScreenPos.Add(Stats.Speed);
 }
 
 const raylib::Vector2 Ship::GetCenterPos()
 {
-    return raylib::Vector2{ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), ScreenPos.y};
+    return raylib::Vector2{Stats.ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), Stats.ScreenPos.y};
 }
 
 const raylib::Rectangle Ship::GetCollision() const
@@ -293,8 +293,8 @@ const raylib::Rectangle Ship::GetCollision() const
 
     return raylib::Rectangle
     {
-        ScreenPos.x + ((ShipWidth * 0.25f)),
-        ScreenPos.y + ((ShipHeight * 0.15f)),
+        Stats.ScreenPos.x + ((ShipWidth * 0.25f)),
+        Stats.ScreenPos.y + ((ShipHeight * 0.15f)),
         (ShipWidth - ShipWidth * 0.5f),
         (ShipHeight - ShipHeight * 0.45f),
     };

@@ -5,7 +5,7 @@
 
 enum class Shipcolor
 {
-    Red, Purple, Green, Blue    
+    Red, Purple, Green, Blue
 };
 
 enum class Shipstate
@@ -24,30 +24,23 @@ public:
          const Shipcolor Shade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
-    const raylib::Vector2 GetPos() const {return ScreenPos;}
+    const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
     const raylib::Rectangle GetCollision() const;
 private:
-    const GameTexture& Textures;
-    const GameAudio& Audio;
-    const Randomizer& RandomEngine;
-    Projectile& Projectiles;
-    BaseStats Stats{};
+    BaseStats Stats;
+    Shipcolor Shade{};
+    Shipstate State{Shipstate::NORMAL}; 
+    Direction Heading{Direction::UP};
+    Direction PrevHeading{Direction::UP};
+    std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
     float TurnInTime{};
     float TurnOutTime{};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
-    
-    Shipcolor Shade{};
-    Shipstate State{Shipstate::NORMAL}; 
-    Direction Heading{Direction::UP};
-    Direction PrevHeading{Direction::UP};
-    const raylib::Window& Window;
-    raylib::Vector2 ScreenPos{};
-    std::vector<Sprite> Sprites{};
 
     void SpriteTick(float DeltaTime);
     void Movement();
