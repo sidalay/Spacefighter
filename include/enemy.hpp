@@ -16,10 +16,12 @@ public:
           const Randomizer& RandomEngine,
           Projectile& Projectiles,
           const raylib::Window& Window,
+          const raylib::Vector2 ScreenPos,
           MonsterType Monster);
     void Tick(float DeltaTime);
     void Draw();
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
+    const raylib::Vector2 GetCenterPos();
     const raylib::Rectangle GetCollision() const;
 private:
     BaseStats Stats;
@@ -28,10 +30,10 @@ private:
 
     int SpriteIndex{};
     float Accelerate{0.05f};
-    float Decelerate{0.03f};
 
     void SpriteTick(float DeltaTime);
     void Movement();
+    void SwayLeftRight();
     void CheckAttack();
     void CheckOffScreen();
     void SetSpriteIndex();
