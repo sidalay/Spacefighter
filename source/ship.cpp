@@ -5,14 +5,14 @@ Ship::Ship(const GameTexture& Textures,
            const Randomizer& RandomEngine,
            Projectile& Projectiles,
            const raylib::Window& Window,
-           const Shipcolor Shade)
+           const Shipcolor ShipShade)
     : Stats{Textures, 
             Audio, 
             RandomEngine, 
             Projectiles, 
             Window, 
             raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}, 
-      Shade{Shade}
+      Shade{ShipShade}
 {
     switch (Shade)
     {

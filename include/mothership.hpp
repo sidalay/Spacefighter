@@ -11,7 +11,7 @@ public:
                const Randomizer& RandomEngine,
                Projectile& Projectiles,
                const raylib::Window& Window, 
-               Stage& Level);
+               Stage& CurrentLevel);
     void Tick(float DeltaTime);
     void Draw();
     void Deploy();

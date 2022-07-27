@@ -21,7 +21,7 @@ public:
          const Randomizer& RandomEngine,
          Projectile& Projectiles,
          const raylib::Window& Window,
-         const Shipcolor Shade = Shipcolor::Purple);
+         const Shipcolor ShipShade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}

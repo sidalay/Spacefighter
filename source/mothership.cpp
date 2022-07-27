@@ -5,8 +5,8 @@ Mothership::Mothership(const GameTexture& Textures,
                        const Randomizer& RandomEngine,
                        Projectile& Projectiles,
                        const raylib::Window& Window, 
-                       Stage& Level)
-    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{Level} {};
+                       Stage& CurrentLevel)
+    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} {};
 
 void Mothership::Tick(float DeltaTime)
 {
