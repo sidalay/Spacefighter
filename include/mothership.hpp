@@ -17,7 +17,7 @@ public:
     void Deploy();
     void Recall(float DeltaTime);
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);
-    std::vector<Enemy>& GetAliens() {return Aliens;} 
+    const std::vector<Enemy>& GetAliens() const {return Aliens;} 
 private:
     BaseStats Stats;
     Stage& Level;

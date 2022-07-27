@@ -81,6 +81,7 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bulle
         {
             DrawCollision(Spacefighter);
             DrawCollision(Bullets);
+            DrawCollision(Mothership);
         }
         
         if (ShowDevTools) 
@@ -138,6 +139,20 @@ void DeveloperTools::DrawCollision(const Projectile& Bullets)
             Collision.y,
             Collision.radius,
             Color{209, 0, 0, 150}
+        );
+    }
+}
+
+void DeveloperTools::DrawCollision(const Mothership& Mothership)
+{
+    for (auto& Alien:Mothership.GetAliens())
+    {
+        DrawRectangle(
+            Alien.GetCollision().GetX(),
+            Alien.GetCollision().GetY(),
+            Alien.GetCollision().GetWidth(),
+            Alien.GetCollision().GetHeight(),
+            Color{0, 200, 48, 150}
         );
     }
 }
