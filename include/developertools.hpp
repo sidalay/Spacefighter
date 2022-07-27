@@ -2,6 +2,7 @@
 #define DEVELOPERTOOLS_HPP
 
 #include "ship.hpp"
+#include "mothership.hpp"
 
 class DeveloperTools
 {
@@ -14,7 +15,7 @@ public:
     DeveloperTools& operator=(DeveloperTools&&) = default;
 
     void Tick();
-    void DrawTools(const Ship& Spacefighter, const Projectile& Bullets);
+    void DrawTools(const Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership);
 private:
     int Row{20};
     bool ShowPos{false};
@@ -30,6 +31,7 @@ private:
     void DrawShipSpeed(const Ship& Spacefighter);
     void DrawCollision(const Ship& Spacefighter);
     void DrawCollision(const Projectile& Bullet);
+    void DrawCollision(const Mothership& Mothership);
 };
 
 #endif // DEVELOPERTOOLS_HPP

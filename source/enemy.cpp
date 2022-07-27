@@ -55,8 +55,8 @@ void Enemy::SwayLeftRight()
 {
     // Set up randomizer code to randomize movement
     // This is temporary code
-    Stats.Speed.x += Accelerate;
     CheckOffScreen();
+    Stats.Speed.x = Accelerate;
 }
 
 void Enemy::CheckAttack()
@@ -70,9 +70,9 @@ void Enemy::CheckOffScreen()
     float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};
     float TextureHeight{static_cast<float>(Sprites.at(SpriteIndex).GetTextureHeight(Stats.Scale))};
 
-    if (Stats.ScreenPos.x + TextureWidth < 0 || Stats.ScreenPos.x > static_cast<float>(Stats.Window.GetWidth())) 
+    if (Stats.ScreenPos.x < 0 || Stats.ScreenPos.x + TextureWidth > static_cast<float>(Stats.Window.GetWidth())) 
     {
-        Accelerate == !Accelerate;
+        Accelerate = -Accelerate;
     }
     if (Stats.ScreenPos.y < 0) 
     {

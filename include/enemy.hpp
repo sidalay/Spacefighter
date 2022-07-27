@@ -20,6 +20,7 @@ public:
           MonsterType Monster);
     void Tick(float DeltaTime);
     void Draw();
+    bool GetAlive() const {return Stats.Alive;}
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Rectangle GetCollision() const;
@@ -29,7 +30,7 @@ private:
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
-    float Accelerate{0.05f};
+    float Accelerate{3.f};
 
     void SpriteTick(float DeltaTime);
     void Movement();

@@ -57,7 +57,7 @@ void DeveloperTools::Tick()
     }
 }
 
-void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bullets)
+void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership)
 {
     if (DevToolsOn) 
     {

@@ -8,7 +8,8 @@ void Game::Run()
     Game::Asset Asset{};
     Game::Object Object{
         Projectile{Asset.Textures, Device.Window},
-        Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Shipcolor::Purple}, 
+        Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Shipcolor::Purple},
+        Mothership{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Info.Level}, 
         Background{Asset.Textures}, 
         DeveloperTools{}
     };
@@ -52,6 +53,7 @@ void Game::Tick(Info& Info, Device& Device, Object& Object, const Asset& Asset)
             Object.Background.Tick(Info.DeltaTime);
             Object.Projectiles.Tick(Info.DeltaTime);
             Object.Spacefighter.Tick(Info.DeltaTime);
+            Object.Mothership.Tick(Info.DeltaTime);
             Object.DevTools.Tick();
             break;
         }
@@ -89,8 +91,9 @@ void Game::Draw(const Info& Info, Device& Device, Object& Object, const Asset& A
         {
             Object.Background.Draw();
             Object.Projectiles.Draw();
+            Object.Mothership.Draw();
             Object.Spacefighter.Draw();
-            Object.DevTools.DrawTools(Object.Spacefighter, Object.Projectiles);
+            Object.DevTools.DrawTools(Object.Spacefighter, Object.Projectiles, Object.Mothership);
             break;
         }
         case Game::State::PAUSED:

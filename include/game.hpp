@@ -31,6 +31,7 @@ namespace Game
     struct Info
     {
         float DeltaTime{};
+        Stage Level{};
         Game::State State{Game::State::RUNNING};
         Game::State PrevState{Game::State::START};
         Game::State NextState{Game::State::RUNNING};
@@ -45,6 +46,7 @@ namespace Game
     {
         Projectile Projectiles; 
         Ship Spacefighter;
+        Mothership Mothership;
         Background Background;
         DeveloperTools DevTools;
     };
