@@ -20,10 +20,10 @@ void Game::Initialize(Device& Device)
 {
     SetTraceLogLevel(LOG_WARNING);
     SetConfigFlags(FLAG_WINDOW_UNDECORATED);
-    SetExitKey(0);
-    HideCursor();
     Device.Window.Init(Device.Screen.x, Device.Screen.y, "Spacefighter");
     Device.Window.SetTargetFPS(144);
+    SetExitKey(0);
+    HideCursor();
     // Device.Audio.Init();
     // Device.Audio.SetVolume(0.2f);
 }
