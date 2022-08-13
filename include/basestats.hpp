@@ -7,6 +7,18 @@
 
 struct BaseStats
 {
+    BaseStats(const GameTexture& Textures,
+              const GameAudio& Audio,
+              const Randomizer& RandomEngine,
+              Projectile& Projectiles,
+              const raylib::Window& Window,
+              const raylib::Vector2 ScreenPos);
+    ~BaseStats() = default;
+    BaseStats(const BaseStats&) = delete;
+    BaseStats(BaseStats&&) = default;
+    BaseStats& operator=(const BaseStats&) = delete;
+    BaseStats& operator=(BaseStats&&);
+
     const GameTexture& Textures;
     const GameAudio& Audio;
     const Randomizer& RandomEngine;

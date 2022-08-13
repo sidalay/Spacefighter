@@ -33,6 +33,7 @@ endif()
 add_executable(${PROJECT_NAME}
     source/audio.cpp
     source/background.cpp
+    source/basestats.cpp
     source/developertools.cpp
     source/enemy.cpp
     source/game.cpp

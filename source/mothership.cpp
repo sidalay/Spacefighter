@@ -32,8 +32,8 @@ void Mothership::Recall(float DeltaTime)
         }
         else
         {
-            // Aliens.erase(Alien);
-            // --Alien;
+            Aliens.erase(Alien);
+            --Alien;
         }
     }
 }
