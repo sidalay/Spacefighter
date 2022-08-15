@@ -13,7 +13,10 @@ BaseStats::BaseStats(const GameTexture& Textures,
       Window{Window}, 
       ScreenPos{ScreenPos} {};
 
-BaseStats& BaseStats::operator=(BaseStats&&)
+BaseStats& BaseStats::operator=(BaseStats&& Rhs)
 {
-    return *this;
+    if (this == &Rhs)
+    {
+        return *this;
+    }  
 }

@@ -17,7 +17,7 @@ struct BaseStats
     BaseStats(const BaseStats&) = delete;
     BaseStats(BaseStats&&) = default;
     BaseStats& operator=(const BaseStats&) = delete;
-    BaseStats& operator=(BaseStats&&);
+    BaseStats& operator=(BaseStats&& Rhs);
 
     const GameTexture& Textures;
     const GameAudio& Audio;

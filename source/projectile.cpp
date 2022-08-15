@@ -9,7 +9,7 @@ void Projectile::Tick(float DeltaTime)
 
     for (auto it = Positions.begin(); it != Positions.end(); ++it)
     {
-        if (WithinScreen(*it))
+        if (WithinScreen(*it) || !Collided)
         {
             (*it).y -= 4.f;
         }
@@ -62,6 +62,7 @@ std::vector<raylib::Circle> Projectile::GetCollision() const
 {
     int Width{Bullet.GetTextureWidth(Scale)};
     int Height{Bullet.GetTextureHeight(Scale)};
+    float Radius{6.5f};
     std::vector<raylib::Circle> Collisions{};
 
     for (auto& Pos:Positions)
@@ -71,7 +72,7 @@ std::vector<raylib::Circle> Projectile::GetCollision() const
             {
                 static_cast<int>(Pos.x) + ((Width/2)),
                 static_cast<int>(Pos.y) + ((Height/2)),
-                6.5f
+                Radius
             }    
         ); 
     }

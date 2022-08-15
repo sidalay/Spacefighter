@@ -21,6 +21,7 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     bool GetAlive() const {return Stats.Alive;}
+    void Death();
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Rectangle GetCollision() const;

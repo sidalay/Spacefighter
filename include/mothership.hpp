@@ -14,14 +14,16 @@ public:
                Stage& CurrentLevel);
     void Tick(float DeltaTime);
     void Draw();
-    void Deploy();
-    void Recall(float DeltaTime);
-    void Load(raylib::Vector2 ScreenPos, MonsterType Type);
-    const std::vector<Enemy>& GetAliens() const {return Aliens;} 
+    const std::vector<Enemy>& GetAliens() const {return Aliens;}
 private:
     BaseStats Stats;
     Stage& Level;
     std::vector<Enemy> Aliens{};
+
+    void Deploy();
+    void Load(raylib::Vector2 ScreenPos, MonsterType Type);
+    void CheckRecall(float DeltaTime);
+    void CheckProjectileCollision(); 
 };
 
 #endif // MOTHERSHIP_HPP

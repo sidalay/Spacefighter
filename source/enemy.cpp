@@ -141,6 +141,11 @@ void Enemy::UpdateScreenPos()
     Stats.ScreenPos = Stats.ScreenPos.Add(Stats.Speed);
 }
 
+void Enemy::Death()
+{
+    Stats.Alive = false;
+}
+
 const raylib::Rectangle Enemy::GetCollision() const
 {
     float TextureWidth{static_cast<float>(Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale))};

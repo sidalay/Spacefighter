@@ -11,7 +11,8 @@ Mothership::Mothership(const GameTexture& Textures,
 void Mothership::Tick(float DeltaTime)
 {
     Deploy();
-    Recall(DeltaTime);
+    CheckProjectileCollision();
+    CheckRecall(DeltaTime);
 }
 
 void Mothership::Draw()
@@ -19,22 +20,6 @@ void Mothership::Draw()
     for (auto& Alien:Aliens)
     {
         Alien.Draw();
-    }
-}
-
-void Mothership::Recall(float DeltaTime)
-{
-    for (auto Alien = Aliens.begin(); Alien != Aliens.end(); ++Alien)
-    {
-        if ((*Alien).GetAlive())
-        {
-            (*Alien).Tick(DeltaTime);
-        }
-        else
-        {
-            Aliens.erase(Alien);
-            --Alien;
-        }
     }
 }
 
@@ -84,4 +69,36 @@ void Mothership::Load(raylib::Vector2 ScreenPos, MonsterType Type)
               Stats.Window, 
               ScreenPos, 
               Type});
+}
+
+void Mothership::CheckRecall(float DeltaTime)
+{
+    for (auto Alien = Aliens.begin(); Alien != Aliens.end(); ++Alien)
+    {
+        if ((*Alien).GetAlive())
+        {
+            (*Alien).Tick(DeltaTime);
+        }
+        else
+        {
+            Aliens.erase(Alien);
+            --Alien;
+        }
+    }
+}
+
+void Mothership::CheckProjectileCollision()
+{
+    std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetCollision()};
+
+    for (auto& Alien:Aliens)
+    {
+        for (auto& Bullet:Bullets)
+        {
+            if (CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullet.x), static_cast<float>(Bullet.y)}, Bullet.radius, Alien.GetCollision()))
+            {
+                Alien.Death();
+            }
+        }
+    }
 }
