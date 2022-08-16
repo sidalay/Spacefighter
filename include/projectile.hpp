@@ -8,6 +8,11 @@ class Projectile
 {
 public:
     Projectile(const GameTexture& Textures, const raylib::Window& Window);
+    ~Projectile() = default;
+    Projectile(const Projectile&) = default;
+    Projectile(Projectile&& Object);
+    Projectile& operator=(const Projectile&) = default;
+    Projectile& operator=(Projectile&& Object);
     void Tick(float DeltaTime);
     void Draw();
     void Load(const raylib::Vector2 Pos);

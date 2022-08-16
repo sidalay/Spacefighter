@@ -1,4 +1,6 @@
 #include "mothership.hpp"
+#include <algorithm>
+#include <iostream>
 
 Mothership::Mothership(const GameTexture& Textures,
                        const GameAudio& Audio,
@@ -6,13 +8,22 @@ Mothership::Mothership(const GameTexture& Textures,
                        Projectile& Projectiles,
                        const raylib::Window& Window, 
                        Stage& CurrentLevel)
-    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} {};
+    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} 
+    {
+        Aliens.reserve(10);
+    };
 
 void Mothership::Tick(float DeltaTime)
 {
+    for (auto& Alien:Aliens)
+    {
+        Alien.Tick(DeltaTime);
+    }
     Deploy();
-    CheckProjectileCollision();
-    CheckRecall(DeltaTime);
+    if (CheckProjectileCollision())
+    {
+        Recall();
+    }
 }
 
 void Mothership::Draw()
@@ -62,32 +73,23 @@ void Mothership::Deploy()
 void Mothership::Load(raylib::Vector2 ScreenPos, MonsterType Type)
 {
     Aliens.emplace_back(
-        Enemy{Stats.Textures, 
-              Stats.Audio, 
-              Stats.RandomEngine, 
-              Stats.Projectiles, 
-              Stats.Window, 
-              ScreenPos, 
-              Type});
+        Stats.Textures, 
+        Stats.Audio, 
+        Stats.RandomEngine, 
+        Stats.Projectiles, 
+        Stats.Window, 
+        ScreenPos, 
+        Type);
 }
 
-void Mothership::CheckRecall(float DeltaTime)
+void Mothership::Recall()
 {
-    for (auto Alien = Aliens.begin(); Alien != Aliens.end(); ++Alien)
-    {
-        if ((*Alien).GetAlive())
-        {
-            (*Alien).Tick(DeltaTime);
-        }
-        else
-        {
-            Aliens.erase(Alien);
-            --Alien;
-        }
-    }
+    std::erase_if(Aliens, [](auto&& Alien) {
+        return !Alien.GetAlive();
+    });
 }
 
-void Mothership::CheckProjectileCollision()
+bool Mothership::CheckProjectileCollision()
 {
     std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetCollision()};
 
@@ -98,7 +100,9 @@ void Mothership::CheckProjectileCollision()
             if (CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullet.x), static_cast<float>(Bullet.y)}, Bullet.radius, Alien.GetCollision()))
             {
                 Alien.Death();
+                return true;
             }
         }
     }
+    return false;
 }

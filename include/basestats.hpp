@@ -15,9 +15,9 @@ struct BaseStats
               const raylib::Vector2 ScreenPos);
     ~BaseStats() = default;
     BaseStats(const BaseStats&) = delete;
-    BaseStats(BaseStats&&) = default;
+    BaseStats(BaseStats&& Object);
     BaseStats& operator=(const BaseStats&) = delete;
-    BaseStats& operator=(BaseStats&& Rhs);
+    BaseStats& operator=(BaseStats&& Object);
 
     const GameTexture& Textures;
     const GameAudio& Audio;

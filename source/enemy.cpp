@@ -15,7 +15,7 @@ Enemy::Enemy(const GameTexture& Textures,
             ScreenPos},
       Monster{Monster}
 {
-    Sprites.emplace_back(Sprite{Textures.Aliens, raylib::Vector2I{8, 8}});
+    Sprites.emplace_back(Textures.Aliens, raylib::Vector2I{8, 8});
     SetMonsterSprite();
 }
 
@@ -95,42 +95,42 @@ void Enemy::SetMonsterSprite()
     {
         case MonsterType::Aqua:
         {
-            Sprites.at(SpriteIndex).Frame.y = 0;
+            Sprites.at(SpriteIndex).Frame.y = 2;
             break;
         }
         case MonsterType::Blue:
         {
-            Sprites.at(SpriteIndex).Frame.y = 1;
+            Sprites.at(SpriteIndex).Frame.y = 6;
             break;
         }
         case MonsterType::Green:
         {
-            Sprites.at(SpriteIndex).Frame.y = 2;
+            Sprites.at(SpriteIndex).Frame.y = 7;
             break;
         }
         case MonsterType::Orange:
         {
-            Sprites.at(SpriteIndex).Frame.y = 3;
+            Sprites.at(SpriteIndex).Frame.y = 5;
             break;
         }
         case MonsterType::Pink:
         {
-            Sprites.at(SpriteIndex).Frame.y = 4;
+            Sprites.at(SpriteIndex).Frame.y = 3;
             break;
         }
         case MonsterType::Purple:
         {
-            Sprites.at(SpriteIndex).Frame.y = 5;
+            Sprites.at(SpriteIndex).Frame.y = 0;
             break;
         }
         case MonsterType::Red:
         {
-            Sprites.at(SpriteIndex).Frame.y = 6;
+            Sprites.at(SpriteIndex).Frame.y = 4;
             break;
         }
         case MonsterType::Yellow:
         {
-            Sprites.at(SpriteIndex).Frame.y = 7;
+            Sprites.at(SpriteIndex).Frame.y = 1;
             break;
         }
     }

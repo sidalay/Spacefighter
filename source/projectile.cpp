@@ -3,6 +3,29 @@
 Projectile::Projectile(const GameTexture& Textures, const raylib::Window& Window) 
     : Textures{Textures}, Window{Window}, Bullet{Textures.Projectiles, raylib::Vector2I{8,1}} {}
 
+Projectile::Projectile(Projectile&& Object)
+    : Textures{std::move(Object.Textures)},
+      Window{std::move(Object.Window)},
+      Bullet{std::move(Object.Bullet)},
+      Collided{std::move(Object.Collided)},
+      Scale{std::move(Object.Scale)},
+      Positions{std::move(Object.Positions)} {}
+
+Projectile& Projectile::operator=(Projectile&& Object)
+{
+    if (this == &Object)
+    {
+        return *this;
+    }
+
+    this->Bullet = std::move(Object.Bullet);
+    this->Collided = std::move(Object.Collided);
+    this->Scale = std::move(Object.Scale);
+    this->Positions = std::move(Object.Positions);
+
+    return *this;
+}
+
 void Projectile::Tick(float DeltaTime)
 {
     SpriteTick(DeltaTime);
@@ -11,7 +34,7 @@ void Projectile::Tick(float DeltaTime)
     {
         if (WithinScreen(*it) || !Collided)
         {
-            (*it).y -= 4.f;
+            it->y -= 4.f;
         }
         else 
         {

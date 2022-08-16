@@ -22,8 +22,8 @@ private:
 
     void Deploy();
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);
-    void CheckRecall(float DeltaTime);
-    void CheckProjectileCollision(); 
+    void Recall();
+    bool CheckProjectileCollision(); 
 };
 
 #endif // MOTHERSHIP_HPP

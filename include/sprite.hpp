@@ -25,6 +25,11 @@ struct Sprite
     explicit Sprite(const raylib::Texture& Texture, 
                     const raylib::Vector2I&& MaxFrames = raylib::Vector2I{1,1}, 
                     const float UpdateSpeed = 1.f/8.f);
+    ~Sprite() = default;
+    Sprite(const Sprite&) = delete;
+    Sprite(Sprite&& Object);
+    Sprite& operator=(const Sprite&) = delete;
+    Sprite& operator=(Sprite&& Object);
     void Tick(float DeltaTime);
     constexpr int GetTextureWidth(float Scale = 1.f) const {return (Texture.width/MaxFrames.x) * static_cast<int>(Scale);}
     constexpr int GetTextureHeight(float Scale = 1.f) const {return (Texture.height/MaxFrames.y) * static_cast<int>(Scale);}
@@ -37,7 +42,7 @@ private:
     const raylib::Vector2I MaxFrames{};
     int PreviousFrame{};
     float RunningTime{};
-    const float UpdateTime{1.f/8.f};
+    float UpdateTime{1.f/8.f};
 };
 
 #endif // SPRITE_HPP
