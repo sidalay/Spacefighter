@@ -16,7 +16,6 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     void Load(const raylib::Vector2 Pos);
-    void SetCollided(bool Collision) {Collided = Collision;}
     std::vector<raylib::Circle> GetCollision() const;
 private:
     const GameTexture& Textures;
@@ -28,6 +27,9 @@ private:
 
     void SpriteTick(float DeltaTime);
     bool WithinScreen(raylib::Vector2 BulletPos);
+    void Unload();
+    void Shooting();
+    void SetCollided(bool Collision) {Collided = Collision;}
 };
 
 #endif // PROJECTILE_HPP

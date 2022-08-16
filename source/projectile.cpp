@@ -29,19 +29,8 @@ Projectile& Projectile::operator=(Projectile&& Object)
 void Projectile::Tick(float DeltaTime)
 {
     SpriteTick(DeltaTime);
-
-    for (auto it = Positions.begin(); it != Positions.end(); ++it)
-    {
-        if (WithinScreen(*it) || !Collided)
-        {
-            it->y -= 4.f;
-        }
-        else 
-        {
-            Positions.erase(it);
-            --it;
-        }
-    }
+    Shooting();
+    Unload();
 }
 
 void Projectile::Draw()
@@ -55,6 +44,24 @@ void Projectile::Draw()
 void Projectile::Load(const raylib::Vector2 Pos)
 {
     Positions.push_back(Pos);
+}
+
+void Projectile::Unload()
+{
+    std::erase_if(Positions, [&](auto&& Position) {
+        return !WithinScreen(Position);
+    });
+}
+
+void Projectile::Shooting()
+{
+    for (auto& Position:Positions)
+    {
+        if (WithinScreen(Position) || !Collided)
+        {
+            Position.y -= 4.f;
+        }
+    }
 }
 
 void Projectile::SpriteTick(float DeltaTime)
