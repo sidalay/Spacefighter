@@ -130,7 +130,7 @@ void DeveloperTools::DrawCollision(const Ship& Spacefighter)
 
 void DeveloperTools::DrawCollision(const Projectile& Bullets)
 {
-    std::vector<raylib::Circle> BulletCollisions{Bullets.GetCollision()};
+    std::vector<raylib::Circle> BulletCollisions{Bullets.GetShipAtkCollision()};
 
     for (auto& Collision:BulletCollisions)
     {

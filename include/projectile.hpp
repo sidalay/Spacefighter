@@ -16,9 +16,12 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     void Load(const raylib::Vector2 Pos, bool Enemy);
-    void SetCollided(int Index) {Positions.at(Index).second = true;}
+    void SetShipAtkCollided(int Index) {Positions.at(Index).second = true;}
+    void SetEnemyAtkCollided(int Index) {EnemyPositions.at(Index).second = true;}
     std::vector<std::pair<raylib::Vector2, bool>> GetPositions() const {return Positions;}
-    std::vector<raylib::Circle> GetCollision() const;
+    std::vector<std::pair<raylib::Vector2, bool>> GetEnemyPositions() const {return EnemyPositions;}
+    std::vector<raylib::Circle> GetShipAtkCollision() const;
+    std::vector<raylib::Circle> GetEnemyAtkCollision() const;
 private:
     const GameTexture& Textures;
     const raylib::Window& Window;

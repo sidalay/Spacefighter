@@ -27,9 +27,10 @@ void Mothership::Tick(float DeltaTime)
         Alien.Tick(DeltaTime);
     }
     Deploy();
-    CheckProjectileCollision();
+    CheckEnemyProjectileCollision();
+    CheckShipProjectileCollision();
     Recall();
-    CheckShipCollision();
+    CheckShipEnemyCollision();
 }
 
 void Mothership::Draw()
@@ -95,7 +96,7 @@ void Mothership::Recall()
     });
 }
 
-void Mothership::CheckShipCollision()
+void Mothership::CheckShipEnemyCollision()
 {
     for (auto& Alien:Aliens)
     {
@@ -107,9 +108,9 @@ void Mothership::CheckShipCollision()
     }
 }
 
-void Mothership::CheckProjectileCollision()
+void Mothership::CheckEnemyProjectileCollision()
 {
-    std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetCollision()};
+    std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetShipAtkCollision()};
 
     for (auto& Alien:Aliens)
     {
@@ -119,8 +120,23 @@ void Mothership::CheckProjectileCollision()
                 CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullets.at(i).x), static_cast<float>(Bullets.at(i).y)}, Bullets.at(i).radius, Alien.GetCollision()))
             {
                 Alien.Dying();
-                Stats.Projectiles.SetCollided(i);
+                Stats.Projectiles.SetShipAtkCollided(i);
             }
+        }
+    }
+}
+
+void Mothership::CheckShipProjectileCollision()
+{
+    std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetEnemyAtkCollision()};
+
+    for (int i = 0; i < static_cast<int>(Bullets.size()); ++i)
+    {
+        if (Stats.Projectiles.GetEnemyPositions().at(i).second == false &&
+            CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullets.at(i).x), static_cast<float>(Bullets.at(i).y)}, Bullets.at(i).radius, Spacefighter.GetCollision()))
+        {
+            Spacefighter.Dying();
+            Stats.Projectiles.SetEnemyAtkCollided(i);
         }
     }
 }

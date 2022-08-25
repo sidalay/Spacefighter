@@ -26,8 +26,9 @@ private:
     void Deploy();
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);
     void Recall();
-    void CheckShipCollision();
-    void CheckProjectileCollision(); 
+    void CheckShipEnemyCollision();
+    void CheckEnemyProjectileCollision(); 
+    void CheckShipProjectileCollision();
 };
 
 #endif // MOTHERSHIP_HPP

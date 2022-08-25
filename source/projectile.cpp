@@ -1,14 +1,18 @@
 #include "projectile.hpp"
 
 Projectile::Projectile(const GameTexture& Textures, const raylib::Window& Window) 
-    : Textures{Textures}, Window{Window}, Bullet{Textures.Projectiles, raylib::Vector2I{8,1}} {}
+    : Textures{Textures}, 
+      Window{Window}, 
+      Bullet{Textures.Projectiles, 
+      raylib::Vector2I{8,1}} {}
 
 Projectile::Projectile(Projectile&& Object)
     : Textures{std::move(Object.Textures)},
       Window{std::move(Object.Window)},
       Bullet{std::move(Object.Bullet)},
       Scale{std::move(Object.Scale)},
-      Positions{std::move(Object.Positions)} {}
+      Positions{std::move(Object.Positions)},
+      EnemyPositions{std::move(Object.EnemyPositions)} {}
 
 Projectile& Projectile::operator=(Projectile&& Object)
 {
@@ -20,6 +24,7 @@ Projectile& Projectile::operator=(Projectile&& Object)
     this->Bullet = std::move(Object.Bullet);
     this->Scale = std::move(Object.Scale);
     this->Positions = std::move(Object.Positions);
+    this->EnemyPositions = std::move(Object.EnemyPositions);
 
     return *this;
 }
@@ -112,7 +117,7 @@ bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
     return true;
 }
 
-std::vector<raylib::Circle> Projectile::GetCollision() const
+std::vector<raylib::Circle> Projectile::GetShipAtkCollision() const
 {
     int Width{Bullet.GetTextureWidth(Scale)};
     int Height{Bullet.GetTextureHeight(Scale)};
@@ -126,6 +131,28 @@ std::vector<raylib::Circle> Projectile::GetCollision() const
             {
                 static_cast<int>(Pos.first.x) + ((Width/2)),
                 static_cast<int>(Pos.first.y) + ((Height/2)),
+                Radius
+            }    
+        ); 
+    }
+
+    return Collisions;
+}
+
+std::vector<raylib::Circle> Projectile::GetEnemyAtkCollision() const
+{
+    int Width{Bullet.GetTextureWidth(Scale)};
+    int Height{Bullet.GetTextureHeight(Scale)};
+    float Radius{6.5f};
+    std::vector<raylib::Circle> Collisions{};
+
+    for (auto& EnemyPos:EnemyPositions)
+    {
+        Collisions.push_back(
+            raylib::Circle
+            {
+                static_cast<int>(EnemyPos.first.x) + ((Width/2)),
+                static_cast<int>(EnemyPos.first.y) + ((Height/2)),
                 Radius
             }    
         ); 

@@ -216,5 +216,5 @@ const raylib::Rectangle Enemy::GetCollision() const
 
 const raylib::Vector2 Enemy::GetCenterPos()
 {
-    return raylib::Vector2{Stats.ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), Stats.ScreenPos.y + 10.f};
+    return raylib::Vector2{Stats.ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), Stats.ScreenPos.y + 30.f};
 }
