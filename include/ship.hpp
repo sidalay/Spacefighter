@@ -24,6 +24,7 @@ public:
          const Shipcolor ShipShade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
+    void Dying() {Stats.Dying = true;}
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
@@ -33,6 +34,7 @@ private:
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
     Direction Heading{Direction::UP};
+    Sprite Death;
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
@@ -47,6 +49,7 @@ private:
     void CheckDecel();
     void CheckInput();
     void CheckAttack();
+    void CheckDying(float DeltaTime);
     void CheckOffScreen();
     void SetDirectionSprite();
     void SetSpriteIndex();

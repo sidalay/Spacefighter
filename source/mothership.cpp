@@ -6,8 +6,19 @@ Mothership::Mothership(const GameTexture& Textures,
                        const Randomizer& RandomEngine,
                        Projectile& Projectiles,
                        const raylib::Window& Window, 
-                       Stage& CurrentLevel)
-    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} {};
+                       Stage& CurrentLevel,
+                       Ship& Spacefighter)
+    : Stats
+      {
+        Textures, 
+        Audio, 
+        RandomEngine, 
+        Projectiles, 
+        Window, 
+        raylib::Vector2{}
+      }, 
+      Level{CurrentLevel},
+      Spacefighter{Spacefighter} {};
 
 void Mothership::Tick(float DeltaTime)
 {
@@ -18,7 +29,7 @@ void Mothership::Tick(float DeltaTime)
     Deploy();
     CheckProjectileCollision();
     Recall();
-
+    CheckShipCollision();
 }
 
 void Mothership::Draw()
@@ -82,6 +93,18 @@ void Mothership::Recall()
     std::erase_if(Aliens, [](auto&& Alien) {
         return !Alien.GetAlive();
     });
+}
+
+void Mothership::CheckShipCollision()
+{
+    for (auto& Alien:Aliens)
+    {
+        if (CheckCollisionRecs(Alien.GetCollision(), Spacefighter.GetCollision()))
+        {
+            Alien.Dying();
+            Spacefighter.Dying();
+        }
+    }
 }
 
 void Mothership::CheckProjectileCollision()

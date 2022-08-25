@@ -12,7 +12,8 @@ Ship::Ship(const GameTexture& Textures,
             Projectiles, 
             Window, 
             raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}, 
-      Shade{ShipShade}
+      Shade{ShipShade},
+      Death{Textures.Death, raylib::Vector2I{8, 3}}
 {
     switch (Shade)
     {
@@ -26,6 +27,7 @@ Ship::Ship(const GameTexture& Textures,
         default:
             break;
     }
+    Death.Frame.y = 0;
 }
 
 void Ship::Tick(float DeltaTime)
@@ -36,16 +38,29 @@ void Ship::Tick(float DeltaTime)
     SetDirectionSprite();
     SetSpriteIndex();
     SpriteTick(DeltaTime);
+    CheckDying(DeltaTime);
 }
 
 void Ship::Draw()
 {
-    DrawTexturePro(
-        Sprites.at(SpriteIndex).GetTexture(), 
-        Sprites.at(SpriteIndex).GetSourceRec(), 
-        Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
-        raylib::Vector2{}, 0.f, WHITE
-    );
+    if (Stats.Dying || !Stats.Alive)
+    {
+        DrawTexturePro(
+            Death.GetTexture(), 
+            Death.GetSourceRec(), 
+            Death.GetPosRec(Stats.ScreenPos, Stats.Scale), 
+            raylib::Vector2{}, 0.f, WHITE
+        );    
+    }
+    else if (Stats.Alive) 
+    {
+        DrawTexturePro(
+            Sprites.at(SpriteIndex).GetTexture(), 
+            Sprites.at(SpriteIndex).GetSourceRec(), 
+            Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
+            raylib::Vector2{}, 0.f, WHITE
+        );    
+    }
 }
 
 void Ship::SpriteTick(float DeltaTime)
@@ -54,33 +69,37 @@ void Ship::SpriteTick(float DeltaTime)
     {
         Sprite.Tick(DeltaTime);
     }
+    Death.Tick(DeltaTime);
 }
 
 void Ship::Movement()
 {
-    CheckOffScreen();
     CheckAccel();
+    CheckOffScreen();
     CheckDecel();
     UpdateScreenPos();
 }
 
 void Ship::CheckAccel()
 {
-    if (IsKeyDown(KEY_W) && Stats.Speed.y > -Stats.MaxSpeed) 
+    if (Stats.Alive && !Stats.Dying)
     {
-        Stats.Speed.y += -Accelerate;
-    }
-    if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Stats.Speed.x > -Stats.MaxSpeed)
-    {
-        Stats.Speed.x += -Accelerate;
-    }
-    if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Stats.Speed.x < Stats.MaxSpeed)
-    {
-        Stats.Speed.x += Accelerate;
-    }
-    if (IsKeyDown(KEY_S) && Stats.Speed.y < Stats.BrakeSpeed)
-    {
-        Stats.Speed.y += Accelerate;
+        if (IsKeyDown(KEY_W) && Stats.Speed.y > -Stats.MaxSpeed) 
+        {
+            Stats.Speed.y += -Accelerate;
+        }
+        if ((IsKeyDown(KEY_A) || IsKeyPressed(KEY_A)) && Stats.Speed.x > -Stats.MaxSpeed)
+        {
+            Stats.Speed.x += -Accelerate;
+        }
+        if ((IsKeyDown(KEY_D) || IsKeyPressed(KEY_D)) && Stats.Speed.x < Stats.MaxSpeed)
+        {
+            Stats.Speed.x += Accelerate;
+        }
+        if (IsKeyDown(KEY_S) && Stats.Speed.y < Stats.BrakeSpeed)
+        {
+            Stats.Speed.y += Accelerate;
+        }
     }
 }
 
@@ -207,9 +226,23 @@ void Ship::CheckInput()
 
 void Ship::CheckAttack()
 {
-    if (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (Stats.Alive && !Stats.Dying && (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
     {
         Stats.Projectiles.Load(GetCenterPos());
+    }
+}
+
+void Ship::CheckDying(float DeltaTime)
+{
+    if (Stats.Dying)
+    {
+        Stats.RunningTime += DeltaTime;
+        if (Stats.RunningTime >= 0.55f)
+        {
+            Stats.Alive = false;
+            Stats.RunningTime = 0.f;
+            Death.Frame.y = 1;
+        }
     }
 }
 

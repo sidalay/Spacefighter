@@ -9,7 +9,7 @@ void Game::Run()
     Game::Object Object{
         Projectile{Asset.Textures, Device.Window},
         Ship{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Shipcolor::Purple},
-        Mothership{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Info.Level}, 
+        Mothership{Asset.Textures, Asset.Audio, Asset.RandomEngine, Object.Projectiles, Device.Window, Info.Level, Object.Spacefighter}, 
         Background{Asset.Textures}, 
         DeveloperTools{}
     };
