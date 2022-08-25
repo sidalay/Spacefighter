@@ -26,6 +26,7 @@ void Enemy::Tick(float DeltaTime)
     CheckAttack();
     Movement();
     SpriteTick(DeltaTime);
+    CheckDying(DeltaTime);
 }
 
 void Enemy::Draw()
@@ -69,8 +70,16 @@ void Enemy::SwayLeftRight()
 {
     // Set up randomizer code to randomize movement
     // This is temporary code
-    CheckOffScreen();
-    Stats.Speed.x = Accelerate;
+    if (Stats.Dying)
+    {
+        Stats.Speed.x = 0.f;
+        Stats.Speed.y = -0.5f;
+    }
+    else
+    {
+        CheckOffScreen();
+        Stats.Speed.x = Accelerate;
+    }
 }
 
 void Enemy::CheckAttack()
@@ -158,6 +167,19 @@ void Enemy::SetDeathSprite()
 void Enemy::UpdateScreenPos()
 {
     Stats.ScreenPos = Stats.ScreenPos.Add(Stats.Speed);
+}
+
+void Enemy::CheckDying(float DeltaTime)
+{
+    if (Stats.Dying)
+    {
+        Stats.RunningTime += DeltaTime;
+        if (Stats.RunningTime >= 1.f)
+        {
+            Die();
+            Stats.RunningTime = 0.f;
+        }
+    }
 }
 
 const raylib::Rectangle Enemy::GetCollision() const

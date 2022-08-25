@@ -16,10 +16,9 @@ void Mothership::Tick(float DeltaTime)
         Alien.Tick(DeltaTime);
     }
     Deploy();
-    if (CheckProjectileCollision())
-    {
-        Recall();
-    }
+    CheckProjectileCollision();
+    Recall();
+
 }
 
 void Mothership::Draw()
@@ -85,7 +84,7 @@ void Mothership::Recall()
     });
 }
 
-bool Mothership::CheckProjectileCollision()
+void Mothership::CheckProjectileCollision()
 {
     std::vector<raylib::Circle> Bullets{Stats.Projectiles.GetCollision()};
 
@@ -98,9 +97,7 @@ bool Mothership::CheckProjectileCollision()
             {
                 Alien.Dying();
                 Stats.Projectiles.SetCollided(i);
-                return true;
             }
         }
     }
-    return false;
 }

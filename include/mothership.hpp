@@ -23,7 +23,7 @@ private:
     void Deploy();
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);
     void Recall();
-    bool CheckProjectileCollision(); 
+    void CheckProjectileCollision(); 
 };
 
 #endif // MOTHERSHIP_HPP

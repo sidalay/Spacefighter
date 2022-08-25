@@ -22,6 +22,7 @@ BaseStats::BaseStats(BaseStats&& Object)
       ScreenPos{std::move(Object.ScreenPos)},
       Speed{std::move(Object.Speed)},
       Alive{std::move(Object.Alive)},
+      Dying{std::move(Object.Dying)},
       UpdateTime{std::move(Object.UpdateTime)},
       RunningTime{std::move(Object.RunningTime)},
       Health{std::move(Object.Health)},
@@ -40,6 +41,7 @@ BaseStats& BaseStats::operator=(BaseStats&& Object)
     this->ScreenPos = std::move(Object.ScreenPos);
     this->Speed = std::move(Object.Speed);
     this->Alive = std::move(Object.Alive);
+    this->Dying = std::move(Object.Dying);
     this->UpdateTime = std::move(Object.UpdateTime);
     this->RunningTime = std::move(Object.RunningTime);
     this->Health = std::move(Object.Health);

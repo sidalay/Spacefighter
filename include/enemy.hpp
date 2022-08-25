@@ -44,6 +44,7 @@ private:
     void SetMonsterSprite();
     void SetDeathSprite();
     void UpdateScreenPos();
+    void CheckDying(float DeltaTime);
 };
 
 #endif // ENEMY_HPP
