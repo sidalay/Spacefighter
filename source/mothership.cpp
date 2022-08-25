@@ -1,6 +1,5 @@
 #include "mothership.hpp"
 #include <algorithm>
-#include <iostream>
 
 Mothership::Mothership(const GameTexture& Textures,
                        const GameAudio& Audio,
@@ -8,10 +7,7 @@ Mothership::Mothership(const GameTexture& Textures,
                        Projectile& Projectiles,
                        const raylib::Window& Window, 
                        Stage& CurrentLevel)
-    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} 
-    {
-        Aliens.reserve(10);
-    };
+    : Stats{Textures, Audio, RandomEngine, Projectiles, Window, raylib::Vector2{}}, Level{CurrentLevel} {};
 
 void Mothership::Tick(float DeltaTime)
 {
@@ -95,11 +91,13 @@ bool Mothership::CheckProjectileCollision()
 
     for (auto& Alien:Aliens)
     {
-        for (auto& Bullet:Bullets)
+        for (int i = 0; i < static_cast<int>(Bullets.size()); ++i)
         {
-            if (CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullet.x), static_cast<float>(Bullet.y)}, Bullet.radius, Alien.GetCollision()))
+            if (Stats.Projectiles.GetPositions().at(i).second == false &&
+                CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullets.at(i).x), static_cast<float>(Bullets.at(i).y)}, Bullets.at(i).radius, Alien.GetCollision()))
             {
                 Alien.Death();
+                Stats.Projectiles.SetCollided(i);
                 return true;
             }
         }
