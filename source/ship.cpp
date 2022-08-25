@@ -228,7 +228,7 @@ void Ship::CheckAttack()
 {
     if (Stats.Alive && !Stats.Dying && (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
     {
-        Stats.Projectiles.Load(GetCenterPos());
+        Stats.Projectiles.Load(GetCenterPos(), false);
     }
 }
 

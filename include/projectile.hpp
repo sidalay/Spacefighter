@@ -15,7 +15,7 @@ public:
     Projectile& operator=(Projectile&& Object);
     void Tick(float DeltaTime);
     void Draw();
-    void Load(const raylib::Vector2 Pos);
+    void Load(const raylib::Vector2 Pos, bool Enemy);
     void SetCollided(int Index) {Positions.at(Index).second = true;}
     std::vector<std::pair<raylib::Vector2, bool>> GetPositions() const {return Positions;}
     std::vector<raylib::Circle> GetCollision() const;
@@ -25,6 +25,7 @@ private:
     Sprite Bullet;
     float Scale{2.5f};
     std::vector<std::pair<raylib::Vector2, bool>> Positions{};
+    std::vector<std::pair<raylib::Vector2, bool>> EnemyPositions{};
     void SpriteTick(float DeltaTime);
     bool WithinScreen(raylib::Vector2 BulletPos);
     void Unload();

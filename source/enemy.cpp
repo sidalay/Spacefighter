@@ -23,10 +23,10 @@ Enemy::Enemy(const GameTexture& Textures,
 
 void Enemy::Tick(float DeltaTime)
 {
-    CheckAttack();
     Movement();
     SpriteTick(DeltaTime);
     CheckDying(DeltaTime);
+    CheckAttack(DeltaTime);
 }
 
 void Enemy::Draw()
@@ -82,10 +82,28 @@ void Enemy::SwayLeftRight()
     }
 }
 
-void Enemy::CheckAttack()
+void Enemy::CheckAttack(float DeltaTime)
 {
     // Set up randomizer code
-    // Stats.Projectiles.Load(GetCenterPos());
+    if (!Stats.Dying)
+    {
+        Stats.CooldownTime += DeltaTime;
+        if (Stats.CooldownTime >= 2.2f)
+        {
+            Stats.CooldownTime = 0.f;
+            Stats.AttackTime = 0.f;
+        }
+        else if (Stats.CooldownTime >= 1.5f)
+        {
+            Stats.AttackTime += DeltaTime;
+        }
+        
+        if (Stats.AttackTime >= 0.3f)
+        {
+            Stats.Projectiles.Load(GetCenterPos(), true);
+            Stats.AttackTime = 0.f;
+        }
+    }
 }
 
 void Enemy::CheckOffScreen()
@@ -198,5 +216,5 @@ const raylib::Rectangle Enemy::GetCollision() const
 
 const raylib::Vector2 Enemy::GetCenterPos()
 {
-    return raylib::Vector2{Stats.ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), Stats.ScreenPos.y};
+    return raylib::Vector2{Stats.ScreenPos.x + (Sprites.at(SpriteIndex).GetTextureWidth(Stats.Scale) * 0.4f), Stats.ScreenPos.y + 10.f};
 }

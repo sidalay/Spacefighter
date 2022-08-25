@@ -30,6 +30,8 @@ struct BaseStats
     bool Dying{false};
     float UpdateTime{1.f/14.f};
     float RunningTime{};
+    float AttackTime{};
+    float CooldownTime{};
     float Health{};
     float MaxSpeed{4.f};
     float BrakeSpeed{2.5f};

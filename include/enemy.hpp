@@ -38,7 +38,7 @@ private:
     void SpriteTick(float DeltaTime);
     void Movement();
     void SwayLeftRight();
-    void CheckAttack();
+    void CheckAttack(float DeltaTime);
     void CheckOffScreen();
     void SetSpriteIndex();
     void SetMonsterSprite();

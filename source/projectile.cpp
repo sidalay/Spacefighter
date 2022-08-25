@@ -40,11 +40,26 @@ void Projectile::Draw()
             DrawTexturePro(Bullet.GetTexture(), Bullet.GetSourceRec(), Bullet.GetPosRec(Pos.first, Scale), raylib::Vector2{}, 0.f, WHITE);
         }
     }
+
+    for (auto& EnemyPos:EnemyPositions)
+    {
+        if (!EnemyPos.second)
+        {
+            DrawTexturePro(Bullet.GetTexture(), Bullet.GetSourceRec(), Bullet.GetPosRec(EnemyPos.first, Scale), raylib::Vector2{}, 0.f, WHITE);
+        }
+    }
 }
 
-void Projectile::Load(const raylib::Vector2 Pos)
+void Projectile::Load(const raylib::Vector2 Pos, bool Enemy)
 {
-    Positions.push_back(std::make_pair(Pos, false));
+    if (Enemy)
+    {
+        EnemyPositions.push_back(std::make_pair(Pos, false));
+    }
+    else 
+    {
+        Positions.push_back(std::make_pair(Pos, false));
+    }
 }
 
 void Projectile::Unload()
@@ -61,6 +76,14 @@ void Projectile::Shooting()
         if (WithinScreen(Position.first))
         {
             Position.first.y -= 4.f;
+        }
+    }
+
+    for (auto& EnemyPos:EnemyPositions)
+    {
+        if (WithinScreen(EnemyPos.first))
+        {
+            EnemyPos.first.y += 4.f;
         }
     }
 }

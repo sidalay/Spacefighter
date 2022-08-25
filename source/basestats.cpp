@@ -25,6 +25,8 @@ BaseStats::BaseStats(BaseStats&& Object)
       Dying{std::move(Object.Dying)},
       UpdateTime{std::move(Object.UpdateTime)},
       RunningTime{std::move(Object.RunningTime)},
+      AttackTime{std::move(Object.AttackTime)},
+      CooldownTime{std::move(Object.CooldownTime)},
       Health{std::move(Object.Health)},
       MaxSpeed{std::move(Object.MaxSpeed)},
       BrakeSpeed{std::move(Object.BrakeSpeed)},
@@ -44,6 +46,8 @@ BaseStats& BaseStats::operator=(BaseStats&& Object)
     this->Dying = std::move(Object.Dying);
     this->UpdateTime = std::move(Object.UpdateTime);
     this->RunningTime = std::move(Object.RunningTime);
+    this->AttackTime = std::move(Object.AttackTime);
+    this->CooldownTime = std::move(Object.CooldownTime);
     this->Health = std::move(Object.Health);
     this->MaxSpeed = std::move(Object.MaxSpeed);
     this->BrakeSpeed = std::move(Object.BrakeSpeed);
