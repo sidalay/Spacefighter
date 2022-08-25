@@ -13,28 +13,41 @@ Enemy::Enemy(const GameTexture& Textures,
             Projectiles, 
             Window,
             ScreenPos},
-      Monster{Monster}
+      Monster{Monster},
+      Death{Textures.Death, raylib::Vector2I{8, 3}}
 {
     Sprites.emplace_back(Textures.Aliens, raylib::Vector2I{8, 8});
     SetMonsterSprite();
+    SetDeathSprite();
 }
 
 void Enemy::Tick(float DeltaTime)
 {
     CheckAttack();
     Movement();
-    SetSpriteIndex();
     SpriteTick(DeltaTime);
 }
 
 void Enemy::Draw()
 {
-    DrawTexturePro(
-        Sprites.at(SpriteIndex).GetTexture(), 
-        Sprites.at(SpriteIndex).GetSourceRec(), 
-        Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
-        raylib::Vector2{}, 0.f, WHITE
-    );
+    if (!Stats.Dying)
+    {
+        DrawTexturePro(
+            Sprites.at(SpriteIndex).GetTexture(), 
+            Sprites.at(SpriteIndex).GetSourceRec(), 
+            Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
+            raylib::Vector2{}, 0.f, WHITE
+        );
+    }
+    else 
+    {
+        DrawTexturePro(
+            Death.GetTexture(), 
+            Death.GetSourceRec(), 
+            Death.GetPosRec(Stats.ScreenPos, Stats.Scale), 
+            raylib::Vector2{}, 0.f, WHITE
+        );
+    }
 }
 
 void Enemy::SpriteTick(float DeltaTime)
@@ -43,6 +56,7 @@ void Enemy::SpriteTick(float DeltaTime)
     {
         Sprite.Tick(DeltaTime);
     }
+    Death.Tick(DeltaTime);
 }
 
 void Enemy::Movement()
@@ -136,14 +150,14 @@ void Enemy::SetMonsterSprite()
     }
 }
 
+void Enemy::SetDeathSprite()
+{
+    Death.Frame.y = 2;
+}
+
 void Enemy::UpdateScreenPos()
 {
     Stats.ScreenPos = Stats.ScreenPos.Add(Stats.Speed);
-}
-
-void Enemy::Death()
-{
-    Stats.Alive = false;
 }
 
 const raylib::Rectangle Enemy::GetCollision() const

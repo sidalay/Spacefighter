@@ -27,6 +27,7 @@ struct BaseStats
     raylib::Vector2 ScreenPos{};
     raylib::Vector2 Speed{};
     bool Alive{true};
+    bool Dying{false};
     float UpdateTime{1.f/14.f};
     float RunningTime{};
     float Health{};

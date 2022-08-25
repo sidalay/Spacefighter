@@ -96,7 +96,7 @@ bool Mothership::CheckProjectileCollision()
             if (Stats.Projectiles.GetPositions().at(i).second == false &&
                 CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullets.at(i).x), static_cast<float>(Bullets.at(i).y)}, Bullets.at(i).radius, Alien.GetCollision()))
             {
-                Alien.Death();
+                Alien.Dying();
                 Stats.Projectiles.SetCollided(i);
                 return true;
             }

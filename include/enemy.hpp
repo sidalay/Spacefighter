@@ -21,13 +21,15 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     bool GetAlive() const {return Stats.Alive;}
-    void Death();
+    void Die() {Stats.Alive = false;}
+    void Dying() {Stats.Dying = true;}
     const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Rectangle GetCollision() const;
 private:
     BaseStats Stats;
     MonsterType Monster;
+    Sprite Death;
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
@@ -40,6 +42,7 @@ private:
     void CheckOffScreen();
     void SetSpriteIndex();
     void SetMonsterSprite();
+    void SetDeathSprite();
     void UpdateScreenPos();
 };
 

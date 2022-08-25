@@ -4,7 +4,8 @@ Sprite::Sprite(const raylib::Texture2D& Texture, const raylib::Vector2I&& MaxFra
     : Texture{Texture}, MaxFrames{MaxFrames}, UpdateTime{UpdateSpeed} {}
 
 Sprite::Sprite(Sprite&& Object)
-    : Texture{std::move(Object.Texture)},
+    : Frame{std::move(Object.Frame)},
+      Texture{std::move(Object.Texture)},
       MaxFrames{std::move(Object.MaxFrames)},
       PreviousFrame{std::move(Object.PreviousFrame)},
       RunningTime{std::move(Object.RunningTime)},
@@ -16,7 +17,8 @@ Sprite& Sprite::operator=(Sprite&& Object)
     {
         return *this;
     }
-
+    
+    this->Frame = std::move(Object.Frame);
     this->PreviousFrame = std::move(Object.PreviousFrame);
     this->RunningTime = std::move(Object.RunningTime);
     this->UpdateTime = std::move(Object.UpdateTime);
