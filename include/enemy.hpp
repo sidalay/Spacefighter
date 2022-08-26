@@ -17,7 +17,13 @@ public:
           Projectile& Projectiles,
           const raylib::Window& Window,
           const raylib::Vector2 ScreenPos,
+          const raylib::Vector2& SpacefighterPos,
           MonsterType Monster);
+    ~Enemy() = default;
+    Enemy(const Enemy&) = default;
+    Enemy(Enemy&& Object);
+    Enemy& operator=(const Enemy&) = default;
+    Enemy& operator=(Enemy&& Object);
     void Tick(float DeltaTime);
     void Draw();
     bool GetAlive() const {return Stats.Alive;}
@@ -30,6 +36,7 @@ private:
     BaseStats Stats;
     MonsterType Monster;
     Sprite Death;
+    const raylib::Vector2& SpacefighterPos;
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};

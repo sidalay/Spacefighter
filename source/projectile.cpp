@@ -11,8 +11,9 @@ Projectile::Projectile(Projectile&& Object)
       Window{std::move(Object.Window)},
       Bullet{std::move(Object.Bullet)},
       Scale{std::move(Object.Scale)},
-      Positions{std::move(Object.Positions)},
-      EnemyPositions{std::move(Object.EnemyPositions)} {}
+      ShipPos{std::move(Object.ShipPos)},
+      ShipAtkPos{std::move(Object.ShipAtkPos)},
+      EnemyAtkPos{std::move(Object.EnemyAtkPos)} {}
 
 Projectile& Projectile::operator=(Projectile&& Object)
 {
@@ -23,8 +24,9 @@ Projectile& Projectile::operator=(Projectile&& Object)
 
     this->Bullet = std::move(Object.Bullet);
     this->Scale = std::move(Object.Scale);
-    this->Positions = std::move(Object.Positions);
-    this->EnemyPositions = std::move(Object.EnemyPositions);
+    this->ShipPos = std::move(Object.ShipPos);
+    this->ShipAtkPos = std::move(Object.ShipAtkPos);
+    this->EnemyAtkPos = std::move(Object.EnemyAtkPos);
 
     return *this;
 }
@@ -38,7 +40,7 @@ void Projectile::Tick(float DeltaTime)
 
 void Projectile::Draw()
 {
-    for (auto& Pos:Positions)
+    for (auto& Pos:ShipAtkPos)
     {
         if (!Pos.second) 
         {
@@ -46,7 +48,7 @@ void Projectile::Draw()
         }
     }
 
-    for (auto& EnemyPos:EnemyPositions)
+    for (auto& EnemyPos:EnemyAtkPos)
     {
         if (!EnemyPos.second)
         {
@@ -55,28 +57,33 @@ void Projectile::Draw()
     }
 }
 
-void Projectile::Load(const raylib::Vector2 Pos, bool Enemy)
+void Projectile::Load(const raylib::Vector2 Pos, bool Enemy, raylib::Vector2 SpacefighterPos)
 {
     if (Enemy)
     {
-        EnemyPositions.push_back(std::make_pair(Pos, false));
+        EnemyAtkPos.emplace_back(std::make_pair(Pos, false));
+        ShipPos.emplace_back(SpacefighterPos);
     }
     else 
     {
-        Positions.push_back(std::make_pair(Pos, false));
+        ShipAtkPos.emplace_back(std::make_pair(Pos, false));
     }
 }
 
 void Projectile::Unload()
 {
-    std::erase_if(Positions, [&](auto&& Position) {
+    std::erase_if(ShipAtkPos, [&](auto&& Position) {
+        return !WithinScreen(Position.first);
+    });
+
+    std::erase_if(EnemyAtkPos, [&](auto&& Position) {
         return !WithinScreen(Position.first);
     });
 }
 
 void Projectile::Shooting()
 {
-    for (auto& Position:Positions)
+    for (auto& Position:ShipAtkPos)
     {
         if (WithinScreen(Position.first))
         {
@@ -84,11 +91,20 @@ void Projectile::Shooting()
         }
     }
 
-    for (auto& EnemyPos:EnemyPositions)
+    // for (auto& EnemyPos:EnemyAtkPos)
+    // {
+    //     if (WithinScreen(EnemyPos.first))
+    //     {
+    //         EnemyPos.first.y += 4.f;
+    //     }
+    // }
+
+    for (int i = 0; i < static_cast<int>(EnemyAtkPos.size()); ++i)
     {
-        if (WithinScreen(EnemyPos.first))
+        raylib::Vector2 ToTarget {Vector2Scale(Vector2Normalize(Vector2Subtract(ShipPos.at(i), EnemyAtkPos.at(i).first)), 4.f)};
+        if (WithinScreen(EnemyAtkPos.at(i).first))
         {
-            EnemyPos.first.y += 4.f;
+            EnemyAtkPos.at(i).first = Vector2Add(EnemyAtkPos.at(i).first, Vector2{0.f, 2.f});
         }
     }
 }
@@ -103,7 +119,7 @@ bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
     float TextureWidth{static_cast<float>(Bullet.GetTextureWidth(Scale))};
     float TextureHeight{static_cast<float>(Bullet.GetTextureHeight(Scale))};
 
-    for (auto& Pos:Positions)
+    for (auto& Pos:ShipAtkPos)
     {
         if (Pos.first == BulletPos && 
            (Pos.first.x + TextureWidth < 0 || 
@@ -124,7 +140,7 @@ std::vector<raylib::Circle> Projectile::GetShipAtkCollision() const
     float Radius{6.5f};
     std::vector<raylib::Circle> Collisions{};
 
-    for (auto& Pos:Positions)
+    for (auto& Pos:ShipAtkPos)
     {
         Collisions.push_back(
             raylib::Circle
@@ -146,7 +162,7 @@ std::vector<raylib::Circle> Projectile::GetEnemyAtkCollision() const
     float Radius{6.5f};
     std::vector<raylib::Circle> Collisions{};
 
-    for (auto& EnemyPos:EnemyPositions)
+    for (auto& EnemyPos:EnemyAtkPos)
     {
         Collisions.push_back(
             raylib::Circle

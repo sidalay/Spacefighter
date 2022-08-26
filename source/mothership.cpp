@@ -85,7 +85,8 @@ void Mothership::Load(raylib::Vector2 ScreenPos, MonsterType Type)
         Stats.RandomEngine, 
         Stats.Projectiles, 
         Stats.Window, 
-        ScreenPos, 
+        ScreenPos,
+        Spacefighter.GetPos(), 
         Type);
 }
 

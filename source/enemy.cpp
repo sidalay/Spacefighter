@@ -6,6 +6,7 @@ Enemy::Enemy(const GameTexture& Textures,
              Projectile& Projectiles,
              const raylib::Window& Window,
              const raylib::Vector2 ScreenPos,
+             const raylib::Vector2& SpacefighterPos,
              MonsterType Monster)
     : Stats{Textures, 
             Audio, 
@@ -14,11 +15,39 @@ Enemy::Enemy(const GameTexture& Textures,
             Window,
             ScreenPos},
       Monster{Monster},
-      Death{Textures.Death, raylib::Vector2I{8, 3}}
+      Death{Textures.Death, raylib::Vector2I{8, 3}},
+      SpacefighterPos{SpacefighterPos}
 {
     Sprites.emplace_back(Textures.Aliens, raylib::Vector2I{8, 8});
     SetMonsterSprite();
     SetDeathSprite();
+}
+
+Enemy::Enemy(Enemy&& Object)
+    : Stats{std::move(Object.Stats)},
+      Monster{std::move(Object.Monster)},
+      Death{std::move(Object.Death)},
+      SpacefighterPos{std::move(Object.SpacefighterPos)},
+      Sprites{std::move(Object.Sprites)},
+      SpriteIndex{std::move(Object.SpriteIndex)},
+      Accelerate(std::move(Object.Accelerate)) {}
+
+Enemy& Enemy::operator=(Enemy&& Object)
+{
+    if (this == &Object)
+    {
+        return *this;
+    }
+
+    this->Stats = std::move(Object.Stats);
+    this->Monster = std::move(Object.Monster);
+    this->Death = std::move(Object.Death);
+    // this->SpacefighterPos = std::move(Object.SpacefighterPos);
+    this->Sprites = std::move(Object.Sprites);
+    this->SpriteIndex = std::move(Object.SpriteIndex);
+    this->Accelerate = std::move(Object.Accelerate);
+
+    return *this;
 }
 
 void Enemy::Tick(float DeltaTime)
@@ -100,7 +129,7 @@ void Enemy::CheckAttack(float DeltaTime)
         
         if (Stats.AttackTime >= 0.3f)
         {
-            Stats.Projectiles.Load(GetCenterPos(), true);
+            Stats.Projectiles.Load(GetCenterPos(), true, SpacefighterPos);
             Stats.AttackTime = 0.f;
         }
     }
