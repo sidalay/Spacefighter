@@ -31,7 +31,7 @@ private:
     std::vector<std::pair<raylib::Vector2, bool>> ShipAtkPos{};
     std::vector<std::pair<raylib::Vector2, bool>> EnemyAtkPos{};
     void SpriteTick(float DeltaTime);
-    bool WithinScreen(raylib::Vector2 BulletPos);
+    bool WithinScreen(raylib::Vector2 BulletPos, std::vector<std::pair<raylib::Vector2, bool>>Container);
     void Unload();
     void Shooting();
 };

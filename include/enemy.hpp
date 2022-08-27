@@ -20,9 +20,9 @@ public:
           const raylib::Vector2& SpacefighterPos,
           MonsterType Monster);
     ~Enemy() = default;
-    Enemy(const Enemy&) = default;
+    Enemy(const Enemy&) = delete;
     Enemy(Enemy&& Object);
-    Enemy& operator=(const Enemy&) = default;
+    Enemy& operator=(const Enemy&) = delete;
     Enemy& operator=(Enemy&& Object);
     void Tick(float DeltaTime);
     void Draw();

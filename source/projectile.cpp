@@ -62,22 +62,35 @@ void Projectile::Load(const raylib::Vector2 Pos, bool Enemy, raylib::Vector2 Spa
     if (Enemy)
     {
         EnemyAtkPos.emplace_back(std::make_pair(Pos, false));
+        SpacefighterPos = Vector2Scale(Vector2Normalize(Vector2Subtract(SpacefighterPos, Pos)), 3.f);
         ShipPos.emplace_back(SpacefighterPos);
     }
     else 
     {
         ShipAtkPos.emplace_back(std::make_pair(Pos, false));
+
+        // std::cout << "Enemy Atk Pos Vector: " << EnemyAtkPos.size() << std::endl;
+        // std::cout << "Ship Atk Pos Vector: " << ShipAtkPos.size() << std::endl;
+        // std::cout << "Ship Pos Vector: " << ShipPos.size() << std::endl;
     }
 }
 
 void Projectile::Unload()
 {
     std::erase_if(ShipAtkPos, [&](auto&& Position) {
-        return !WithinScreen(Position.first);
+        return !WithinScreen(Position.first, ShipAtkPos);
     });
 
+    for (int i = 0; i < static_cast<int>(EnemyAtkPos.size()); ++i)
+    {
+        if (!WithinScreen(EnemyAtkPos.at(i).first, EnemyAtkPos))
+        {
+            ShipPos.erase(ShipPos.begin() + i);
+        }
+    }
+
     std::erase_if(EnemyAtkPos, [&](auto&& Position) {
-        return !WithinScreen(Position.first);
+        return !WithinScreen(Position.first, EnemyAtkPos);
     });
 }
 
@@ -85,26 +98,17 @@ void Projectile::Shooting()
 {
     for (auto& Position:ShipAtkPos)
     {
-        if (WithinScreen(Position.first))
+        if (WithinScreen(Position.first, ShipAtkPos))
         {
             Position.first.y -= 4.f;
         }
     }
 
-    // for (auto& EnemyPos:EnemyAtkPos)
-    // {
-    //     if (WithinScreen(EnemyPos.first))
-    //     {
-    //         EnemyPos.first.y += 4.f;
-    //     }
-    // }
-
     for (int i = 0; i < static_cast<int>(EnemyAtkPos.size()); ++i)
     {
-        raylib::Vector2 ToTarget {Vector2Scale(Vector2Normalize(Vector2Subtract(ShipPos.at(i), EnemyAtkPos.at(i).first)), 4.f)};
-        if (WithinScreen(EnemyAtkPos.at(i).first))
+        if (WithinScreen(EnemyAtkPos.at(i).first, EnemyAtkPos))
         {
-            EnemyAtkPos.at(i).first = Vector2Add(EnemyAtkPos.at(i).first, Vector2{0.f, 2.f});
+            EnemyAtkPos.at(i).first = Vector2Add(EnemyAtkPos.at(i).first, ShipPos.at(i));
         }
     }
 }
@@ -114,12 +118,12 @@ void Projectile::SpriteTick(float DeltaTime)
     Bullet.Tick(DeltaTime);
 }
 
-bool Projectile::WithinScreen(raylib::Vector2 BulletPos)
+bool Projectile::WithinScreen(raylib::Vector2 BulletPos, std::vector<std::pair<raylib::Vector2, bool>>Container)
 {
     float TextureWidth{static_cast<float>(Bullet.GetTextureWidth(Scale))};
     float TextureHeight{static_cast<float>(Bullet.GetTextureHeight(Scale))};
 
-    for (auto& Pos:ShipAtkPos)
+    for (auto& Pos:Container)
     {
         if (Pos.first == BulletPos && 
            (Pos.first.x + TextureWidth < 0 || 

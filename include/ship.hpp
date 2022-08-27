@@ -25,7 +25,7 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     void Dying() {Stats.Dying = true;}
-    const raylib::Vector2 GetPos() const {return Stats.ScreenPos;}
+    const raylib::Vector2& GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
     const raylib::Rectangle GetCollision() const;
