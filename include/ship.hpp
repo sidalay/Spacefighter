@@ -51,6 +51,7 @@ private:
     void CheckAttack();
     void CheckDying(float DeltaTime);
     void CheckOffScreen();
+    void ApplyDamage(float DeltaTime);
     void SetDirectionSprite();
     void SetSpriteIndex();
     void UpdateScreenPos();

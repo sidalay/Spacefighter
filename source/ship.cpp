@@ -40,6 +40,7 @@ void Ship::Tick(float DeltaTime)
     SetSpriteIndex();
     SpriteTick(DeltaTime);
     CheckDying(DeltaTime);
+    ApplyDamage(DeltaTime);
 }
 
 void Ship::Draw()
@@ -55,12 +56,24 @@ void Ship::Draw()
     }
     else if (Stats.Alive) 
     {
-        DrawTexturePro(
-            Sprites.at(SpriteIndex).GetTexture(), 
-            Sprites.at(SpriteIndex).GetSourceRec(), 
-            Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
-            raylib::Vector2{}, 0.f, WHITE
-        );    
+        if (Stats.TakingDamage)
+        {
+            DrawTexturePro(
+                Sprites.at(SpriteIndex).GetTexture(), 
+                Sprites.at(SpriteIndex).GetSourceRec(), 
+                Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
+                raylib::Vector2{}, 0.f, RED
+            );    
+        }
+        else
+        {
+            DrawTexturePro(
+                Sprites.at(SpriteIndex).GetTexture(), 
+                Sprites.at(SpriteIndex).GetSourceRec(), 
+                Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
+                raylib::Vector2{}, 0.f, WHITE
+            );
+        }
     }
 }
 
@@ -319,11 +332,25 @@ void Ship::TakeDamage()
 {
     if (Stats.Health > 1)
     {
-        Stats.Health -= 1;
+        Stats.TakingDamage = true;
     }
     else 
     {
         Stats.Dying = true;
+    }
+}
+
+void Ship::ApplyDamage(float DeltaTime)
+{
+    if (Stats.TakingDamage)
+    {
+        Stats.RunningTime += DeltaTime;
+        if (Stats.RunningTime >= 0.55f)
+        {
+            Stats.Health -= 1.f;
+            Stats.RunningTime = 0.f;
+            Stats.TakingDamage = false;
+        }
     }
 }
 

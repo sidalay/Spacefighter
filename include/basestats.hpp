@@ -28,6 +28,7 @@ struct BaseStats
     raylib::Vector2 Speed{};
     bool Alive{true};
     bool Dying{false};
+    bool TakingDamage{false};
     float UpdateTime{1.f/14.f};
     float RunningTime{};
     float AttackTime{};
