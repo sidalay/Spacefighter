@@ -104,7 +104,7 @@ void Mothership::CheckShipEnemyCollision()
         if (CheckCollisionRecs(Alien.GetCollision(), Spacefighter.GetCollision()))
         {
             Alien.Dying();
-            Spacefighter.Dying();
+            Spacefighter.TakeDamage();
         }
     }
 }
@@ -136,7 +136,7 @@ void Mothership::CheckShipProjectileCollision()
         if (Stats.Projectiles.GetEnemyPositions().at(i).second == false &&
             CheckCollisionCircleRec(raylib::Vector2{static_cast<float>(Bullets.at(i).x), static_cast<float>(Bullets.at(i).y)}, Bullets.at(i).radius, Spacefighter.GetCollision()))
         {
-            Spacefighter.Dying();
+            Spacefighter.TakeDamage();
             Stats.Projectiles.SetEnemyAtkCollided(i);
         }
     }

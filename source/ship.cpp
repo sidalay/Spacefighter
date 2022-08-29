@@ -27,6 +27,7 @@ Ship::Ship(const GameTexture& Textures,
         default:
             break;
     }
+    Stats.Health = 3.f;
     Death.Frame.y = 0;
 }
 
@@ -312,6 +313,18 @@ void Ship::SetSpriteIndex()
 void Ship::UpdateScreenPos()
 {
     Stats.ScreenPos = Stats.ScreenPos.Add(Stats.Speed);
+}
+
+void Ship::TakeDamage()
+{
+    if (Stats.Health > 1)
+    {
+        Stats.Health -= 1;
+    }
+    else 
+    {
+        Stats.Dying = true;
+    }
 }
 
 const raylib::Vector2 Ship::GetCenterPos()

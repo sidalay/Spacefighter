@@ -24,7 +24,7 @@ public:
          const Shipcolor ShipShade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
-    void Dying() {Stats.Dying = true;}
+    void TakeDamage();
     const raylib::Vector2& GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
