@@ -23,6 +23,7 @@ BaseStats::BaseStats(BaseStats&& Object)
       Speed{std::move(Object.Speed)},
       Alive{std::move(Object.Alive)},
       Dying{std::move(Object.Dying)},
+      CollisionOn{std::move(Object.CollisionOn)},
       TakingDamage{std::move(Object.TakingDamage)},
       UpdateTime{std::move(Object.UpdateTime)},
       RunningTime{std::move(Object.RunningTime)},
@@ -45,6 +46,7 @@ BaseStats& BaseStats::operator=(BaseStats&& Object)
     this->Speed = std::move(Object.Speed);
     this->Alive = std::move(Object.Alive);
     this->Dying = std::move(Object.Dying);
+    this->CollisionOn = std::move(Object.CollisionOn);
     this->TakingDamage = std::move(Object.TakingDamage);
     this->UpdateTime = std::move(Object.UpdateTime);
     this->RunningTime = std::move(Object.RunningTime);

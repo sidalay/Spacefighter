@@ -10,7 +10,7 @@ enum class Shipcolor
 
 enum class Shipstate
 {
-    ACCELERATE, DECELERATE, NORMAL
+    ACCELERATE, DECELERATE, NORMAL, ROLL
 };
 
 class Ship
@@ -49,6 +49,7 @@ private:
     void CheckDecel();
     void CheckInput();
     void CheckAttack();
+    void CheckRolling();
     void CheckDying(float DeltaTime);
     void CheckOffScreen();
     void ApplyDamage(float DeltaTime);

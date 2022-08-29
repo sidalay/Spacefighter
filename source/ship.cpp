@@ -65,7 +65,16 @@ void Ship::Draw()
                 raylib::Vector2{}, 0.f, RED
             );    
         }
-        else
+        else if (State == Shipstate::ROLL)
+        {
+            DrawTexturePro(
+                Sprites.at(SpriteIndex).GetTexture(), 
+                Sprites.at(SpriteIndex).GetSourceRec(), 
+                Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
+                raylib::Vector2{}, 0.f, SKYBLUE
+            );  
+        }
+        else if (!Stats.TakingDamage)
         {
             DrawTexturePro(
                 Sprites.at(SpriteIndex).GetTexture(), 
@@ -91,6 +100,7 @@ void Ship::Movement()
     CheckAccel();
     CheckOffScreen();
     CheckDecel();
+    CheckRolling();
     UpdateScreenPos();
 }
 
@@ -228,8 +238,13 @@ void Ship::CheckInput()
             Heading = Direction::NORMAL;
         }
     }
+
+    if (IsKeyDown(KEY_LEFT_SHIFT))
+    {
+        State = Shipstate::ROLL;
+    }
     
-    if (IsKeyUp(KEY_W) && IsKeyUp(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && !Turning)
+    if (IsKeyUp(KEY_W) && IsKeyUp(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && IsKeyUp(KEY_LEFT_SHIFT) && !Turning)
     {
         State = Shipstate::NORMAL;
         Heading = Direction::NORMAL;
@@ -243,6 +258,18 @@ void Ship::CheckAttack()
     if (Stats.Alive && !Stats.Dying && (IsKeyPressed(KEY_SPACE) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)))
     {
         Stats.Projectiles.Load(GetCenterPos(), false);
+    }
+}
+
+void Ship::CheckRolling()
+{
+    if (State == Shipstate::ROLL)
+    {
+        Stats.CollisionOn = false;
+    }
+    else 
+    {
+        Stats.CollisionOn = true;
     }
 }
 
@@ -320,6 +347,9 @@ void Ship::SetSpriteIndex()
         case Shipstate::NORMAL:
             SpriteIndex = static_cast<int>(Shipstate::NORMAL);
             break;
+        case Shipstate::ROLL:
+            SpriteIndex = static_cast<int>(Shipstate::NORMAL);
+            break;
     }
 }
 
@@ -330,13 +360,16 @@ void Ship::UpdateScreenPos()
 
 void Ship::TakeDamage()
 {
-    if (Stats.Health > 1)
+    if (Stats.CollisionOn)
     {
-        Stats.TakingDamage = true;
-    }
-    else 
-    {
-        Stats.Dying = true;
+        if (Stats.Health > 1)
+        {
+            Stats.TakingDamage = true;
+        }
+        else 
+        {
+            Stats.Dying = true;
+        }
     }
 }
 
