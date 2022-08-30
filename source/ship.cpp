@@ -1,4 +1,5 @@
 #include "ship.hpp"
+#include <iostream>
 
 Ship::Ship(const GameTexture& Textures, 
            const GameAudio& Audio, 
@@ -65,7 +66,7 @@ void Ship::Draw()
                 raylib::Vector2{}, 0.f, RED
             );    
         }
-        else if (State == Shipstate::ROLL)
+        else if (Rolling)
         {
             DrawTexturePro(
                 Sprites.at(SpriteIndex).GetTexture(), 
@@ -239,9 +240,10 @@ void Ship::CheckInput()
         }
     }
 
-    if (IsKeyDown(KEY_LEFT_SHIFT))
+    if (IsKeyPressed(KEY_LEFT_SHIFT) && RollReleased)
     {
-        State = Shipstate::ROLL;
+        Rolling = true;
+        RollReleased = false;
     }
     
     if (IsKeyUp(KEY_W) && IsKeyUp(KEY_S) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D) && IsKeyUp(KEY_LEFT_SHIFT) && !Turning)
@@ -262,14 +264,24 @@ void Ship::CheckAttack()
 }
 
 void Ship::CheckRolling()
-{
-    if (State == Shipstate::ROLL)
+{   
+    // When barrel roll becomes available again
+    if (RollTimer >= RollCDTime)
+    {
+        RollReleased = true;
+        RollTimer = 0.f;
+    }
+    // When barrel roll ends
+    else if ((RollTimer >= MaxRollTime) && (RollTimer < RollCDTime))
+    {
+        RollTimer += GetFrameTime();
+        Rolling = false;
+        Stats.CollisionOn = true;
+    }
+    else if (Rolling)
     {
         Stats.CollisionOn = false;
-    }
-    else 
-    {
-        Stats.CollisionOn = true;
+        RollTimer += GetFrameTime();
     }
 }
 

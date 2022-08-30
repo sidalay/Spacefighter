@@ -40,8 +40,13 @@ private:
     int SpriteIndex{};
     float TurnInTime{};
     float TurnOutTime{};
+    float RollTimer{};
+    float MaxRollTime{0.7f};
+    float RollCDTime{1.f};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
+    bool Rolling{false};
+    bool RollReleased{true};
 
     void SpriteTick(float DeltaTime);
     void Movement();
