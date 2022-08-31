@@ -1,11 +1,15 @@
 #include "sprite.hpp"
 
-Sprite::Sprite(const raylib::Texture2D& Texture, const raylib::Vector2I&& MaxFrames, const float UpdateSpeed)
-    : Texture{Texture}, MaxFrames{MaxFrames}, UpdateTime{UpdateSpeed} {}
+Sprite::Sprite(const raylib::Texture2D& Texture, 
+               const std::string_view Name, 
+               const raylib::Vector2I&& MaxFrames, 
+               const float UpdateSpeed)
+    : Texture{Texture}, Name{Name}, MaxFrames{MaxFrames}, UpdateTime{UpdateSpeed} {}
 
 Sprite::Sprite(Sprite&& Object)
     : Frame{std::move(Object.Frame)},
       Texture{std::move(Object.Texture)},
+      Name{std::move(Object.Name)},
       MaxFrames{std::move(Object.MaxFrames)},
       PreviousFrame{std::move(Object.PreviousFrame)},
       RunningTime{std::move(Object.RunningTime)},

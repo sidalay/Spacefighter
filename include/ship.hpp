@@ -34,8 +34,6 @@ private:
     Shipcolor Shade{};
     Shipstate State{Shipstate::NORMAL}; 
     Direction Heading{Direction::UP};
-    Sprite Death;
-    Sprite Roll;
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};

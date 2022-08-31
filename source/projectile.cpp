@@ -3,8 +3,7 @@
 Projectile::Projectile(const GameTexture& Textures, const raylib::Window& Window) 
     : Textures{Textures}, 
       Window{Window}, 
-      Bullet{Textures.Projectiles, 
-      raylib::Vector2I{8,1}} {}
+      Bullet{Textures.Projectiles, "Projectile", raylib::Vector2I{8,1}} {}
 
 Projectile::Projectile(Projectile&& Object)
     : Textures{std::move(Object.Textures)},

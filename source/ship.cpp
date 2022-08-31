@@ -13,24 +13,23 @@ Ship::Ship(const GameTexture& Textures,
             Projectiles, 
             Window, 
             raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}, 
-      Shade{ShipShade},
-      Death{Textures.Death, raylib::Vector2I{8, 3}},
-      Roll{Textures.Roll, raylib::Vector2I{11, 1}}
+      Shade{ShipShade}
 {
     switch (Shade)
     {
         case Shipcolor::Purple:
         {
-            Sprites.emplace_back(Sprite{Textures.Accelerate, raylib::Vector2I{8, 7}});
-            Sprites.emplace_back(Sprite{Textures.Decelerate, raylib::Vector2I{8, 7}});
-            Sprites.emplace_back(Sprite{Textures.Normal, raylib::Vector2I{8, 7}});
+            Sprites.emplace_back(Textures.Accelerate, "Accelerate", raylib::Vector2I{8, 7});
+            Sprites.emplace_back(Textures.Decelerate, "Decelerate", raylib::Vector2I{8, 7});
+            Sprites.emplace_back(Textures.Normal, "Normal", raylib::Vector2I{8, 7});
+            Sprites.emplace_back(Textures.Death, "Death", raylib::Vector2I{8, 3});
+            Sprites.emplace_back(Textures.Roll, "Roll", raylib::Vector2I{11, 1}, .7f/11.f);
             break;
         }
         default:
             break;
     }
     Stats.Health = 3.f;
-    Death.Frame.y = 0;
 }
 
 void Ship::Tick(float DeltaTime)
@@ -50,9 +49,9 @@ void Ship::Draw()
     if (Stats.Dying || !Stats.Alive)
     {
         DrawTexturePro(
-            Death.GetTexture(), 
-            Death.GetSourceRec(), 
-            Death.GetPosRec(Stats.ScreenPos, Stats.Scale), 
+            Sprites.at(3).GetTexture(), 
+            Sprites.at(3).GetSourceRec(), 
+            Sprites.at(3).GetPosRec(Stats.ScreenPos, Stats.Scale), 
             raylib::Vector2{}, 0.f, WHITE
         );    
     }
@@ -70,9 +69,9 @@ void Ship::Draw()
         else if (Rolling)
         {
             DrawTexturePro(
-                Roll.GetTexture(), 
-                Roll.GetSourceRec(), 
-                Roll.GetPosRec(Stats.ScreenPos, Stats.Scale), 
+                Sprites.at(4).GetTexture(), 
+                Sprites.at(4).GetSourceRec(), 
+                Sprites.at(4).GetPosRec(Stats.ScreenPos, Stats.Scale), 
                 raylib::Vector2{}, 0.f, WHITE
             );  
         }
@@ -90,22 +89,20 @@ void Ship::Draw()
 
 void Ship::SpriteTick(float DeltaTime)
 {
-    if (Stats.Dying)
+    for (auto& Sprite:Sprites) 
     {
-        Roll.SetDefaultUpdateTime();
-        Death.Tick(DeltaTime);
-    }
-    else if (Rolling)
-    {
-        Roll.SetUpdateTime(.7f/11.f);
-        Roll.Tick(DeltaTime);
-    }
-    else
-    {
-        Roll.SetDefaultUpdateTime();
-        Roll.Frame.x = 0;
-        for (auto& Sprite:Sprites) 
+        if (Stats.Dying && Sprite.GetName() == "Death")
         {
+            Sprites.at(4).Frame.x = 0;
+            Sprite.Tick(DeltaTime);
+        }
+        else if (Rolling && Sprite.GetName() == "Roll")
+        {
+            Sprite.Tick(DeltaTime);
+        }
+        else if (!Rolling && !Stats.Dying)
+        {
+            Sprites.at(4).Frame.x = 0;
             Sprite.Tick(DeltaTime);
         }
     }
@@ -309,7 +306,7 @@ void Ship::CheckDying(float DeltaTime)
         {
             Stats.Alive = false;
             Stats.RunningTime = 0.f;
-            Death.Frame.y = 1;
+            Sprites.at(3).Frame.y = 1;
         }
     }
 }

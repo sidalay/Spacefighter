@@ -15,10 +15,10 @@ Enemy::Enemy(const GameTexture& Textures,
             Window,
             ScreenPos},
       Monster{Monster},
-      Death{Textures.Death, raylib::Vector2I{8, 3}},
+      Death{Textures.Death, "Death", raylib::Vector2I{8, 3}},
       SpacefighterPos{SpacefighterPos}
 {
-    Sprites.emplace_back(Textures.Aliens, raylib::Vector2I{8, 8});
+    Sprites.emplace_back(Textures.Aliens, "Aliens", raylib::Vector2I{8, 8});
     SetMonsterSprite();
     SetDeathSprite();
 }
