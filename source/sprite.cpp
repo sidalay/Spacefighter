@@ -33,12 +33,29 @@ void Sprite::Tick(float DeltaTime)
 {
     // update animation frame
     RunningTime += DeltaTime;
-    if (RunningTime >= UpdateTime) {
+    if (RunningTime >= UpdateTime) 
+    {
         PreviousFrame = Frame.x;
         ++Frame.x;
         RunningTime = 0.f;
-        if (Frame.x > MaxFrames.x) {
+        if (Frame.x > MaxFrames.x) 
+        {
             Frame.x = 0;
+        }
+    }
+}
+
+void Sprite::InverseTick(float DeltaTime)
+{
+    RunningTime += DeltaTime;
+    if (RunningTime >= UpdateTime)
+    {
+        PreviousFrame = Frame.x;
+        --Frame.x;
+        RunningTime = 0.f;
+        if (Frame.x < 0.f)
+        {
+            Frame.x = MaxFrames.x;
         }
     }
 }

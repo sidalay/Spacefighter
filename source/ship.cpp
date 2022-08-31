@@ -23,7 +23,7 @@ Ship::Ship(const GameTexture& Textures,
             Sprites.emplace_back(Textures.Decelerate, "Decelerate", raylib::Vector2I{8, 7});
             Sprites.emplace_back(Textures.Normal, "Normal", raylib::Vector2I{8, 7});
             Sprites.emplace_back(Textures.Death, "Death", raylib::Vector2I{8, 3});
-            Sprites.emplace_back(Textures.Roll, "Roll", raylib::Vector2I{11, 1}, .7f/11.f);
+            Sprites.emplace_back(Textures.Roll, "Roll", raylib::Vector2I{11, 2}, .7f/11.f);
             break;
         }
         default:
@@ -264,6 +264,15 @@ void Ship::CheckInput()
         Heading = Direction::NORMAL;
         TurnInTime = 0.f;
         TurnOutTime = 0.f;
+    }
+
+    if (TurningLeft)
+    {
+        Sprites.at(4).Frame.y = 0;
+    }
+    else if (TurningRight)
+    {
+        Sprites.at(4).Frame.y = 1;
     }
 }
 
