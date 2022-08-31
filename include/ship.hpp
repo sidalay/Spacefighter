@@ -35,6 +35,7 @@ private:
     Shipstate State{Shipstate::NORMAL}; 
     Direction Heading{Direction::UP};
     Sprite Death;
+    Sprite Roll;
     std::vector<Sprite> Sprites{};
 
     int SpriteIndex{};
@@ -45,6 +46,8 @@ private:
     float RollCDTime{1.f};
     float Accelerate{0.05f};
     float Decelerate{0.03f};
+    bool RollLeft{false};
+    bool RollRight{false};
     bool Rolling{false};
     bool RollReleased{true};
 

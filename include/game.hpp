@@ -38,7 +38,7 @@ namespace Game
     };
     struct Device
     {
-        raylib::Vector2I Screen{1280,720};
+        raylib::Vector2I Screen{1920,1080};
         raylib::Window Window;
         raylib::AudioDevice Audio;
     };

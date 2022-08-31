@@ -14,7 +14,8 @@ Ship::Ship(const GameTexture& Textures,
             Window, 
             raylib::Vector2{static_cast<float>(Window.GetWidth()/2), static_cast<float>(Window.GetHeight()/2)}}, 
       Shade{ShipShade},
-      Death{Textures.Death, raylib::Vector2I{8, 3}}
+      Death{Textures.Death, raylib::Vector2I{8, 3}},
+      Roll{Textures.Roll, raylib::Vector2I{11, 1}}
 {
     switch (Shade)
     {
@@ -69,10 +70,10 @@ void Ship::Draw()
         else if (Rolling)
         {
             DrawTexturePro(
-                Sprites.at(SpriteIndex).GetTexture(), 
-                Sprites.at(SpriteIndex).GetSourceRec(), 
-                Sprites.at(SpriteIndex).GetPosRec(Stats.ScreenPos, Stats.Scale), 
-                raylib::Vector2{}, 0.f, SKYBLUE
+                Roll.GetTexture(), 
+                Roll.GetSourceRec(), 
+                Roll.GetPosRec(Stats.ScreenPos, Stats.Scale), 
+                raylib::Vector2{}, 0.f, WHITE
             );  
         }
         else if (!Stats.TakingDamage)
@@ -89,11 +90,25 @@ void Ship::Draw()
 
 void Ship::SpriteTick(float DeltaTime)
 {
-    for (auto& Sprite:Sprites) 
+    if (Stats.Dying)
     {
-        Sprite.Tick(DeltaTime);
+        Roll.SetDefaultUpdateTime();
+        Death.Tick(DeltaTime);
     }
-    Death.Tick(DeltaTime);
+    else if (Rolling)
+    {
+        Roll.SetUpdateTime(.7f/11.f);
+        Roll.Tick(DeltaTime);
+    }
+    else
+    {
+        Roll.SetDefaultUpdateTime();
+        Roll.Frame.x = 0;
+        for (auto& Sprite:Sprites) 
+        {
+            Sprite.Tick(DeltaTime);
+        }
+    }
 }
 
 void Ship::Movement()
@@ -280,8 +295,8 @@ void Ship::CheckRolling()
     }
     else if (Rolling)
     {
-        Stats.CollisionOn = false;
         RollTimer += GetFrameTime();
+        Stats.CollisionOn = false;
     }
 }
 

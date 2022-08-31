@@ -17,6 +17,7 @@ struct GameTexture
     const raylib::Texture Accelerate{"sprites/ShipAccel.png"};
     const raylib::Texture Decelerate{"sprites/ShipDecel.png"};
     const raylib::Texture Death{"sprites/Death.png"};
+    const raylib::Texture Roll{"sprites/ShipRoll.png"};
     const raylib::Texture Normal{"sprites/ShipNorm.png"};
     const raylib::Texture Projectiles{"sprites/Projectiles.png"};
     const raylib::Texture SpaceBackground{"sprites/SpaceBG.png"};

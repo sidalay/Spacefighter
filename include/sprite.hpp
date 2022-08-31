@@ -31,6 +31,8 @@ struct Sprite
     Sprite& operator=(const Sprite&) = delete;
     Sprite& operator=(Sprite&& Object);
     void Tick(float DeltaTime);
+    void SetUpdateTime(float NewTime) {UpdateTime = NewTime;}
+    void SetDefaultUpdateTime() {UpdateTime = 1.f/8.f;}
     constexpr int GetTextureWidth(float Scale = 1.f) const {return (Texture.width/MaxFrames.x) * static_cast<int>(Scale);}
     constexpr int GetTextureHeight(float Scale = 1.f) const {return (Texture.height/MaxFrames.y) * static_cast<int>(Scale);}
     const raylib::Texture& GetTexture() const {return Texture;}
