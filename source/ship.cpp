@@ -1,5 +1,4 @@
 #include "ship.hpp"
-#include <iostream>
 
 Ship::Ship(const GameTexture& Textures, 
            const GameAudio& Audio, 
@@ -314,6 +313,7 @@ void Ship::CheckDying(float DeltaTime)
         if (Stats.RunningTime >= 0.55f)
         {
             Stats.Alive = false;
+            Stats.Dying = false;
             Stats.RunningTime = 0.f;
             Sprites.at(3).Frame.y = 1;
         }

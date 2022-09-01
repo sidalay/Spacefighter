@@ -29,6 +29,10 @@ void DeveloperTools::Tick()
         {
             ShowSpeed = !ShowSpeed;
         }
+        else if (IsKeyPressed(KEY_SIX))
+        {
+            ShipAlive = !ShipAlive;
+        }
         else if (IsKeyPressed(KEY_ZERO)) 
         {
             ShowDevTools = !ShowDevTools;
@@ -57,7 +61,7 @@ void DeveloperTools::Tick()
     }
 }
 
-void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership)
+void DeveloperTools::DrawTools(Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership)
 {
     if (DevToolsOn) 
     {
@@ -83,6 +87,12 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bulle
             DrawCollision(Bullets);
             DrawCollision(Mothership);
         }
+
+        if (ShipAlive)
+        {
+            Spacefighter.SetAlive();
+            ShipAlive = !ShipAlive;
+        }
         
         if (ShowDevTools) 
         {
@@ -96,10 +106,11 @@ void DeveloperTools::DrawTools(const Ship& Spacefighter, const Projectile& Bulle
             DrawText("[3] FPS", 20, 395, 20, !ShowFPS ? WHITE : LIME);
             DrawText("[4] Position", 20, 415, 20, !ShowPos ? WHITE : LIME);
             DrawText("[5] Speed", 20, 435, 20, !ShowSpeed ? WHITE : LIME);
-            DrawText("[0] Tools Menu", 20, 455, 20, !IsKeyDown(KEY_ZERO) ? WHITE : LIME);
-            DrawText("    ---- Misc ----", 20, 480, 20, WHITE);
-            DrawText("[-] Decrease HP", 20, 505, 20, !IsKeyDown(KEY_MINUS) ? WHITE : LIME);
-            DrawText("[+] Increase HP", 20, 525, 20, !IsKeyDown(KEY_EQUAL) ? WHITE : LIME);
+            DrawText("[6] Set Alive", 20, 455, 20, !IsKeyDown(KEY_SIX) ? WHITE : LIME);
+            DrawText("[0] Tools Menu", 20, 475, 20, !IsKeyDown(KEY_ZERO) ? WHITE : LIME);
+            DrawText("    ---- Misc ----", 20, 500, 20, WHITE);
+            DrawText("[-] Decrease HP", 20, 525, 20, !IsKeyDown(KEY_MINUS) ? WHITE : LIME);
+            DrawText("[+] Increase HP", 20, 550, 20, !IsKeyDown(KEY_EQUAL) ? WHITE : LIME);
         }
     }
 }

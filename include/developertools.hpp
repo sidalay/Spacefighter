@@ -14,9 +14,10 @@ public:
     DeveloperTools& operator=(DeveloperTools&&) = default;
 
     void Tick();
-    void DrawTools(const Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership);
+    void DrawTools(Ship& Spacefighter, const Projectile& Bullets, const Mothership& Mothership);
 private:
     int Row{20};
+    bool ShipAlive{false};
     bool ShowPos{false};
     bool ShowFPS{false};
     bool ShowSpeed{false};

@@ -25,6 +25,7 @@ public:
     void Tick(float DeltaTime);
     void Draw();
     void TakeDamage();
+    void SetAlive() {Stats.Alive = true; Stats.Health = 3;}
     const raylib::Vector2& GetPos() const {return Stats.ScreenPos;}
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
