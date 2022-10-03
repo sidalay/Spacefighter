@@ -1,5 +1,5 @@
 Level file
-Template: {$Color} {$Spawn}
+Template: Enemy= {$Color} {$Spawn}
 Colors: {Orange, Pink, Purple, Aqua, Blue, Green, Red, Yellow}
 Spawn: {Quadrant[1-4], Mid}
 Symbols:

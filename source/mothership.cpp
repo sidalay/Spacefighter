@@ -45,39 +45,21 @@ void Mothership::Draw()
 void Mothership::Deploy()
 {
     Stats.RunningTime += GetFrameTime();
-    
-    // if (IsKeyPressed(KEY_F2))
-    // {
-    //     Load(raylib::Vector2{0.f, 64.f}, MonsterType::Orange);
-    // }
-    // else if (IsKeyPressed(KEY_F3))
-    // {
-    //     Load(raylib::Vector2{0.f, 128.f}, MonsterType::Pink);
-    // }
-    // else if (IsKeyPressed(KEY_F4))
-    // {
-    //     Load(raylib::Vector2{0.f, 192.f}, MonsterType::Purple);
-    // }
-    // else if (IsKeyPressed(KEY_F5))
-    // {
-    //     Load(raylib::Vector2{0.f, 256.f}, MonsterType::Aqua);
-    // }
-    // else if (IsKeyPressed(KEY_F6))
-    // {
-    //     Load(raylib::Vector2{0.f, 320.f}, MonsterType::Blue);
-    // }
-    // else if (IsKeyPressed(KEY_F7))
-    // {
-    //     Load(raylib::Vector2{0.f, 384.f}, MonsterType::Green);
-    // }
-    // else if (IsKeyPressed(KEY_F8))
-    // {
-    //     Load(raylib::Vector2{0.f, 448.f}, MonsterType::Red);
-    // }
-    // else if (IsKeyPressed(KEY_F9))
-    // {
-    //     Load(raylib::Vector2{0.f, 512.f}, MonsterType::Yellow);
-    // }
+
+    if (Stats.RunningTime >= 5.f) 
+    {
+        auto Iterator {Levels.begin()};
+        if (Iterator != Levels.end()) // Construct Aliens & erase from vector
+        {
+            Load(Iterator->first, Iterator->second);
+            Levels.erase(Iterator);
+        }
+        else // If vector is empty load next level
+        {
+            LoadLevel();
+        }
+        Stats.RunningTime = 3.f;
+    }
 }
 
 void Mothership::Load(Spawn SpawnPoint, MonsterType Type)
@@ -92,6 +74,14 @@ void Mothership::Load(Spawn SpawnPoint, MonsterType Type)
         Spacefighter.GetPos(),
         SpawnPoint,
         Type);
+}
+
+void Mothership::LoadLevel()
+{
+    if (CurrentLevel <= Editor.GetNumberOfLevels()) 
+    {
+        Levels = Editor.GetLevel(++CurrentLevel);
+    }
 }
 
 void Mothership::Recall()

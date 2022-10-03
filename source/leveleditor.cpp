@@ -8,7 +8,7 @@ LevelEditor::LevelEditor(std::string_view FilePath)
 {
     Open(FilePath);
     Parse();
-    Print();
+    // Print();
 }
 
 LevelEditor::~LevelEditor()
@@ -117,7 +117,7 @@ Spawn LevelEditor::ConvertToSpawn(std::string_view SpawnPoint)
     }
 }
 
-const std::vector<std::pair<Spawn, MonsterType>>& LevelEditor::GetLevel(int Level)
+std::vector<std::pair<Spawn, MonsterType>>& LevelEditor::GetLevel(int Level)
 {
     return Levels.at(Level-1);
 }

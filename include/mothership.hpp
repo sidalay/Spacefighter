@@ -17,10 +17,12 @@ private:
     Ship& Spacefighter;
     LevelEditor Editor{"levels/level.txt"};
     std::vector<Enemy> Aliens{};
-    const std::vector<std::pair<Spawn, MonsterType>>& Levels;
+    std::vector<std::pair<Spawn, MonsterType>>& Levels;
+    int CurrentLevel{1};
 
     void Deploy();
     void Load(Spawn SpawnPoint, MonsterType Type);
+    void LoadLevel();
     void Recall();
     void CheckShipEnemyCollision();
     void CheckEnemyProjectileCollision(); 
