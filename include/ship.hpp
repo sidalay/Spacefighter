@@ -16,12 +16,6 @@ enum class Shipstate
 class Ship
 {
 public:
-    Ship(const GameTexture& Textures, 
-         const GameAudio& Audio,
-         const Randomizer& RandomEngine,
-         Projectile& Projectiles,
-         const raylib::Window& Window,
-         const Shipcolor ShipShade = Shipcolor::Purple);
     void Tick(float DeltaTime);
     void Draw();
     void TakeDamage();
@@ -30,6 +24,7 @@ public:
     const raylib::Vector2 GetCenterPos();
     const raylib::Vector2 GetSpeed() const {return Stats.Speed;}
     const raylib::Rectangle GetCollision() const;
+
 private:
     BaseStats Stats;
     Shipcolor Shade{};
@@ -63,6 +58,14 @@ private:
     void SetDirectionSprite();
     void SetSpriteIndex();
     void UpdateScreenPos();
+
+public:
+    Ship(const GameTexture& Textures, 
+         const GameAudio& Audio,
+         const Randomizer& RandomEngine,
+         Projectile& Projectiles,
+         const raylib::Window& Window,
+         const Shipcolor ShipShade = Shipcolor::Purple);
 };
 
 #endif

@@ -7,16 +7,10 @@
 class Mothership
 {
 public:
-    Mothership(const GameTexture& Textures,
-               const GameAudio& Audio,
-               const Randomizer& RandomEngine,
-               Projectile& Projectiles,
-               const raylib::Window& Window, 
-               Stage& CurrentLevel,
-               Ship& Spacefighter);
     void Tick(float DeltaTime);
     void Draw();
     const std::vector<Enemy>& GetAliens() const {return Aliens;}
+
 private:
     BaseStats Stats;
     Stage& Level;
@@ -29,6 +23,15 @@ private:
     void CheckShipEnemyCollision();
     void CheckEnemyProjectileCollision(); 
     void CheckShipProjectileCollision();
+
+public:
+    Mothership(const GameTexture& Textures,
+               const GameAudio& Audio,
+               const Randomizer& RandomEngine,
+               Projectile& Projectiles,
+               const raylib::Window& Window, 
+               Stage& CurrentLevel,
+               Ship& Spacefighter);
 };
 
 #endif // MOTHERSHIP_HPP

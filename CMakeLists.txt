@@ -37,6 +37,7 @@ add_executable(${PROJECT_NAME}
     source/developertools.cpp
     source/enemy.cpp
     source/game.cpp
+    source/leveleditor.cpp
     source/main.cpp
     source/mothership.cpp
     source/projectile.cpp
@@ -51,4 +52,4 @@ target_include_directories(${PROJECT_NAME} PRIVATE include enums ${raylib_INCLUD
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 
-file(COPY sprites audio DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY sprites audio levels DESTINATION ${CMAKE_BINARY_DIR})
