@@ -15,8 +15,9 @@ private:
     BaseStats Stats;
     Stage& Level;
     Ship& Spacefighter;
-    std::vector<Enemy> Aliens{};
     LevelEditor Editor{"levels/level.txt"};
+    std::vector<Enemy> Aliens{};
+    const std::vector<std::pair<std::string, MonsterType>>& Levels;
 
     void Deploy();
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);

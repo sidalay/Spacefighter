@@ -18,7 +18,8 @@ Mothership::Mothership(const GameTexture& Textures,
         raylib::Vector2{}
       }, 
       Level{CurrentLevel},
-      Spacefighter{Spacefighter} {};
+      Spacefighter{Spacefighter},
+      Levels{Editor.GetLevel(1)} {};
 
 void Mothership::Tick(float DeltaTime)
 {
