@@ -1,7 +1,6 @@
 #ifndef MOTHERSHIP_HPP
 #define MOTHERSHIP_HPP
 
-#include "enemy.hpp"
 #include "ship.hpp"
 #include "leveleditor.hpp"
 

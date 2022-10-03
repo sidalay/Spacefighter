@@ -2,23 +2,22 @@
 #define LEVELEDITOR_HPP
 
 #include <fstream>
-#include <vector>
 #include <string>
-#include <string_view>
+#include "enemy.hpp"
 
 class LevelEditor
 {
 public:
-    const std::vector<std::pair<std::string, std::string>>& GetLevel(int Level);
+    const std::vector<std::pair<MonsterType, std::string>>& GetLevel(int Level);
 
 private:
     std::ifstream FileStream{};
-    std::vector<std::vector<std::pair<std::string, std::string>>> Levels{};
+    std::vector<std::vector<std::pair<MonsterType, std::string>>> Levels{};
 
     void Open(std::string_view FilePath);
     void Parse();
     void Print();
-
+    MonsterType ConvertToType(std::string_view Color);
 public:
     LevelEditor(std::string_view FilePath);
     ~LevelEditor();
