@@ -26,7 +26,7 @@ void LevelEditor::Open(std::string_view FilePath)
 
 void LevelEditor::Parse()
 {
-    std::vector<std::pair<MonsterType, std::string>> Temp{};
+    std::vector<std::pair<std::string, MonsterType>> Temp{};
     std::string Color{};
     std::string Spawn{};
     while (FileStream)
@@ -36,7 +36,7 @@ void LevelEditor::Parse()
         {
             FileStream >> Color;
             FileStream >> Spawn;
-            Temp.emplace_back(std::move(std::make_pair(ConvertToType(Color), Spawn)));
+            Temp.emplace_back(std::move(std::make_pair(Spawn, ConvertToType(Color))));
         }
         else if (Color.starts_with("ENDLEVEL"))
         {
@@ -54,7 +54,7 @@ void LevelEditor::Print()
     for (const auto& Level:Levels) {
         std::cout << "\nLevel " << LevelCounter << "\n\n";
         for (const auto& Enemy:Level) {
-            std::cout << Enemy.first << " " << Enemy.second << '\n';
+            std::cout << Enemy.second << " " << Enemy.first << '\n';
         }
         ++LevelCounter;
     }
@@ -93,7 +93,7 @@ MonsterType LevelEditor::ConvertToType(std::string_view Color)
     }
 }
 
-const std::vector<std::pair<MonsterType, std::string>>& LevelEditor::GetLevel(int Level)
+const std::vector<std::pair<std::string, MonsterType>>& LevelEditor::GetLevel(int Level)
 {
     return Levels.at(Level-1);
 }

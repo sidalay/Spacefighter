@@ -8,11 +8,11 @@
 class LevelEditor
 {
 public:
-    const std::vector<std::pair<MonsterType, std::string>>& GetLevel(int Level);
+    const std::vector<std::pair<std::string, MonsterType>>& GetLevel(int Level);
 
 private:
     std::ifstream FileStream{};
-    std::vector<std::vector<std::pair<MonsterType, std::string>>> Levels{};
+    std::vector<std::vector<std::pair<std::string, MonsterType>>> Levels{};
 
     void Open(std::string_view FilePath);
     void Parse();
