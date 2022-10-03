@@ -8,16 +8,17 @@
 class LevelEditor
 {
 public:
-    const std::vector<std::pair<std::string, MonsterType>>& GetLevel(int Level);
+    const std::vector<std::pair<Spawn, MonsterType>>& GetLevel(int Level);
 
 private:
     std::ifstream FileStream{};
-    std::vector<std::vector<std::pair<std::string, MonsterType>>> Levels{};
+    std::vector<std::vector<std::pair<Spawn, MonsterType>>> Levels{};
 
     void Open(std::string_view FilePath);
     void Parse();
     void Print();
-    MonsterType ConvertToType(std::string_view Color);
+    MonsterType ConvertToMonster(std::string_view Color);
+    Spawn ConvertToSpawn(std::string_view SpawnPoint);
 public:
     LevelEditor(std::string_view FilePath);
     ~LevelEditor();

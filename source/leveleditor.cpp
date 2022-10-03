@@ -2,6 +2,7 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& Out, const MonsterType& Type);
+std::ostream& operator<<(std::ostream& Out, const Spawn& Type);
 
 LevelEditor::LevelEditor(std::string_view FilePath)
 {
@@ -26,7 +27,7 @@ void LevelEditor::Open(std::string_view FilePath)
 
 void LevelEditor::Parse()
 {
-    std::vector<std::pair<std::string, MonsterType>> Temp{};
+    std::vector<std::pair<Spawn, MonsterType>> Temp{};
     std::string Color{};
     std::string Spawn{};
     while (FileStream)
@@ -36,7 +37,7 @@ void LevelEditor::Parse()
         {
             FileStream >> Color;
             FileStream >> Spawn;
-            Temp.emplace_back(std::move(std::make_pair(Spawn, ConvertToType(Color))));
+            Temp.emplace_back(std::move(std::make_pair(ConvertToSpawn(Spawn), ConvertToMonster(Color))));
         }
         else if (Color.starts_with("ENDLEVEL"))
         {
@@ -60,7 +61,7 @@ void LevelEditor::Print()
     }
 }
 
-MonsterType LevelEditor::ConvertToType(std::string_view Color)
+MonsterType LevelEditor::ConvertToMonster(std::string_view Color)
 {
     
     if (Color == "Orange") {
@@ -93,7 +94,30 @@ MonsterType LevelEditor::ConvertToType(std::string_view Color)
     }
 }
 
-const std::vector<std::pair<std::string, MonsterType>>& LevelEditor::GetLevel(int Level)
+Spawn LevelEditor::ConvertToSpawn(std::string_view SpawnPoint)
+{
+    if (SpawnPoint == "Quadrant1") {
+        return Spawn::Quadrant1;
+    }
+    else if (SpawnPoint == "Quadrant2") {
+        return Spawn::Quadrant2;
+    }
+    else if (SpawnPoint == "Quadrant3") {
+        return Spawn::Quadrant3;
+    }
+    else if (SpawnPoint == "Quadrant4") {
+        return Spawn::Quadrant4;
+    }
+    else if (SpawnPoint == "Mid") {
+        return Spawn::Mid;
+    }
+    else {
+        std::cerr << "\nInvalid Spawn input. Check level.txt.\n";
+        return Spawn::Mid;
+    }
+}
+
+const std::vector<std::pair<Spawn, MonsterType>>& LevelEditor::GetLevel(int Level)
 {
     return Levels.at(Level-1);
 }
@@ -103,28 +127,51 @@ std::ostream& operator<<(std::ostream& Out, const MonsterType& Type)
     switch (Type)
     {
         case MonsterType::Aqua:
-            Out << "MonsterType[Aqua]";
+            Out << "MonsterType: [Aqua]";
             break;
         case MonsterType::Blue:
-            Out << "MonsterType[Blue]";
+            Out << "MonsterType: [Blue]";
             break;
         case MonsterType::Green:
-            Out << "MonsterType[Green]";
+            Out << "MonsterType: [Gren]";
             break;
         case MonsterType::Orange:
-            Out << "MonsterType[Orange]";
+            Out << "MonsterType: [Orng]";
             break;
         case MonsterType::Pink:
-            Out << "MonsterType[Pink]";
+            Out << "MonsterType: [Pink]";
             break;
         case MonsterType::Purple:
-            Out << "MonsterType[Purple]";
+            Out << "MonsterType: [Purp]";
             break;
         case MonsterType::Red:
-            Out << "MonsterType[Red]";
+            Out << "MonsterType: [Red]";
             break;
         case MonsterType::Yellow:
-            Out << "MonsterType[Yellow]";
+            Out << "MonsterType: [Yell]";
+            break;
+    }
+    return Out;
+}
+
+std::ostream& operator<<(std::ostream& Out, const Spawn& Type)
+{
+    switch (Type)
+    {
+        case Spawn::Mid:
+            Out << "SpawnPoint: [Mid]";
+            break;
+        case Spawn::Quadrant1:
+            Out << "SpawnPoint: [Quadrant 1]";
+            break;
+        case Spawn::Quadrant2:
+            Out << "SpawnPoint: [Quadrant 2]";
+            break;
+        case Spawn::Quadrant3:
+            Out << "SpawnPoint: [Quadrant 3]";
+            break;
+        case Spawn::Quadrant4:
+            Out << "SpawnPoint: [Quadrant 4]";
             break;
     }
     return Out;

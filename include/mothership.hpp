@@ -17,7 +17,7 @@ private:
     Ship& Spacefighter;
     LevelEditor Editor{"levels/level.txt"};
     std::vector<Enemy> Aliens{};
-    const std::vector<std::pair<std::string, MonsterType>>& Levels;
+    const std::vector<std::pair<Spawn, MonsterType>>& Levels;
 
     void Deploy();
     void Load(Spawn SpawnPoint, MonsterType Type);
