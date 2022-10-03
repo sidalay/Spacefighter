@@ -37,7 +37,7 @@ void LevelEditor::Parse()
         {
             FileStream >> Color;
             FileStream >> Spawn;
-            Temp.emplace_back(std::move(std::make_pair(ConvertToSpawn(Spawn), ConvertToMonster(Color))));
+            Temp.emplace_back(ConvertToSpawn(Spawn), ConvertToMonster(Color));
         }
         else if (Color.starts_with("ENDLEVEL"))
         {

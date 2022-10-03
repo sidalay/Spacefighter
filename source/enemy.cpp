@@ -23,6 +23,7 @@ Enemy::Enemy(const GameTexture& Textures,
     Sprites.emplace_back(Textures.Aliens, "Aliens", raylib::Vector2I{8, 8});
     SetMonsterSprite();
     SetDeathSprite();
+    SetSpawnPos();
 }
 
 Enemy::Enemy(Enemy&& Object)
@@ -211,6 +212,43 @@ void Enemy::SetMonsterSprite()
 void Enemy::SetDeathSprite()
 {
     Death.Frame.y = 2;
+}
+
+void Enemy::SetSpawnPos()
+{
+    switch (SpawnPoint)
+    {
+        case Spawn::Mid: 
+        {
+            Stats.ScreenPos.x = 900.f;
+            Stats.ScreenPos.y = 0.f;
+            break;
+        } 
+        case Spawn::Quadrant1: 
+        {
+            Stats.ScreenPos.x = 0.f;
+            Stats.ScreenPos.y = 0.f;
+            break;
+        }
+        case Spawn::Quadrant2: 
+        {
+            Stats.ScreenPos.x = 0.f;
+            Stats.ScreenPos.y = 370.f;
+            break;
+        }
+        case Spawn::Quadrant3: 
+        {
+            Stats.ScreenPos.x = 1800.f;
+            Stats.ScreenPos.y = 0.f;
+            break;
+        }
+        case Spawn::Quadrant4: 
+        {
+            Stats.ScreenPos.x = 1800.f;
+            Stats.ScreenPos.y = 370.f;
+            break;
+        }
+    }
 }
 
 void Enemy::UpdateScreenPos()

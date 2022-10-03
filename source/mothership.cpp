@@ -78,7 +78,7 @@ void Mothership::Load(Spawn SpawnPoint, MonsterType Type)
 
 void Mothership::LoadLevel()
 {
-    if (CurrentLevel <= Editor.GetNumberOfLevels()) 
+    if (CurrentLevel < Editor.GetNumberOfLevels()) 
     {
         Levels = Editor.GetLevel(++CurrentLevel);
     }

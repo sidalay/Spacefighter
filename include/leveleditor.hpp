@@ -9,7 +9,7 @@ class LevelEditor
 {
 public:
     std::vector<std::pair<Spawn, MonsterType>>& GetLevel(int Level);
-    const size_t GetNumberOfLevels() {return Levels.size();}
+    int GetNumberOfLevels() {return static_cast<int>(Levels.size());}
 
 private:
     std::ifstream FileStream{};

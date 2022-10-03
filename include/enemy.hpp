@@ -43,6 +43,7 @@ private:
     void SetSpriteIndex();
     void SetMonsterSprite();
     void SetDeathSprite();
+    void SetSpawnPos();
     void UpdateScreenPos();
     void CheckDying(float DeltaTime);
 
