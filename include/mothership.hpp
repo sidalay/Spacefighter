@@ -3,6 +3,7 @@
 
 #include "enemy.hpp"
 #include "ship.hpp"
+#include "leveleditor.hpp"
 
 class Mothership
 {
@@ -16,6 +17,7 @@ private:
     Stage& Level;
     Ship& Spacefighter;
     std::vector<Enemy> Aliens{};
+    LevelEditor Editor{"levels/level.txt"};
 
     void Deploy();
     void Load(raylib::Vector2 ScreenPos, MonsterType Type);

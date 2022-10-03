@@ -5,7 +5,6 @@ LevelEditor::LevelEditor(std::string_view FilePath)
 {
     Open(FilePath);
     Parse();
-    Print();
 }
 
 LevelEditor::~LevelEditor()
