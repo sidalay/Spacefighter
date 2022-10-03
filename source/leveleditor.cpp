@@ -1,9 +1,6 @@
 #include "leveleditor.hpp"
 #include <iostream>
 
-std::ostream& operator<<(std::ostream& Out, const MonsterType& Type);
-std::ostream& operator<<(std::ostream& Out, const Spawn& Type);
-
 LevelEditor::LevelEditor(std::string_view FilePath)
 {
     Open(FilePath);
@@ -41,7 +38,7 @@ void LevelEditor::Parse()
         }
         else if (Color.starts_with("ENDLEVEL"))
         {
-            Levels.emplace_back(std::move(Temp));
+            Levels.push_back(std::move(Temp));
             Temp.clear();
         }
         Color.clear();

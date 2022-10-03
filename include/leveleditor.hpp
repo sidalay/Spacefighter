@@ -25,4 +25,7 @@ public:
     ~LevelEditor();
 };
 
+std::ostream& operator<<(std::ostream& Out, const MonsterType& Type);
+std::ostream& operator<<(std::ostream& Out, const Spawn& Type);
+
 #endif // LEVELEDITOR_HPP
