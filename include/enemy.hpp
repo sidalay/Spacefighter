@@ -8,6 +8,11 @@ enum class MonsterType
     Purple, Yellow, Aqua, Pink, Red, Orange, Blue, Green
 };
 
+enum class Spawn
+{
+    Quadrant1, Quadrant2, Quadrant3, Quadrant4, Mid
+};
+
 class Enemy
 {
 public:
@@ -24,6 +29,7 @@ private:
     BaseStats Stats;
     MonsterType Monster;
     Sprite Death;
+    Spawn SpawnPoint;
     const raylib::Vector2& SpacefighterPos;
     std::vector<Sprite> Sprites{};
     int SpriteIndex{};
@@ -48,6 +54,7 @@ public:
           const raylib::Window& Window,
           const raylib::Vector2 ScreenPos,
           const raylib::Vector2& SpacefighterPos,
+          Spawn Pos,
           MonsterType Monster);
     ~Enemy() = default;
     Enemy(const Enemy&) = delete;

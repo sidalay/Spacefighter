@@ -7,6 +7,7 @@ Enemy::Enemy(const GameTexture& Textures,
              const raylib::Window& Window,
              const raylib::Vector2 ScreenPos,
              const raylib::Vector2& SpacefighterPos,
+             Spawn Pos,
              MonsterType Monster)
     : Stats{Textures, 
             Audio, 
@@ -16,6 +17,7 @@ Enemy::Enemy(const GameTexture& Textures,
             ScreenPos},
       Monster{Monster},
       Death{Textures.Death, "Death", raylib::Vector2I{8, 3}},
+      SpawnPoint{Pos},
       SpacefighterPos{SpacefighterPos}
 {
     Sprites.emplace_back(Textures.Aliens, "Aliens", raylib::Vector2I{8, 8});

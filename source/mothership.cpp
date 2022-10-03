@@ -44,41 +44,43 @@ void Mothership::Draw()
 
 void Mothership::Deploy()
 {
-    if (IsKeyPressed(KEY_F2))
-    {
-        Load(raylib::Vector2{0.f, 64.f}, MonsterType::Orange);
-    }
-    else if (IsKeyPressed(KEY_F3))
-    {
-        Load(raylib::Vector2{0.f, 128.f}, MonsterType::Pink);
-    }
-    else if (IsKeyPressed(KEY_F4))
-    {
-        Load(raylib::Vector2{0.f, 192.f}, MonsterType::Purple);
-    }
-    else if (IsKeyPressed(KEY_F5))
-    {
-        Load(raylib::Vector2{0.f, 256.f}, MonsterType::Aqua);
-    }
-    else if (IsKeyPressed(KEY_F6))
-    {
-        Load(raylib::Vector2{0.f, 320.f}, MonsterType::Blue);
-    }
-    else if (IsKeyPressed(KEY_F7))
-    {
-        Load(raylib::Vector2{0.f, 384.f}, MonsterType::Green);
-    }
-    else if (IsKeyPressed(KEY_F8))
-    {
-        Load(raylib::Vector2{0.f, 448.f}, MonsterType::Red);
-    }
-    else if (IsKeyPressed(KEY_F9))
-    {
-        Load(raylib::Vector2{0.f, 512.f}, MonsterType::Yellow);
-    }
+    Stats.RunningTime += GetFrameTime();
+    
+    // if (IsKeyPressed(KEY_F2))
+    // {
+    //     Load(raylib::Vector2{0.f, 64.f}, MonsterType::Orange);
+    // }
+    // else if (IsKeyPressed(KEY_F3))
+    // {
+    //     Load(raylib::Vector2{0.f, 128.f}, MonsterType::Pink);
+    // }
+    // else if (IsKeyPressed(KEY_F4))
+    // {
+    //     Load(raylib::Vector2{0.f, 192.f}, MonsterType::Purple);
+    // }
+    // else if (IsKeyPressed(KEY_F5))
+    // {
+    //     Load(raylib::Vector2{0.f, 256.f}, MonsterType::Aqua);
+    // }
+    // else if (IsKeyPressed(KEY_F6))
+    // {
+    //     Load(raylib::Vector2{0.f, 320.f}, MonsterType::Blue);
+    // }
+    // else if (IsKeyPressed(KEY_F7))
+    // {
+    //     Load(raylib::Vector2{0.f, 384.f}, MonsterType::Green);
+    // }
+    // else if (IsKeyPressed(KEY_F8))
+    // {
+    //     Load(raylib::Vector2{0.f, 448.f}, MonsterType::Red);
+    // }
+    // else if (IsKeyPressed(KEY_F9))
+    // {
+    //     Load(raylib::Vector2{0.f, 512.f}, MonsterType::Yellow);
+    // }
 }
 
-void Mothership::Load(raylib::Vector2 ScreenPos, MonsterType Type)
+void Mothership::Load(Spawn SpawnPoint, MonsterType Type)
 {
     Aliens.emplace_back(
         Stats.Textures, 
@@ -86,8 +88,9 @@ void Mothership::Load(raylib::Vector2 ScreenPos, MonsterType Type)
         Stats.RandomEngine, 
         Stats.Projectiles, 
         Stats.Window, 
-        ScreenPos,
-        Spacefighter.GetPos(), 
+        raylib::Vector2{0.f,0.f},
+        Spacefighter.GetPos(),
+        SpawnPoint,
         Type);
 }
 

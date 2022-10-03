@@ -20,7 +20,7 @@ private:
     const std::vector<std::pair<std::string, MonsterType>>& Levels;
 
     void Deploy();
-    void Load(raylib::Vector2 ScreenPos, MonsterType Type);
+    void Load(Spawn SpawnPoint, MonsterType Type);
     void Recall();
     void CheckShipEnemyCollision();
     void CheckEnemyProjectileCollision(); 
