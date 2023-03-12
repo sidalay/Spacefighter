@@ -3,6 +3,9 @@
 *.code-workspace
 *.dll
 cmake-build-debug
+cmake-build-release
+build
+release
 .VSCodeCounter
 .vscode
 report.txt

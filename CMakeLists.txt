@@ -7,7 +7,7 @@ if (NOT raylib_FOUND)
         FetchContent_Declare(
         raylib
         GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG 4.0.0
+        GIT_TAG 4.2.0
     )
     FetchContent_GetProperties(raylib)
     if (NOT raylib_POPULATED)
@@ -15,6 +15,7 @@ if (NOT raylib_FOUND)
         FetchContent_Populate(raylib)
         set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
         set(BUILD_GAMES    OFF CACHE BOOL "" FORCE)
+        set_directory_properties(PROPERTIES COMPILE_OPTIONS -Wno-missing-field-initializers)
         add_subdirectory(${raylib_SOURCE_DIR} ${raylib_BINARY_DIR})
     endif()
 endif()
@@ -25,9 +26,10 @@ if (NOT raylib_cpp_FOUND)
         FetchContent_Declare(
         raylib_cpp
         GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
-        GIT_TAG v4.2.2
+        GIT_TAG v4.2.8
     )
     FetchContent_MakeAvailable(raylib_cpp)
+    set_directory_properties(PROPERTIES COMPILE_OPTIONS -Wno-unused-function)
 endif()
 
 add_executable(${PROJECT_NAME}
